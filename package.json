@@ -1,0 +1,55 @@
+{
+  "name": "dropzone-ui-test",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@dynamicss/dynamicss": "^2.1.0",
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.1.1",
+    "@mui/lab": "^5.0.0-alpha.55",
+    "@mui/material": "^5.1.1",
+    "@mui/styles": "^5.1.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/react": "^17.0.16",
+    "@unlimited-react-components/kernel": "^1.0.2",
+    "@unlimited-react-components/material-button": "^1.2.5",
+    "@unlimited-react-components/react-highlight": "^1.3.2",
+    "axios": "^0.21.4",
+    "dotenv": "^10.0.0",
+    "node-sass": "^6.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^6.0.2",
+    "react-router-dom": "^6.0.2",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.4.2",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+.dui-main-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f3f6f9;
+  //background-color: rgb(234, 238, 243);
+}
+.dui-main-header {
+  max-width: 1260px;
+  margin: auto;
+  @media (max-width: 1260px) {
+    width: 100%;
+  }
+}
+.dui-main-wrapper-body {
+  max-width: 1260px;
+  // background-color: #F3F6F9;
+  background-color: rgb(234, 238, 243);
+}
+.dui-main-background {
+  background-color: rgb(234, 238, 243);
+}
+
+.dropzone-ui-logo-container {
+  height: 245px;
+  width: 245px;
+  margin: auto;
+  @media (max-width: 960px) {
+    height: 215px;
+    width: 215px;
+  }
+}
+.dropzone-ui-text-container {
+  font-size: 2em;
+  text-align: center;
+  @media (max-width: 960px) {
+    text-align: center;
+    font-size: 1.8em;
+  }
+}
