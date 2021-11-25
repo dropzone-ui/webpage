@@ -200,7 +200,7 @@ export const DropzonePropsDefault: DropzoneProps = {
   //numberOfValidFiles: 0,
   disableRipple: false,
   clickable: true,
-  view: "grid",
+  view: undefined,
   maxHeight: "450px",
   minHeight:"280px",
   footer: true,

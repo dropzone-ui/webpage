@@ -8,7 +8,7 @@ export interface FileItemMainLayerProps {
   showInfo: boolean;
   onOpenInfo: Function;
   onOpenImage: Function | undefined;
-  onDelete: Function;
+  onDelete: Function | undefined;
   //fileNamePosition: FileItemProps["fileName"];
   fileName: string;
   info: boolean;
@@ -70,7 +70,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
     <div className="info-container">
       <div
         className={
-          uploadStatus === "uploading"
+          (uploadStatus === "uploading" || !onDelete)
             ? "status-close uploading"
             : showInfo
             ? "status-close hide"
@@ -124,7 +124,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
           {isImage && onOpenImage && valid && (
             <Visibility
               className="view-in-image-file-item"
-              color="white"
+              color="rgba(255,255,255,0.9)"
               onClick={handleOpenImage}
               size="small"
             />

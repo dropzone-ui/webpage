@@ -40,16 +40,26 @@ export default function ElevateAppBar(props) {
         >
           <Toolbar>
             <Avatar
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                window.location.replace("http://www.dropzone-ui.com");
+              }}
               alt="dropzone-ui-logo"
               src="https://user-images.githubusercontent.com/43678736/132112022-0ca409ae-cca2-43c8-be89-110376260a3f.png"
             />
             <div
               style={{
+                cursor: "pointer",
                 margin: "0 10px",
                 fontSize: "1.5rem",
                 lineHeight: "1.334",
                 letterSpacing: "0em",
                 fontWeight: "400",
+              }}
+              onClick={() => {
+                window.location.replace("http://www.dropzone-ui.com");
               }}
             >
               Dropzone-ui

@@ -18,44 +18,42 @@ const InteractiveDemo = (props) => {
     console.log("list cleaned", files);
   };
   return (
-      <Fragment><Dropzone
-          style={{ minWidth: "550px" }}
-          onChange={updateFiles}
-          minHeight="180px"
-          onClean={handleClean}
-          value={files}
-          maxFiles={10}
-          maxFileSize={5698000}
-          accept=".png,image/*"
-          url="http://ec2-99-99-9-9.compute-1.amazonaws.com:2800/upload-my-file"
-          //of course this url doens´t work, is only to make upload button visible
-          uploadOnDrop
-          fakeUploading
-        >
-          {files.map((file) => (
-            <FileItem
-              {...file}
-              key={file.id}
-              onDelete={onDelete}
-              onSee={handleSee}
-              preview
-              info
-              hd
-            />
-          ))}
-          <FullScreenPreview
-            imgSource={imageSrc}
-            openImage={imageSrc}
-            onClose={(e) => handleSee(undefined)}
+    <Fragment>
+      <Dropzone
+        style={{ minWidth: "550px" }}
+        onChange={updateFiles}
+        minHeight="180px"
+        onClean={handleClean}
+        value={files}
+        maxFiles={10}
+        maxFileSize={5698000}
+        accept=".png,image/*"
+        url="http://ec2-99-99-9-9.compute-1.amazonaws.com:2800/upload-my-file"
+        //of course this url doens´t work, is only to make upload button visible
+        uploadOnDrop
+        fakeUploading
+      >
+        {files.map((file) => (
+          <FileItem
+            {...file}
+            key={file.id}
+            onDelete={onDelete}
+            onSee={handleSee}
+            preview
+            info
+            hd
           />
-        </Dropzone>
-           <div className="dui-demo-container"> 
-      <div className="dui-demo-paper">
-       
+        ))}
+        <FullScreenPreview
+          imgSource={imageSrc}
+          openImage={imageSrc}
+          onClose={(e) => handleSee(undefined)}
+        />
+      </Dropzone>
+      <div className="dui-demo-container">
+        <div className="dui-demo-paper"></div>
       </div>
-    </div>
-      </Fragment>
-   
+    </Fragment>
   );
 };
 export default InteractiveDemo;

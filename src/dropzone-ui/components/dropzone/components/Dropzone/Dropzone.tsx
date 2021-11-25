@@ -415,6 +415,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
           //handleReset={handleReset}
           onUploadingStart={onUploadingStart}
           view={localView}
+          hideViewIcon={view?true:false}
           onChangeView={handleChangeView}
           onUploadStart={!uploadOnDrop ? handleUploadStart : undefined}
           onClean={onClean && !onUploadingStart ? handleCleanFiles : undefined}
@@ -422,7 +423,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
           localization={localization}
         />
       )}
-      {value && files && files.length > 0 ? (
+      {children && value && files && files.length > 0 ? (
         <FileItemContainer view={localView} style={{ minHeight, maxHeight }}>
           {children}
         </FileItemContainer>
