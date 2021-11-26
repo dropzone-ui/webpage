@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Dropzone, FileItem, FullScreenPreview } from "../../dropzone-ui";
+import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
 import "./InteractiveCode.scss";
 import InteractiveGeneratedCode from "./InteractiveGeneratedCode";
 import ElevationSlider from "./FileItemProps/ElevationSlider";
@@ -152,6 +152,7 @@ const InteractiveCode = (props) => {
     "....Uploading Files, please wait..."
   ); */
   const [uploadingMessage, setUploadingMessage] = useState(undefined);
+  // eslint-disable-next-line
   const handleuploadingMessage = (e) => {
     if (e.target.value.lenght === 0) {
       setUploadingMessage(undefined);

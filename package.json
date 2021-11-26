@@ -1,8 +1,9 @@
 {
-  "name": "dropzone-ui-test",
+  "name": "dropzone-ui-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@dropzone-ui/react": "^6.0.0",
     "@dynamicss/dynamicss": "^2.1.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
