@@ -27,9 +27,9 @@ const InteractiveCode = (props) => {
     if (!useColor) {
       setColor(undefined);
     } else {
-      if (!color) {
-        setColor("#071e25");
-      }
+      //if (!color) {
+      setColor(color);
+      //}
     }
   }, [useColor, color]);
 
@@ -101,26 +101,38 @@ const InteractiveCode = (props) => {
   };
   const [footerDis, setFooterDis] = React.useState(false);
   const [headerDis, setHeaderDis] = React.useState(false);
-  const [clickable, setClickable] = React.useState(true);
+  const [clickableDis, setClickableDis] = React.useState(false);
   const [onClean, setOnClean] = React.useState(true);
   const [uploadOnDrop, setUploadOnDrop] = React.useState(false);
   //inner Upload
 
   //const [innerUpload, setInnerUpload] = useState(false);
   const [url, setUrl] = React.useState(undefined);
+  const handleUrl = (e) => {
+    if (e.target.value.lenght === 0) {
+      setUrl(undefined);
+    } else {
+      setUrl(e.target.value);
+    }
+  };
   //method
   const [method, setMethod] = React.useState(undefined);
   const hadleSelectMethod = (e, value) => {
     console.log("method", value);
     setMethod(value?.method);
   };
-  const [fakeupload, setFakeUpload] = React.useState(false);
+  const [fakeupload, setFakeUpload] = React.useState(undefined);
   //const [headerDis, setHeaderDis] = React.useState(false);
   const [behaviour, setBehaviour] = React.useState("unset");
   const handleCheckBehaviour = (e, val) => {
     setBehaviour(val);
   };
   //config
+  const defaultHeader = {
+    headers: {
+      "content-type": "multipart/form-data;",
+    },
+  };
   const [config, setConfig] = useState(undefined);
   const [useConfig, setUseConfig] = useState(false);
   const handleUseConfig = (v) => {
@@ -136,9 +148,10 @@ const InteractiveCode = (props) => {
   };
 
   // upload message
-  const [uploadingMessage, setUploadingMessage] = useState(
-    "Uploading Files, please wait..."
-  );
+ /*  const [uploadingMessage, setUploadingMessage] = useState(
+    "....Uploading Files, please wait..."
+  ); */
+  const [uploadingMessage, setUploadingMessage] = useState(undefined);
   const handleuploadingMessage = (e) => {
     if (e.target.value.lenght === 0) {
       setUploadingMessage(undefined);
@@ -146,11 +159,11 @@ const InteractiveCode = (props) => {
   };
   ////       ////       ////       ////       FILE ITEM
   const [hd, setHd] = React.useState(false);
-  const [info, setInfo] = React.useState(false);
-  const [preview, setPreview] = React.useState(false);
-  const [alwaysActive, setAlwaysActive] = React.useState(false);
+  const [info, setInfo] = React.useState(true);
+  const [preview, setPreview] = React.useState(true);
+  const [alwaysActive, setAlwaysActive] = React.useState(true);
   const [onSee, setOnSee] = React.useState(false);
-  const [onDeleteVal, setOnDelete] = React.useState(false);
+  const [onDeleteVal, setOnDelete] = React.useState(true);
   const [elevation, setElevation] = React.useState(0);
   return (
     <div className="dui-demo-container">
@@ -168,15 +181,15 @@ const InteractiveCode = (props) => {
         value={files}
         footer={footerDis ? false : true}
         header={headerDis ? false : true}
-        clickable={clickable || undefined}
+        clickable={clickableDis?false : true}
         onClean={onClean || undefined}
         maxFileSize={maxFileSize}
         maxFiles={maxFiles}
         //upload
         uploadOnDrop={uploadOnDrop || undefined}
-        url="dcsdvdsv"
+        url={url}
         fakeUploading={fakeupload}
-        config={config}
+        config={config ? defaultHeader : undefined}
         uploadingMessage={uploadingMessage}
       >
         {files.map((file) => (
@@ -203,15 +216,15 @@ const InteractiveCode = (props) => {
       {/**
        * /////////////////////////////    CONTROLS    ////////////////////////////////////
        */}
-      <Grid container style={{ padding: "15px 0" }} spacing={2}>
-        <Grid item md={8} xs={12}>
-          <h3>Dropzone props</h3>
+      <Grid container style={{ padding: "15px 0" }} spacing={1}>
+        <Grid item md={9} xs={12}>
+          <h3>{"Dropzone props"}</h3>
           <Paper elevation={3} style={{ padding: "15px" }}>
-            <Grid container spacing={4}>
+            <Grid container spacing={2}>
               <Grid item md={6} xs={12}>
-                <h4 style={{ margin: "10px 5px 0 0" }}>Validation</h4>
+                <h4 style={{ margin: "10px 5px 0 0" }}>{"Validation"}</h4>
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Accept
+                  {"Accept"}
                 </FormLabel>
                 <TextField
                   fullWidth
@@ -224,27 +237,10 @@ const InteractiveCode = (props) => {
                 />
                 <FileSizeSlider onChange={handleChangeMaxFileSize} />
                 <FileLimitSlider onChange={handleChangeMaxFiles} />
-                <h4 style={{ margin: "10px 5px 0 0" }}>Language</h4>
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Localization
-                </FormLabel>
-                <Autocomplete
-                  //disablePortal
-                  autoSelect
-                  size="small"
-                  //style={{ width: "80%" }}
-                  //fullWidth
-                  onChange={hadleSelect}
-                  id="combo-box-demo"
-                  options={languages}
-                  getOptionLabel={(option) => option.idiom}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Localization" />
-                  )}
-                />{" "}
+
                 <h4 style={{ margin: "10px 5px 0 0" }}>Upload process</h4>
                 <FormLabel component="h2" style={{ marginTop: "8px" }}>
-                  Start upload on drop
+                  {"Start upload on drop"}
                 </FormLabel>
                 <FormControlLabel
                   control={
@@ -257,7 +253,7 @@ const InteractiveCode = (props) => {
                   label="uploadOnDrop"
                 />
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Url of server
+                  {"Url of server"}
                 </FormLabel>
                 <TextField
                   fullWidth
@@ -265,11 +261,11 @@ const InteractiveCode = (props) => {
                   size="small"
                   label="url"
                   variant="outlined"
-                  //onChange={handleChangeAccept}
-                  //value={accept}
+                  onChange={handleUrl}
+                  value={url}
                 />
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Method (POST by default)
+                  {"Method (POST by default)"}
                 </FormLabel>
                 <Autocomplete
                   //disablePortal
@@ -290,7 +286,7 @@ const InteractiveCode = (props) => {
                   )}
                 />
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Aditional configuration (e.g. headers, bearer token)
+                  {"Aditional configuration (e.g. headers, bearer token)"}
                 </FormLabel>
                 <FormControlLabel
                   control={
@@ -314,8 +310,8 @@ const InteractiveCode = (props) => {
                     //onChange={handleConfig}
                   />
                 )}
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Uploading Message
+               {/*  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                  {"Uploading Message"}
                 </FormLabel>
                 <TextField
                   fullWidth
@@ -325,14 +321,52 @@ const InteractiveCode = (props) => {
                   variant="outlined"
                   onChange={handleuploadingMessage}
                   value={uploadingMessage}
+                /> */}
+                <h4 style={{ margin: "10px 5px 0 0" }}>
+                  Fake upload (simulate upload process on development)
+                </h4>
+                <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                  {
+                    "Enable fake uploading. It needs a fake url string prop to show the 'upload button'"
+                  }
+                </FormLabel>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={fakeupload}
+                      onChange={(e, ch) => {
+                        setFakeUpload(ch);
+                      }}
+                    />
+                  }
+                  label="enable fakeUpload"
                 />
               </Grid>
               <Grid item md={6} xs={12}>
-                <h4 style={{ margin: "10px 5px 0 0" }}>Behaviour</h4>
-
+                <h4 style={{ margin: "10px 5px 0 0" }}>{"Language"}</h4>
+                <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                  {"Localization"}
+                </FormLabel>
+                <Autocomplete
+                  //disablePortal
+                  autoSelect
+                  size="small"
+                  //style={{ width: "80%" }}
+                  //fullWidth
+                  onChange={hadleSelect}
+                  id="combo-box-demo"
+                  options={languages}
+                  getOptionLabel={(option) => option.idiom}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Localization" />
+                  )}
+                />
+                <h4 style={{ margin: "10px 5px 0 0" }}>
+                  {"Behaviour on drop files"}
+                </h4>
                 <FormControl component="fieldset">
                   <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                    add files or replace files
+                    {'Add files or replace the file list ( "add" by default )'}
                   </FormLabel>
                   <RadioGroup
                     row
@@ -358,9 +392,9 @@ const InteractiveCode = (props) => {
                     />
                   </RadioGroup>
                 </FormControl>
-                <h4 style={{ margin: "10px 5px 0 0" }}>Display settings</h4>
+                <h4 style={{ margin: "10px 5px 0 0" }}>{"Display settings"}</h4>
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Custom Label
+                  {"Custom Label"}
                 </FormLabel>
                 <TextField
                   fullWidth
@@ -372,7 +406,7 @@ const InteractiveCode = (props) => {
                   value={label}
                 />
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  minHeight
+                  {"minHeight"}
                 </FormLabel>
                 <TextField
                   fullWidth
@@ -384,7 +418,7 @@ const InteractiveCode = (props) => {
                   value={minHeight}
                 />
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  maxHeight
+                  {"maxHeight"}
                 </FormLabel>
                 <TextField
                   fullWidth
@@ -397,7 +431,7 @@ const InteractiveCode = (props) => {
                 />
                 <FormControl component="fieldset">
                   <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                    View (FileItems layout)
+                    {"View (FileItems layout)"}
                   </FormLabel>
                   <RadioGroup
                     row
@@ -423,7 +457,6 @@ const InteractiveCode = (props) => {
                     />
                   </RadioGroup>
                 </FormControl>
-
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
                   {`Theme color: ( ${useColor ? color : "unset"} )`}
                 </FormLabel>
@@ -443,14 +476,13 @@ const InteractiveCode = (props) => {
                     <input
                       placeholder="color"
                       onChange={handleChangeColor}
-                      //value={color}
                       type="color"
                     />
-                    {color}{" "}
+                    {color}
                   </div>
                 )}
                 <FormLabel component="h2" style={{ marginTop: "8px" }}>
-                  Clean not valid files button
+                  {"Clean not valid files button"}
                 </FormLabel>
                 <FormControlLabel
                   control={
@@ -464,23 +496,21 @@ const InteractiveCode = (props) => {
                   label="onClean"
                 />
                 <FormLabel component="h2" style={{ marginTop: "8px" }}>
-                  Enable/disable clickable
+                  {"Enable/disable clickable"}
                 </FormLabel>
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={clickable}
+                      checked={clickableDis}
                       onChange={(e, ch) => {
-                        setClickable(ch);
+                        setClickableDis(ch);
                       }}
                     />
                   }
                   label="clickable"
                 />
-
                 <FormLabel component="h2">
-                  {" "}
-                  Footer and header (true by def.){" "}
+                  {"Footer and header (true by def.)"}
                 </FormLabel>
                 <FormControlLabel
                   control={
@@ -507,17 +537,17 @@ const InteractiveCode = (props) => {
           </Paper>
         </Grid>
 
-        <Grid item md={4} xs={12}>
-          <h3>FileItem props</h3>
+        <Grid item md={3} xs={12}>
+          <h3>{"FileItem props"}</h3>
           <Paper elevation={3} style={{ padding: "15px" }}>
             <h4 style={{ margin: "10px 5px 0 0" }}>Display</h4>
             <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {" "}
-              Show info layer{" "}
+              {"Show info layer"}
             </FormLabel>
             <FormControlLabel
               control={
                 <Switch
+                  checked={info}
                   onChange={(e, ch) => {
                     setInfo(ch);
                   }}
@@ -526,12 +556,12 @@ const InteractiveCode = (props) => {
               label="info"
             />
             <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {" "}
-              Always active (only on Hover if false){" "}
+              {"Always active (only on Hover if false)"}
             </FormLabel>
             <FormControlLabel
               control={
                 <Switch
+                  checked={alwaysActive}
                   onChange={(e, ch) => {
                     setAlwaysActive(ch);
                   }}
@@ -540,43 +570,30 @@ const InteractiveCode = (props) => {
               label="alwaysActive"
             />
             <h4 style={{ margin: "10px 5px 0 0" }}>
-              Preview (inside and fullscreen)
+              {"Preview (inside FileItem)"}
             </h4>
             <FormLabel component="legend" style={{ marginTop: "8px" }}>
-              {" "}
-              Show image preview on FleItem if valid
+              {"Show image preview on FleItem if valid"}
             </FormLabel>
             <FormControlLabel
               control={
                 <Switch
+                  checked={preview}
                   onChange={(e, ch) => {
                     setPreview(ch);
                   }}
                 />
               }
               label="preview"
-            />{" "}
-            <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {" "}
-              Show preview in HD{" "}
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  onChange={(e, ch) => {
-                    setHd(ch);
-                  }}
-                />
-              }
-              label="hd"
             />
+            <h4 style={{ margin: "10px 5px 0 0" }}>Full Screen Preview</h4>
             <FormLabel component="legend" style={{ marginTop: "8px" }}>
-              {" "}
-              Show FullScreen preview button and add handler{" "}
+              {" Preview button and add handler"}
             </FormLabel>
             <FormControlLabel
               control={
                 <Switch
+                  checked={onSee}
                   onChange={(e, ch) => {
                     setOnSee(ch);
                   }}
@@ -584,15 +601,28 @@ const InteractiveCode = (props) => {
               }
               label="onSee"
             />
-            <h4 style={{ margin: "10px 5px 0 0" }}>Delete File</h4>
-            <FormLabel component="legend" style={{ marginTop: "8px" }}>
-              {" "}
-              Show "delete file" button and add handler{" "}
+            <FormLabel component="h2" style={{ marginTop: "8px" }}>
+              {"Show preview in HD"}
             </FormLabel>
             <FormControlLabel
               control={
                 <Switch
-                  value={onDeleteVal}
+                  checked={hd}
+                  onChange={(e, ch) => {
+                    setHd(ch);
+                  }}
+                />
+              }
+              label="hd"
+            />
+            <h4 style={{ margin: "10px 5px 0 0" }}>Delete File</h4>
+            <FormLabel component="legend" style={{ marginTop: "8px" }}>
+              {'Show "delete file" button and add handler'}
+            </FormLabel>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={onDeleteVal}
                   onChange={(e, ch) => {
                     setOnDelete(ch);
                   }}
@@ -632,6 +662,8 @@ const InteractiveCode = (props) => {
           maxFileSize,
           maxFiles,
           onClean,
+          color,
+          clickableDis
         }}
       />
     </div>

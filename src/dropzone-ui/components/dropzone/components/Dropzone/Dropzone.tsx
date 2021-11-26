@@ -67,9 +67,9 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     fakeUploading,
     localization,
   } = mergeProps(props, DropzonePropsDefault);
-  console.log("heiight", maxHeight);
-  //validation
-
+  //console.log("heiight", maxHeight);
+  
+  ////  re-validation
   useEffect(() => {
     if (files.length > 0) {
       let fileList: FileList = files.map((x) => x.file) as unknown as FileList;
@@ -86,6 +86,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
       );
       onChange?.(output);
     }
+    // eslint-disable-next-line
   }, [accept, maxFileSize, maxFiles]);
   //localizers
   const DropzoneLocalizer: LocalLabels =

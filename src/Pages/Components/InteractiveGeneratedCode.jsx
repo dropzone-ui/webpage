@@ -30,6 +30,8 @@ const InteractiveGeneratedCode = (props) => {
     maxFileSize,
     maxFiles,
     onClean,
+    color,
+    clickableDis,
   } = props;
   const [code, setCode] = useState("");
   const makeAccept = (accept) => {
@@ -96,6 +98,7 @@ const InteractiveGeneratedCode = (props) => {
     return `\n\tbehaviour={"${behaviour}"}\n`;
   }
   function makeUploadingMessage(uploadingMessage) {
+    console.log("upload message", uploadingMessage);
     if (!uploadingMessage) {
       return ``;
     }
@@ -143,6 +146,18 @@ const InteractiveGeneratedCode = (props) => {
       return ``;
     }
     return `\n\tonClean\n`;
+  }
+  function makeColor(color) {
+    if (!color) {
+      return ``;
+    }
+    return `\n\tcolor={"${color}"}\n`;
+  }
+  function makeClickable(clickable) {
+    if (!clickable) {
+      return ``;
+    }
+    return `\n\tclickable={"${clickable}"}\n`;
   }
   ////////////////// FILE ITEM
   function makeHd(hd) {
@@ -220,14 +235,37 @@ const InteractiveGeneratedCode = (props) => {
     label,
     maxFileSize,
     maxFiles,
-    onClean
+    onClean,
+    color,
+    clickableDis
   ) => {
     return (
       `
+  import { Dropzone, FileItem${
+    onSee ? ", FullScreenPreview " : " "
+  }} from "@dropzone-ui/react";
+  import { useState } from "react";
+  export default function App() {
+    const [files, setFiles] = useState([]);` +
+      makeImgSrcState(onSee) +
+      `
+    const updateFiles = (incommingFiles) => {
+      console.log("incomming files", incommingFiles);
+      setFiles(incommingFiles);
+    };` +
+      makeOnDeleteHandler(onDeleteVal) +
+      makeHandleSee(onSee) +
+      `
+    return (
       <Dropzone
         onChange={updateFiles}
         value={files}` +
+      makeClickable(clickableDis) +
+      makeonClean(onClean) +
       makeAccept(accept) +
+      makeMaxFileSize(maxFileSize) +
+      makeMaxFiles(maxFiles) +
+      makeLabel(label) +
       makeMinHeight(minHeight) +
       makeMaxHeight(maxHeight) +
       makeLocalization(localization) +
@@ -240,11 +278,8 @@ const InteractiveGeneratedCode = (props) => {
       makeBehaviour(behaviour) +
       makeConfig(config) +
       makeUploadOnDrop(uploadOnDrop) +
+      makeColor(color) +
       makeFakeUpload(fakeupload) +
-      makeLabel(label) +
-      makeMaxFileSize(maxFileSize)+
-      makeMaxFiles(maxFiles)+
-      makeonClean(onClean)+
       `
       >
         {files.map((file) => (
@@ -261,8 +296,12 @@ const InteractiveGeneratedCode = (props) => {
       makeElevation(elevation) +
       `
           />
-        ))}
+        ))}` +
+      makeFullScreenOnseeComponent(onSee) +
+      `
       </Dropzone>
+    );
+  }
       `
     );
   };
@@ -292,7 +331,9 @@ const InteractiveGeneratedCode = (props) => {
       label,
       maxFileSize,
       maxFiles,
-      onClean
+      onClean,
+      color,
+      clickableDis
     );
     setCode(codeGenerated);
     // eslint-disable-next-line
@@ -322,6 +363,8 @@ const InteractiveGeneratedCode = (props) => {
     maxFileSize,
     maxFiles,
     onClean,
+    color,
+    clickableDis,
   ]);
   return (
     <Fragment>
@@ -337,50 +380,37 @@ const InteractiveGeneratedCode = (props) => {
   );
 };
 export default InteractiveGeneratedCode;
-/*
-const makeCode2 = `
-    // this is a sample code
-    import React from "react";
-    
-    const themes = {
-      light: {
-        foreground: "#000000",
-        background: "#eeeeee"
-      },
-      dark: {
-        foreground: "#ffffff",
-        background: "#222222"
-      }
-    };
-    
-    const ThemeContext = React.createContext( themes.light );
-    
-    function App() {
-      return (
-        <ThemeContext.Provider value={ themes.dark }>
-          <Toolbar />
-        </ThemeContext.Provider>
-      );
-    }
-    
-    function Toolbar(props) {
-      return (
-        <div>
-          <ThemedButton />
-        </div>
-      );
-    }
-    
-    const ThemedButton =() => {
-      const theme = useContext(ThemeContext);  
-      return (    
-        <button style=
-        {{ background: theme.background, 
-            color: theme.foreground }}
-        >      
-         { "I am styled by theme context! " }  
-        </button>  
-      );
-    } 
-`;
-*/
+function makeOnDeleteHandler(onDelete) {
+  if (!onDelete) {
+    return ``;
+  }
+  return `
+    const onDelete = (id) => {
+      setFiles(files.filter((x) => x.id !== id));
+    };`;
+}
+function makeHandleSee(onSee) {
+  if (!onSee) {
+    return ``;
+  }
+  return `\n    const handleSee = (imageSource) => {
+      setImageSrc(imageSource);
+    };\n`;
+}
+function makeImgSrcState(onSee) {
+  if (!onSee) {
+    return ``;
+  }
+  return `\n    const [imageSrc, setImageSrc] = useState(undefined);\n`;
+}
+
+function makeFullScreenOnseeComponent(onSee) {
+  if (!onSee) {
+    return ``;
+  }
+  return `\n       <FullScreenPreview
+          imgSource={imageSrc}
+          openImage={imageSrc}
+          onClose={(e) => handleSee(undefined)}
+       />\n`;
+}
