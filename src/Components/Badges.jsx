@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 const styles = {
   badge: { padding: "0 4px" },
 };

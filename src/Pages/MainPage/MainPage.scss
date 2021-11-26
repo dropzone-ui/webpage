@@ -2,20 +2,29 @@
   width: 100%;
   min-height: 100vh;
   background-color: #f3f6f9;
+  //background-image: url("https://web.whatsapp.com/img/bg-chat-tile-light_04fcacde539c58cca6745483d4858c52.png");
   //background-color: rgb(234, 238, 243);
+  background-image: linear-gradient(
+      to top,
+      rgba(236, 233, 205, 0.92),
+      rgba(236, 233, 205, 0.92)
+    ),
+    url("https://user-images.githubusercontent.com/43678736/143504433-92c77ad5-addb-49e8-83d6-71af0bc43b26.png");
 }
 .dui-main-header {
   max-width: 1000px;
   margin: auto;
-  margin-bottom: 15px;
+  //margin-bottom: 15px;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 
   @media (max-width: 1000px) {
     width: 100%;
   }
+  background-color: rgb(234, 238, 243);
 }
 .dui-main-wrapper-body {
+  //background-image: url("https://web.whatsapp.com/img/bg-chat-tile-light_04fcacde539c58cca6745483d4858c52.png");
   max-width: 1260px;
   // background-color: #F3F6F9;
   background-color: rgb(234, 238, 243);
@@ -38,7 +47,7 @@
   text-align: center;
   @media (max-width: 960px) {
     text-align: center;
-    font-size: 2.5em;
+    font-size: 2.1em;
     font-weight: 300;
     //margin-top: 40px;
   }
@@ -48,4 +57,17 @@
   font-weight: 700;
   text-align: center;
   //margin-bottom: 20px;
+}
+.stargazers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 7vh;
+  width: 100%;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  @media (max-width: 960px) {
+    text-align: center;
+  }
 }

@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -9,9 +9,12 @@ const Options = (props) => {
     window.open(url, "_blank").focus();
   };
   return (
-    <Stack
+    <div
       direction="row"
       style={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
         justifyContent: "space-evenly",
         backgroundColor: "#f3f6f9",
         padding: "25px 5px",
@@ -37,7 +40,7 @@ const Options = (props) => {
           openTab("https://github.com/dropzone-ui/react#Usage-and-examples")
         }
       >
-        Examples
+        Samples
       </Button>
       <Button
         size="small"
@@ -47,7 +50,7 @@ const Options = (props) => {
           openTab("https://github.com/dropzone-ui/react#readme", "_blank")
         }
       >
-        Github repo
+        Github
       </Button>
       <Button
         size="small"
@@ -59,7 +62,10 @@ const Options = (props) => {
       >
         Server side
       </Button>
-    </Stack>
+     {/*  <div id="donate-button-container">
+        <div id="donate-button"></div>
+      </div> */}
+    </div>
   );
 };
 export default Options;

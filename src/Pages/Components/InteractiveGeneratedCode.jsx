@@ -17,6 +17,7 @@ const InteractiveGeneratedCode = (props) => {
     viewValue,
     footerDis,
     headerDis,
+    elevation,
   } = props;
   const [code, setCode] = useState("");
   const makeAccept = (accept) => {
@@ -25,9 +26,12 @@ const InteractiveGeneratedCode = (props) => {
     }
     return `\n\taccept={"${accept}"}\n`;
   };
-  const makeLocalization = (localization) => {
+  const makeLocalization = (localization, item) => {
     if (!localization || localization.length === 0) {
       return ``;
+    }
+    if (item) {
+      return `\n\t    localization={"${localization}"}\n`;
     }
     return `\n\tlocalization={"${localization}"}\n`;
   };
@@ -98,6 +102,13 @@ const InteractiveGeneratedCode = (props) => {
       return ``;
     }
   }
+  const makeElevation = (elevation) => {
+    if (!elevation || elevation === 0) {
+      return ``;
+    } else {
+      return `\n\t    elevation={${elevation}}\n`;
+    }
+  };
   const makeCode = (
     accept,
     localization,
@@ -110,7 +121,8 @@ const InteractiveGeneratedCode = (props) => {
     onDeleteVal,
     viewValue,
     footerDis,
-    headerDis
+    headerDis,
+    elevation
   ) => {
     return (
       `
@@ -132,10 +144,11 @@ const InteractiveGeneratedCode = (props) => {
       makeOnDelete(onDeleteVal) +
       makeOnSee(onSee) +
       makeAlwaysActive(alwaysActive) +
-      makeLocalization(localization) +
+      makeLocalization(localization, true) +
       makePreview(preview) +
       makeInfo(info) +
       makeHd(hd) +
+      makeElevation(elevation) +
       `
           />
         ))}
@@ -156,9 +169,11 @@ const InteractiveGeneratedCode = (props) => {
       onDeleteVal,
       viewValue,
       footerDis,
-      headerDis
+      headerDis,
+      elevation
     );
     setCode(codeGenerated);
+    // eslint-disable-next-line
   }, [
     accept,
     localization,
@@ -172,6 +187,7 @@ const InteractiveGeneratedCode = (props) => {
     viewValue,
     footerDis,
     headerDis,
+    elevation,
   ]);
   return (
     <Fragment>
@@ -187,7 +203,7 @@ const InteractiveGeneratedCode = (props) => {
   );
 };
 export default InteractiveGeneratedCode;
-
+/*
 const makeCode2 = `
     // this is a sample code
     import React from "react";
@@ -233,3 +249,4 @@ const makeCode2 = `
       );
     } 
 `;
+*/
