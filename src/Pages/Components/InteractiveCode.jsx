@@ -628,7 +628,10 @@ const InteractiveCode = (props) => {
           config,
           uploadOnDrop,
           fakeupload,
-          label,maxFileSize,maxFiles,onClean
+          label,
+          maxFileSize,
+          maxFiles,
+          onClean,
         }}
       />
     </div>
