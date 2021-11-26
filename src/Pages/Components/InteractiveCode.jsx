@@ -108,11 +108,42 @@ const InteractiveCode = (props) => {
 
   //const [innerUpload, setInnerUpload] = useState(false);
   const [url, setUrl] = React.useState(undefined);
-  const [method, setMethod] = React.useState("POST");
+  //method
+  const [method, setMethod] = React.useState(undefined);
+  const hadleSelectMethod = (e, value) => {
+    console.log("method", value);
+    setMethod(value?.method);
+  };
   const [fakeupload, setFakeUpload] = React.useState(false);
   //const [headerDis, setHeaderDis] = React.useState(false);
-
+  const [behaviour, setBehaviour] = React.useState("unset");
+  const handleCheckBehaviour = (e, val) => {
+    setBehaviour(val);
+  };
   //config
+  const [config, setConfig] = useState(undefined);
+  const [useConfig, setUseConfig] = useState(false);
+  const handleUseConfig = (v) => {
+    if (v) {
+      setUseConfig(true);
+      setConfig(
+        `{\n\t  headers: {\n\t    "Authorization": "Bearer YOUR_BEARER_TOKEN_GOES_HERE",\n\t    "content-type": "multipart/form-data",\n\t  },\n\t}`
+      );
+    } else {
+      setUseConfig(false);
+      setConfig(undefined);
+    }
+  };
+
+  // upload message
+  const [uploadingMessage, setUploadingMessage] = useState(
+    "Uploading Files, please wait..."
+  );
+  const handleuploadingMessage = (e) => {
+    if (e.target.value.lenght === 0) {
+      setUploadingMessage(undefined);
+    } else setUploadingMessage(e.target.value);
+  };
   ////       ////       ////       ////       FILE ITEM
   const [hd, setHd] = React.useState(false);
   const [info, setInfo] = React.useState(false);
@@ -128,21 +159,25 @@ const InteractiveCode = (props) => {
         label={label}
         color={color}
         minHeight={minHeight}
+        maxHeight={maxHeight}
         accept={accept}
         view={viewValue === "unset" ? undefined : viewValue}
+        behaviour={behaviour === "unset" ? undefined : behaviour}
         localization={localization}
         onChange={updateFiles}
         value={files}
-        url="dcsdvdsv"
-        fakeUploading
         footer={footerDis ? false : true}
         header={headerDis ? false : true}
         clickable={clickable || undefined}
         onClean={onClean || undefined}
-        uploadOnDrop={uploadOnDrop || undefined}
         maxFileSize={maxFileSize}
         maxFiles={maxFiles}
+        //upload
+        uploadOnDrop={uploadOnDrop || undefined}
+        url="dcsdvdsv"
+        fakeUploading={fakeupload}
         config={config}
+        uploadingMessage={uploadingMessage}
       >
         {files.map((file) => (
           <FileItem
@@ -157,7 +192,6 @@ const InteractiveCode = (props) => {
             info={info ? info : undefined}
             hd={hd ? hd : undefined}
             elevation={elevation}
-            
           />
         ))}
         <FullScreenPreview
@@ -243,7 +277,7 @@ const InteractiveCode = (props) => {
                   size="small"
                   //style={{ width: "80%" }}
                   //fullWidth
-                  //onChange={hadleSelect}
+                  onChange={hadleSelectMethod}
                   id="combo-box-demo"
                   options={[
                     { method: "POST" },
@@ -256,18 +290,30 @@ const InteractiveCode = (props) => {
                   )}
                 />
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  Aditional configuration
+                  Aditional configuration (e.g. headers, bearer token)
                 </FormLabel>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  label="Multiline"
-                  multiline
-                  fullWidth
-                  maxRows={6}
-                  minRows={3}
-                  // value={value}
-                  //onChange={handleChange}
+                <FormControlLabel
+                  control={
+                    <Switch
+                      onChange={(e, ch) => {
+                        handleUseConfig(ch);
+                      }}
+                    />
+                  }
+                  label="Add config"
                 />
+                {useConfig && (
+                  <TextField
+                    id="outlined-multiline-flexible"
+                    label="config"
+                    multiline
+                    fullWidth
+                    minRows={3}
+                    value={config}
+                    disabled
+                    //onChange={handleConfig}
+                  />
+                )}
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
                   Uploading Message
                 </FormLabel>
@@ -277,11 +323,41 @@ const InteractiveCode = (props) => {
                   size="small"
                   label="uploadingMessage"
                   variant="outlined"
-                  //onChange={handleChangeAccept}
-                  //value={accept}
+                  onChange={handleuploadingMessage}
+                  value={uploadingMessage}
                 />
               </Grid>
               <Grid item md={6} xs={12}>
+                <h4 style={{ margin: "10px 5px 0 0" }}>Behaviour</h4>
+
+                <FormControl component="fieldset">
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    add files or replace files
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-label="gender"
+                    name="row-radio-buttons-group"
+                    onChange={handleCheckBehaviour}
+                    value={behaviour}
+                  >
+                    <FormControlLabel
+                      value="add"
+                      control={<Radio />}
+                      label="add"
+                    />
+                    <FormControlLabel
+                      value="replace"
+                      control={<Radio />}
+                      label="replace"
+                    />
+                    <FormControlLabel
+                      value={"unset"}
+                      control={<Radio />}
+                      label="unset"
+                    />
+                  </RadioGroup>
+                </FormControl>
                 <h4 style={{ margin: "10px 5px 0 0" }}>Display settings</h4>
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
                   Custom Label
@@ -545,6 +621,14 @@ const InteractiveCode = (props) => {
           footerDis,
           headerDis,
           elevation,
+          url,
+          method,
+          behaviour,
+          uploadingMessage,
+          config,
+          uploadOnDrop,
+          fakeupload,
+          label,maxFileSize,maxFiles,onClean
         }}
       />
     </div>

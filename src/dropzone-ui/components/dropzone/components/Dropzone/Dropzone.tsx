@@ -67,6 +67,26 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     fakeUploading,
     localization,
   } = mergeProps(props, DropzonePropsDefault);
+  console.log("heiight", maxHeight);
+  //validation
+
+  useEffect(() => {
+    if (files.length > 0) {
+      let fileList: FileList = files.map((x) => x.file) as unknown as FileList;
+      const remainingValids: number =
+        (maxFiles || Infinity) - numberOfValidFiles;
+      const localValidator: FileValidator = {
+        accept: accept,
+        maxFileSize: maxFileSize,
+      };
+      const output: FileValidated[] = fileListvalidator(
+        fileList,
+        remainingValids,
+        localValidator
+      );
+      onChange?.(output);
+    }
+  }, [accept, maxFileSize, maxFiles]);
   //localizers
   const DropzoneLocalizer: LocalLabels =
     DropzoneLocalizerSelector(localization);
@@ -95,11 +115,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
   const finalClassName: string = `dropzone-ui${classNameCreated}${
     isDragging ? ` drag` : ``
   }${clickable ? ` clickable` : ``}`;
-  // validator
-  const localValidator: FileValidator = {
-    accept: accept,
-    maxFileSize: maxFileSize,
-  };
+
   //number of files
   const [numberOfValidFiles, setNumberOfValidFiles] = useState<number>(0);
   useEffect(() => {
@@ -125,7 +141,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     try {
       onClean?.(filesCleaned);
     } catch (error) {
-      if (process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === "production") {
         console.error(error);
       }
     }
@@ -297,10 +313,15 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
       return;
     }
     let fileList: FileList = evt.dataTransfer.files;
-    const remainingValids: number = (maxFiles || 7) - numberOfValidFiles;
+    const remainingValids: number = (maxFiles || Infinity) - numberOfValidFiles;
+    const localValidator: FileValidator = {
+      accept: accept,
+      maxFileSize: maxFileSize,
+    };
     const output: FileValidated[] = fileListvalidator(
       fileList,
-      remainingValids
+      remainingValids,
+      localValidator
     );
     if (!disableRipple) {
       createRipple(evt, color as string);
@@ -316,18 +337,25 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
       return;
     }
     let fileList: FileList = evt.target.files as FileList;
-    const remainingValids: number = (maxFiles || 7) - numberOfValidFiles;
+    const remainingValids: number = (maxFiles || Infinity) - numberOfValidFiles;
+    const localValidator: FileValidator = {
+      accept: accept,
+      maxFileSize: maxFileSize,
+    };
     const output: FileValidated[] = fileListvalidator(
       fileList,
-      remainingValids
+      remainingValids,
+      localValidator
     );
     handleFilesChange(output);
   };
+  // validator
 
   //local function validator
   const fileListvalidator = (
     preValidatedFiles: FileList,
-    remainingValids: number
+    remainingValids: number,
+    localValidator: FileValidator
   ): FileValidated[] => {
     const output: FileValidated[] = [];
     let countdown: number = remainingValids;
@@ -345,8 +373,11 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
           const MaxFileErrorMessenger: FunctionLabel =
             ValidationErrorLocalizer.maxFileCount as FunctionLabel;
           validatedFile.errors = validatedFile.errors
-            ? [...validatedFile.errors, MaxFileErrorMessenger(maxFiles || 7)]
-            : [MaxFileErrorMessenger(maxFiles || 7)];
+            ? [
+                ...validatedFile.errors,
+                MaxFileErrorMessenger(maxFiles || Infinity),
+              ]
+            : [MaxFileErrorMessenger(maxFiles || Infinity)];
         }
         countdown--;
       }
@@ -415,7 +446,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
           //handleReset={handleReset}
           onUploadingStart={onUploadingStart}
           view={localView}
-          hideViewIcon={view?true:false}
+          hideViewIcon={view ? true : false}
           onChangeView={handleChangeView}
           onUploadStart={!uploadOnDrop ? handleUploadStart : undefined}
           onClean={onClean && !onUploadingStart ? handleCleanFiles : undefined}

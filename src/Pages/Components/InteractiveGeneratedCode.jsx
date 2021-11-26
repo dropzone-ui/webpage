@@ -6,6 +6,7 @@ import React, { Fragment, useEffect, useState } from "react";
 const InteractiveGeneratedCode = (props) => {
   const {
     accept,
+    maxHeight,
     localization,
     minHeight,
     hd,
@@ -18,6 +19,17 @@ const InteractiveGeneratedCode = (props) => {
     footerDis,
     headerDis,
     elevation,
+    url,
+    method,
+    behaviour,
+    uploadingMessage,
+    config,
+    uploadOnDrop,
+    fakeupload,
+    label,
+    maxFileSize,
+    maxFiles,
+    onClean,
   } = props;
   const [code, setCode] = useState("");
   const makeAccept = (accept) => {
@@ -41,6 +53,12 @@ const InteractiveGeneratedCode = (props) => {
     }
     return `\n\tminHeight={"${minHeight}"}\n`;
   };
+  const makeMaxHeight = (maxHeight) => {
+    if (!maxHeight || maxHeight.length === 0) {
+      return ``;
+    }
+    return `\n\tmaxHeight={"${maxHeight}"}\n`;
+  };
   const makeView = (viewValue) => {
     if (viewValue === "unset") {
       return ``;
@@ -59,6 +77,73 @@ const InteractiveGeneratedCode = (props) => {
     }
     return `\n\theader={${!headerDis}}\n`;
   };
+  function makeUrl(url) {
+    if (!url) {
+      return ``;
+    }
+    return `\n\turl={"${url}"}\n`;
+  }
+  function makeMethod(method) {
+    if (!method) {
+      return ``;
+    }
+    return `\n\tmethod={"${method}"}\n`;
+  }
+  function makeBehaviour(behaviour) {
+    if (behaviour === "unset") {
+      return ``;
+    }
+    return `\n\tbehaviour={"${behaviour}"}\n`;
+  }
+  function makeUploadingMessage(uploadingMessage) {
+    if (!uploadingMessage) {
+      return ``;
+    }
+    return `\n\tuploadingMessage={"${uploadingMessage}"}\n`;
+  }
+  function makeConfig(config) {
+    if (!config) {
+      return ``;
+    }
+    return `\n\tconfig={${config}}\n`;
+  }
+
+  function makeUploadOnDrop(uploadOnDrop) {
+    if (!uploadOnDrop) {
+      return ``;
+    }
+    return `\n\tuploadOnDrop\n`;
+  }
+  function makeFakeUpload(fakeupload) {
+    if (!fakeupload) {
+      return ``;
+    }
+    return `\n\tfakeupload\n`;
+  }
+  function makeLabel(label) {
+    if (!label) {
+      return ``;
+    }
+    return `\n\tlabel={"${label}"}\n`;
+  }
+  function makeMaxFileSize(maxFileSize) {
+    if (!maxFileSize) {
+      return ``;
+    }
+    return `\n\tmaxFileSize={${maxFileSize}}\n`;
+  }
+  function makeMaxFiles(maxFiles) {
+    if (!maxFiles) {
+      return ``;
+    }
+    return `\n\tmaxFiles={${maxFiles}}\n`;
+  }
+  function makeonClean(onClean) {
+    if (!onClean) {
+      return ``;
+    }
+    return `\n\tonClean\n`;
+  }
   ////////////////// FILE ITEM
   function makeHd(hd) {
     if (hd) {
@@ -109,8 +194,10 @@ const InteractiveGeneratedCode = (props) => {
       return `\n\t    elevation={${elevation}}\n`;
     }
   };
+  //////// MAIN CODE
   const makeCode = (
     accept,
+    maxHeight,
     localization,
     minHeight,
     hd,
@@ -122,20 +209,43 @@ const InteractiveGeneratedCode = (props) => {
     viewValue,
     footerDis,
     headerDis,
-    elevation
+    elevation,
+    url,
+    method,
+    behaviour,
+    uploadingMessage,
+    config,
+    uploadOnDrop,
+    fakeupload,
+    label,
+    maxFileSize,
+    maxFiles,
+    onClean
   ) => {
     return (
       `
-      <Dropzone` +
+      <Dropzone
+        onChange={updateFiles}
+        value={files}` +
       makeAccept(accept) +
       makeMinHeight(minHeight) +
+      makeMaxHeight(maxHeight) +
       makeLocalization(localization) +
       makeView(viewValue) +
       makeFooter(footerDis) +
       makeHeader(headerDis) +
+      makeUrl(url) +
+      makeMethod(method) +
+      makeUploadingMessage(uploadingMessage) +
+      makeBehaviour(behaviour) +
+      makeConfig(config) +
+      makeUploadOnDrop(uploadOnDrop) +
+      makeFakeUpload(fakeupload) +
+      makeLabel(label) +
+      makeMaxFileSize(maxFileSize)+
+      makeMaxFiles(maxFiles)+
+      makeonClean(onClean)+
       `
-        onChange={updateFiles}
-        value={files}
       >
         {files.map((file) => (
           <FileItem
@@ -159,6 +269,7 @@ const InteractiveGeneratedCode = (props) => {
   useEffect(() => {
     const codeGenerated = makeCode(
       accept,
+      maxHeight,
       localization,
       minHeight,
       hd,
@@ -170,12 +281,24 @@ const InteractiveGeneratedCode = (props) => {
       viewValue,
       footerDis,
       headerDis,
-      elevation
+      elevation,
+      url,
+      method,
+      behaviour,
+      uploadingMessage,
+      config,
+      uploadOnDrop,
+      fakeupload,
+      label,
+      maxFileSize,
+      maxFiles,
+      onClean
     );
     setCode(codeGenerated);
     // eslint-disable-next-line
   }, [
     accept,
+    maxHeight,
     localization,
     minHeight,
     hd,
@@ -188,6 +311,17 @@ const InteractiveGeneratedCode = (props) => {
     footerDis,
     headerDis,
     elevation,
+    url,
+    method,
+    behaviour,
+    uploadingMessage,
+    config,
+    uploadOnDrop,
+    fakeupload,
+    label,
+    maxFileSize,
+    maxFiles,
+    onClean,
   ]);
   return (
     <Fragment>
