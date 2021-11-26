@@ -1,11 +1,11 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+//import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+//import Box from "@mui/material/Box";
+//import Container from "@mui/material/Container";
 import { Avatar } from "@mui/material";
 
 function ElevationScroll(props) {
@@ -25,14 +25,14 @@ function ElevationScroll(props) {
 }
 
 export default function ElevateAppBar(props) {
-  const { children } = props;
+ // const { children } = props;
   return (
     <React.Fragment>
       <CssBaseline />
       <ElevationScroll {...props}>
         <AppBar
           style={{
-            backgroundColor: "white",
+            backgroundColor: "rgba(255,255,255,0.82)",
             color: "black",
             backdropFilter: "blur(20px)",
             boxShadow: "inset 0px -1px 1px #eaeef3",
