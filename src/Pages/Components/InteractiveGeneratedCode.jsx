@@ -32,6 +32,8 @@ const InteractiveGeneratedCode = (props) => {
     onClean,
     color,
     clickableDis,
+    resultOnTooltip,
+    disableScroll,
   } = props;
   const [code, setCode] = useState("");
   const makeAccept = (accept) => {
@@ -98,7 +100,7 @@ const InteractiveGeneratedCode = (props) => {
     return `\n\tbehaviour={"${behaviour}"}\n`;
   }
   function makeUploadingMessage(uploadingMessage) {
-    console.log("upload message", uploadingMessage);
+    //console.log("upload message", uploadingMessage);
     if (!uploadingMessage) {
       return ``;
     }
@@ -159,6 +161,12 @@ const InteractiveGeneratedCode = (props) => {
     }
     return `\n\tclickable={"${clickable}"}\n`;
   }
+  function makeDisableScroll(disableScroll) {
+    if (!disableScroll) {
+      return ``;
+    }
+    return `\n\tdisableScroll\n`;
+  }
   ////////////////// FILE ITEM
   function makeHd(hd) {
     if (hd) {
@@ -209,6 +217,13 @@ const InteractiveGeneratedCode = (props) => {
       return `\n\t    elevation={${elevation}}\n`;
     }
   };
+  function makeResultOnTooltip(resultOnTooltip) {
+    if (resultOnTooltip) {
+      return `\n\t    resultOnTooltip\n`;
+    } else {
+      return ``;
+    }
+  }
   //////// MAIN CODE
   const makeCode = (
     accept,
@@ -237,7 +252,8 @@ const InteractiveGeneratedCode = (props) => {
     maxFiles,
     onClean,
     color,
-    clickableDis
+    clickableDis,
+    resultOnTooltip,disableScroll,
   ) => {
     return (
       `
@@ -280,6 +296,7 @@ const InteractiveGeneratedCode = (props) => {
       makeUploadOnDrop(uploadOnDrop) +
       makeColor(color) +
       makeFakeUpload(fakeupload) +
+      makeDisableScroll(disableScroll)+
       `
       >
         {files.map((file) => (
@@ -294,6 +311,7 @@ const InteractiveGeneratedCode = (props) => {
       makeInfo(info) +
       makeHd(hd) +
       makeElevation(elevation) +
+      makeResultOnTooltip(resultOnTooltip) +
       `
           />
         ))}` +
@@ -333,7 +351,8 @@ const InteractiveGeneratedCode = (props) => {
       maxFiles,
       onClean,
       color,
-      clickableDis
+      clickableDis,
+      resultOnTooltip,disableScroll,
     );
     setCode(codeGenerated);
     // eslint-disable-next-line
@@ -365,13 +384,14 @@ const InteractiveGeneratedCode = (props) => {
     onClean,
     color,
     clickableDis,
+    resultOnTooltip,disableScroll
   ]);
   return (
     <Fragment>
       <Highlighter
         style={{ margin: "10px 0", backgroundColor: "#010409" }}
         onCopyToClipboard={(code_) => {
-          console.log("copied: " + code_);
+          //console.log("copied: " + code_);
         }}
       >
         {code}

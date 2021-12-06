@@ -31,9 +31,9 @@ const Clipboard = (props) => {
       if (successful) {
         changeIcon();
       }
-      console.log("Fallback: Copying text command was " + msg);
+      //console.log("Fallback: Copying text command was " + msg);
     } catch (err) {
-      console.error("Fallback: Oops, unable to copy", err);
+      //console.error("Fallback: Oops, unable to copy", err);
     }
 
     document.body.removeChild(textArea);
@@ -47,7 +47,7 @@ const Clipboard = (props) => {
       function () {
         changeIcon();
 
-        console.log("Async: Copying to clipboard was successful!");
+        //console.log("Async: Copying to clipboard was successful!");
       },
       function (err) {
         console.error("Async: Could not copy text: ", err);

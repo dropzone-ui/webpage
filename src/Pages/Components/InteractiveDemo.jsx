@@ -5,7 +5,7 @@ const InteractiveDemo = (props) => {
   const [files, setFiles] = useState([]);
   const [imageSrc, setImageSrc] = useState(undefined);
   const updateFiles = (incommingFiles) => {
-    console.log("incomming files", incommingFiles);
+    //console.log("incomming files", incommingFiles);
     setFiles(incommingFiles);
   };
   const onDelete = (id) => {
@@ -15,7 +15,7 @@ const InteractiveDemo = (props) => {
     setImageSrc(imageSource);
   };
   const handleClean = (files) => {
-    console.log("list cleaned", files);
+    //console.log("list cleaned", files);
   };
   return (
     <Fragment>

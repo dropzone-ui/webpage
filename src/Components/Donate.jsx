@@ -4,7 +4,7 @@ const Donate = (props) => {
   const scriptRef = useRef(null);
 
   const renderButton = () => {
-    console.log("Empezando render button", window.PayPal);
+    //console.log("Empezando render button", window.PayPal);
     window.PayPal.Donation.Button({
       env: "production",
       hosted_button_id: "HHB6BJNNXQTPW",

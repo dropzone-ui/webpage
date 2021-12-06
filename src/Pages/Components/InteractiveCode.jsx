@@ -12,11 +12,13 @@ import React, { useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
+//import { Dropzone, FileItem, FullScreenPreview } from "../../dropzone-ui";
 import "./InteractiveCode.scss";
 import InteractiveGeneratedCode from "./InteractiveGeneratedCode";
 import ElevationSlider from "./FileItemProps/ElevationSlider";
 import FileSizeSlider from "./DropzoneProps/FileSizeSlider";
 import FileLimitSlider from "./DropzoneProps/FileLimitSlider";
+//import FakeFileItem from "../../Components/FakeFileItem/FakeFileItem";
 
 const InteractiveCode = (props) => {
   ////////////////////     DROPZONE PROPS ////////////////
@@ -70,7 +72,7 @@ const InteractiveCode = (props) => {
   //localization
   const [localization, setLocalization] = useState(undefined);
   const hadleSelect = (e, value) => {
-    console.log(value);
+    //console.log(value);
     setLocalization(value?.value);
   };
   //accept
@@ -118,7 +120,7 @@ const InteractiveCode = (props) => {
   //method
   const [method, setMethod] = React.useState(undefined);
   const hadleSelectMethod = (e, value) => {
-    console.log("method", value);
+    //console.log("method", value);
     setMethod(value?.method);
   };
   const [fakeupload, setFakeUpload] = React.useState(undefined);
@@ -148,7 +150,7 @@ const InteractiveCode = (props) => {
   };
 
   // upload message
- /*  const [uploadingMessage, setUploadingMessage] = useState(
+  /*  const [uploadingMessage, setUploadingMessage] = useState(
     "....Uploading Files, please wait..."
   ); */
   const [uploadingMessage, setUploadingMessage] = useState(undefined);
@@ -158,11 +160,14 @@ const InteractiveCode = (props) => {
       setUploadingMessage(undefined);
     } else setUploadingMessage(e.target.value);
   };
+  /////// NEW
+  const [disableScroll, setDisableScroll] = useState(undefined);
   ////       ////       ////       ////       FILE ITEM
   const [hd, setHd] = React.useState(false);
   const [info, setInfo] = React.useState(true);
   const [preview, setPreview] = React.useState(true);
   const [alwaysActive, setAlwaysActive] = React.useState(true);
+  const [resultOnTooltip, setResultOnTooltip] = React.useState(true);
   const [onSee, setOnSee] = React.useState(false);
   const [onDeleteVal, setOnDelete] = React.useState(true);
   const [elevation, setElevation] = React.useState(0);
@@ -173,7 +178,7 @@ const InteractiveCode = (props) => {
         label={label}
         color={color}
         minHeight={minHeight}
-        maxHeight={maxHeight}
+        //maxHeight={maxHeight}
         accept={accept}
         view={viewValue === "unset" ? undefined : viewValue}
         behaviour={behaviour === "unset" ? undefined : behaviour}
@@ -182,7 +187,7 @@ const InteractiveCode = (props) => {
         value={files}
         footer={footerDis ? false : true}
         header={headerDis ? false : true}
-        clickable={clickableDis?false : true}
+        clickable={clickableDis ? false : true}
         onClean={onClean || undefined}
         maxFileSize={maxFileSize}
         maxFiles={maxFiles}
@@ -192,6 +197,7 @@ const InteractiveCode = (props) => {
         fakeUploading={fakeupload}
         config={config ? defaultHeader : undefined}
         uploadingMessage={uploadingMessage}
+        disableScroll={disableScroll}
       >
         {files.map((file) => (
           <FileItem
@@ -201,6 +207,7 @@ const InteractiveCode = (props) => {
             onSee={onSee ? handleSee : undefined}
             localization={localization}
             alwaysActive={alwaysActive || undefined}
+            resultOnTooltip={resultOnTooltip || undefined}
             preview={preview ? preview : undefined}
             //onlyImage
             info={info ? info : undefined}
@@ -208,12 +215,12 @@ const InteractiveCode = (props) => {
             elevation={elevation}
           />
         ))}
-        <FullScreenPreview
-          imgSource={imageSrc}
-          openImage={imageSrc}
-          onClose={(e) => handleSee(undefined)}
-        />
       </Dropzone>
+      <FullScreenPreview
+        imgSource={imageSrc}
+        openImage={imageSrc}
+        onClose={(e) => handleSee(undefined)}
+      />
       {/**
        * /////////////////////////////    CONTROLS    ////////////////////////////////////
        */}
@@ -311,7 +318,7 @@ const InteractiveCode = (props) => {
                     //onChange={handleConfig}
                   />
                 )}
-               {/*  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                {/*  <FormLabel component="legend" style={{ marginTop: "8px" }}>
                   {"Uploading Message"}
                 </FormLabel>
                 <TextField
@@ -371,7 +378,7 @@ const InteractiveCode = (props) => {
                   </FormLabel>
                   <RadioGroup
                     row
-                    aria-label="gender"
+                    aria-label="view"
                     name="row-radio-buttons-group"
                     onChange={handleCheckBehaviour}
                     value={behaviour}
@@ -442,22 +449,47 @@ const InteractiveCode = (props) => {
                     value={viewValue}
                   >
                     <FormControlLabel
+                      disabled={disableScroll}
                       value="list"
                       control={<Radio />}
                       label="list"
                     />
                     <FormControlLabel
+                      disabled={disableScroll}
                       value="grid"
                       control={<Radio />}
                       label="grid"
                     />
                     <FormControlLabel
+                      disabled={disableScroll}
                       value={"unset"}
                       control={<Radio />}
                       label="unset"
                     />
                   </RadioGroup>
                 </FormControl>
+
+                <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                  {`Disable scrollbar: ( for optimizing display when using "resultOnTooltip prop on FileItem")`}
+                </FormLabel>
+                <a href="https://codesandbox.io/s/dropzone-ui-fileitem-resultontooltip-h6hu7">
+                  <img
+                    src="https://img.shields.io/badge/new-feature-green.svg"
+                    alt="npm latest package"
+                  />
+                </a>
+
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={disableScroll}
+                      onChange={(e, ch) => {
+                        setDisableScroll(ch);
+                      }}
+                    />
+                  }
+                  label={"disableScroll"}
+                />
                 <FormLabel component="legend" style={{ marginTop: "8px" }}>
                   {`Theme color: ( ${useColor ? color : "unset"} )`}
                 </FormLabel>
@@ -557,7 +589,9 @@ const InteractiveCode = (props) => {
               label="info"
             />
             <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {"Always active (only on Hover if false)"}
+              {
+                "Always active (show actions and buttons if true. If false, show only on hover)"
+              }
             </FormLabel>
             <FormControlLabel
               control={
@@ -570,6 +604,29 @@ const InteractiveCode = (props) => {
               }
               label="alwaysActive"
             />
+            <FormLabel component="h2" style={{ marginTop: "8px" }}>
+              {
+                "Display Result on layer (if true) otherwise, on tooltip on Hover"
+              }
+            </FormLabel>
+            <a href="https://codesandbox.io/s/dropzone-ui-fileitem-resultontooltip-h6hu7">
+              <img
+                src="https://img.shields.io/badge/new-feature-green.svg"
+                alt="npm latest package"
+              />
+            </a>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={resultOnTooltip}
+                  onChange={(e, ch) => {
+                    setResultOnTooltip(ch);
+                  }}
+                />
+              }
+              label="resultOnTooltip"
+            />
+            resultOnTooltip
             <h4 style={{ margin: "10px 5px 0 0" }}>
               {"Preview (inside FileItem)"}
             </h4>
@@ -635,7 +692,6 @@ const InteractiveCode = (props) => {
           </Paper>
         </Grid>
       </Grid>
-
       <InteractiveGeneratedCode
         {...{
           accept,
@@ -664,7 +720,9 @@ const InteractiveCode = (props) => {
           maxFiles,
           onClean,
           color,
-          clickableDis
+          clickableDis,
+          resultOnTooltip,
+          disableScroll,
         }}
       />
     </div>
