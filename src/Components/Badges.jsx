@@ -35,10 +35,10 @@ const Badges = (props) => {
 
       <a
         style={styles.badge}
-        href="https://app.travis-ci.com/dropzone-ui/react"
+        href="https://github.com/dropzone-ui/react-dropzone"
       >
         <img
-          src="https://app.travis-ci.com/dropzone-ui/react.svg?branch=master"
+          src="https://github.com/dropzone-ui/react-dropzone/actions/workflows/node.js.yml/badge.svg"
           alt="Build Status"
         />
       </a>

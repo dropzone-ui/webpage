@@ -2,7 +2,7 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 //import Typography from "@mui/material/Typography";
-import CssBaseline from "@mui/material/CssBaseline";
+//import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 //import Box from "@mui/material/Box";
 //import Container from "@mui/material/Container";
@@ -28,7 +28,7 @@ export default function ElevateAppBar(props) {
  // const { children } = props;
   return (
     <React.Fragment>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <ElevationScroll {...props}>
         <AppBar
           style={{

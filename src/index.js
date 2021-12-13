@@ -4,9 +4,10 @@ import "./index.scss";
 import App from './App';
 import reportWebVitals from "./reportWebVitals";
 import MainPage from "./Pages/MainPage/MainPage";
+import { Dropzone } from "@dropzone-ui/react";
 const mode = 1;
 ReactDOM.render(
-  <React.StrictMode>{mode ? <MainPage /> : <App />}</React.StrictMode>,
+  <React.StrictMode>{mode ? <MainPage /> : <Dropzone />}</React.StrictMode>,
   document.getElementById("dropzone-ui-web-page")
 );
 

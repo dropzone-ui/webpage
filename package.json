@@ -1,12 +1,13 @@
 {
   "name": "dropzone-ui-web",
   "version": "0.1.0",
-  "private": true, "engines": {
+  "private": true,
+  "engines": {
     "node": "16.x",
-    "npm":"8.1.2"
+    "npm": "8.1.2"
   },
   "dependencies": {
-    "@dropzone-ui/react": "^6.3.0",
+    "@dropzone-ui/react": "^6.4.2",
     "@dynamicss/dynamicss": "^2.1.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",

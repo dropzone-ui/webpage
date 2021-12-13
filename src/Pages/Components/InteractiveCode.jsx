@@ -11,13 +11,8 @@ import {
 import React, { useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-//import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
-import {
-  Dropzone,
-  FileItem,
-  FullScreenPreview,
-  VideoPreview,
-} from "../../dropzone-ui";
+import { Dropzone, FileItem, FullScreenPreview ,VideoPreview} from "@dropzone-ui/react";
+//import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "../../dropzone-ui";
 import "./InteractiveCode.scss";
 import InteractiveGeneratedCode from "./InteractiveGeneratedCode";
 import ElevationSlider from "./FileItemProps/ElevationSlider";
@@ -186,6 +181,9 @@ const InteractiveCode = (props) => {
   const [elevation, setElevation] = React.useState(0);
   return (
     <div className="dui-demo-container">
+     <div>
+       
+     </div>
       <Dropzone
         //style={{ fontFamily:`"Roboto","Helvetica","Arial",sans-serif` }}
         label={label}
