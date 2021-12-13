@@ -11,8 +11,13 @@ import {
 import React, { useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
-//import { Dropzone, FileItem, FullScreenPreview } from "../../dropzone-ui";
+//import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
+import {
+  Dropzone,
+  FileItem,
+  FullScreenPreview,
+  VideoPreview,
+} from "../../dropzone-ui";
 import "./InteractiveCode.scss";
 import InteractiveGeneratedCode from "./InteractiveGeneratedCode";
 import ElevationSlider from "./FileItemProps/ElevationSlider";
@@ -60,6 +65,9 @@ const InteractiveCode = (props) => {
   //display
   const [files, setFiles] = useState([]);
   const [imageSrc, setImageSrc] = useState(undefined);
+  const [videoSrc, setVideoSrc] = useState(undefined);
+  const [controls, setControls] = useState(true);
+  const [autoplay, setAutoPlay] = useState(true);
   const updateFiles = (incommingFiles) => {
     setFiles(incommingFiles);
   };
@@ -69,6 +77,11 @@ const InteractiveCode = (props) => {
   const handleSee = (imageSource) => {
     setImageSrc(imageSource);
   };
+  //VIDEOOO PREVIEW
+  const handleWatch = (vidSrc) => {
+    console.log("handleWatch", vidSrc);
+    setVideoSrc(vidSrc);
+  };
   //localization
   const [localization, setLocalization] = useState(undefined);
   const hadleSelect = (e, value) => {
@@ -76,7 +89,7 @@ const InteractiveCode = (props) => {
     setLocalization(value?.value);
   };
   //accept
-  const [accept, setAccept] = useState("image/jpeg,.ts");
+  const [accept, setAccept] = useState("image/jpeg,.ts, video/*");
   const handleChangeAccept = (e) => {
     if (e.target.value.lenght === 0) {
       setAccept(undefined);
@@ -161,7 +174,7 @@ const InteractiveCode = (props) => {
     } else setUploadingMessage(e.target.value);
   };
   /////// NEW
-  const [disableScroll, setDisableScroll] = useState(undefined);
+  const [disableScroll, setDisableScroll] = useState(true);
   ////       ////       ////       ////       FILE ITEM
   const [hd, setHd] = React.useState(false);
   const [info, setInfo] = React.useState(true);
@@ -213,6 +226,7 @@ const InteractiveCode = (props) => {
             info={info ? info : undefined}
             hd={hd ? hd : undefined}
             elevation={elevation}
+            onWatch={handleWatch}
           />
         ))}
       </Dropzone>
@@ -220,6 +234,13 @@ const InteractiveCode = (props) => {
         imgSource={imageSrc}
         openImage={imageSrc}
         onClose={(e) => handleSee(undefined)}
+      />
+      <VideoPreview
+        videoSrc={videoSrc}
+        openVideo={videoSrc}
+        onClose={(e) => handleWatch(undefined)}
+        controls={controls}
+        autoplay={autoplay}
       />
       {/**
        * /////////////////////////////    CONTROLS    ////////////////////////////////////

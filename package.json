@@ -2,7 +2,8 @@
   "name": "dropzone-ui-web",
   "version": "0.1.0",
   "private": true, "engines": {
-    "node": "16.x"
+    "node": "16.x",
+    "npm":"8.1.2"
   },
   "dependencies": {
     "@dropzone-ui/react": "^6.3.0",
