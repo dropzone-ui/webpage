@@ -15,9 +15,9 @@ import { Dropzone, FileItem, FullScreenPreview ,VideoPreview} from "@dropzone-ui
 //import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "../../dropzone-ui";
 import "./InteractiveCode.scss";
 import InteractiveGeneratedCode from "./InteractiveGeneratedCode";
-import ElevationSlider from "./FileItemProps/ElevationSlider";
-import FileSizeSlider from "./DropzoneProps/FileSizeSlider";
-import FileLimitSlider from "./DropzoneProps/FileLimitSlider";
+import ElevationSlider from "../../Pages/Components/FileItemProps/ElevationSlider";
+import FileSizeSlider from "../../Pages/Components/DropzoneProps/FileSizeSlider";
+import FileLimitSlider from "../../Pages/Components/DropzoneProps/FileLimitSlider";
 //import FakeFileItem from "../../Components/FakeFileItem/FakeFileItem";
 
 const InteractiveCode = (props) => {

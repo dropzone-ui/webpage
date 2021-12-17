@@ -1,5 +1,6 @@
-import { Button } from "@mui/material";
 import React from "react";
+
+import { Button } from "@mui/material";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -62,7 +63,7 @@ const Options = (props) => {
       >
         Server side
       </Button>
-     {/*  <div id="donate-button-container">
+      {/*  <div id="donate-button-container">
         <div id="donate-button"></div>
       </div> */}
     </div>

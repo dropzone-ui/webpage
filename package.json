@@ -24,11 +24,12 @@
     "@unlimited-react-components/react-highlight": "^2.0.0",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
+    "history": "^5.1.0",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router": "^6.0.2",
-    "react-router-dom": "^6.0.2",
+    "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
     "typescript": "^4.4.2",
     "web-vitals": "^1.1.2"

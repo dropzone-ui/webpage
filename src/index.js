@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
-import App from './App';
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import MainPage from "./Pages/MainPage/MainPage";
-import { Dropzone } from "@dropzone-ui/react";
+//import { Dropzone } from "@dropzone-ui/react";
+import { BrowserRouter } from "react-router-dom";
 const mode = 1;
 ReactDOM.render(
-  <React.StrictMode>{mode ? <MainPage /> : <Dropzone />}</React.StrictMode>,
+  <React.StrictMode>
+    <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter>
+  </React.StrictMode>,
   document.getElementById("dropzone-ui-web-page")
 );
 

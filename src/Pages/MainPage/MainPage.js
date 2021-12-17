@@ -4,14 +4,14 @@ import React, { Fragment } from "react";
 import Badges from "../../Components/Badges";
 import Donate from "../../Components/Donate";
 import ElevateAppBar from "../../Templates/ElevateAppBar";
-import InteractiveCode from "../Components/InteractiveCode";
-import Options from "../Components/Options";
+import InteractiveCode from "../../Components/CodeGenerator/InteractiveCode";
+import Options from "../../Components/OptionsRedirect/Options";
 //import ResponsiveDrawer from "../../Templates/ResponsiveDrawer";
 import "./MainPage.scss";
 const MainPage = (props) => {
   return (
     <Fragment>
-      {/* <Dropzone />{" "} */}
+      {/* <Dropzone /> */}
       <div className="dui-main-wrapper">
         <div className="dui-main-paper">
           <div className="dui-main-header">
@@ -25,9 +25,9 @@ const MainPage = (props) => {
                   <img
                     width={"100%"}
                     src="https://user-images.githubusercontent.com/43678736/132112022-0ca409ae-cca2-43c8-be89-110376260a3f.png"
-                    alt=" dropzone-ui main logo"
+                    alt="dropzone-ui main logo"
                   />
-                </div>{" "}
+                </div>
                 <div className="dropzone-ui-logo-text">Dropzone-ui</div>
               </Grid>
               <Grid
