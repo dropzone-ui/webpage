@@ -7,6 +7,7 @@ import ElevateAppBar from "../../Templates/ElevateAppBar";
 import Options from "../../Components/OptionsRedirect/Options";
 //import ResponsiveDrawer from "../../Templates/ResponsiveDrawer";
 import "./MainPage.scss";
+import InteractiveCode from "../../Components/CodeGenerator/InteractiveCode";
 const MainPage = (props) => {
   return (
     <Fragment>
@@ -15,7 +16,7 @@ const MainPage = (props) => {
       <div className="dui-main-wrapper">
         {" "}
         <ElevateAppBar />
-            <div className="dui-main-paper">
+        <div className="dui-main-paper">
           <div className="dui-main-header">
             <ElevateAppBar />
             <Grid
@@ -50,18 +51,14 @@ const MainPage = (props) => {
                 <Badges />
               </Grid>
               <Grid item md={12} xs={12}>
-                
-
+                <InteractiveCode />
                 <Options />
               </Grid>
-
-            
-            
             </Grid>
 
             <Donate />
           </div>
-        </div> 
+        </div>
       </div>
     </Fragment>
   );
