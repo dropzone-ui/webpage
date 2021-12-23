@@ -15,7 +15,7 @@ const MainPage = (props) => {
       <div className="dui-main-wrapper">
         {" "}
         <ElevateAppBar />
-        {/*     <div className="dui-main-paper">
+            <div className="dui-main-paper">
           <div className="dui-main-header">
             <ElevateAppBar />
             <Grid
@@ -61,7 +61,7 @@ const MainPage = (props) => {
 
             <Donate />
           </div>
-        </div> */}
+        </div> 
       </div>
     </Fragment>
   );
