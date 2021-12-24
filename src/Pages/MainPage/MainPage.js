@@ -18,7 +18,7 @@ const MainPage = (props) => {
         <ElevateAppBar />
         <div className="dui-main-paper">
           <div className="dui-main-header">
-            <ElevateAppBar />
+           
             <Grid
               container
               style={{ backgroundColor: "white", padding: "20px 0" }}
@@ -51,11 +51,10 @@ const MainPage = (props) => {
                 <Badges />
               </Grid>
               <Grid item md={12} xs={12}>
-                <InteractiveCode />
                 <Options />
               </Grid>
             </Grid>
-
+            <InteractiveCode />
             <Donate />
           </div>
         </div>
