@@ -5,25 +5,29 @@ import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import StorageIcon from "@mui/icons-material/Storage";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
+import "./Options.scss";
 const Options = (props) => {
   const openTab = (url) => {
     window.open(url, "_blank").focus();
   };
   return (
     <div
-      direction="row"
-      style={{
+      className="options-container"
+      // direction="row"
+      /*   style={{
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         backgroundColor: "#f3f6f9",
-        padding: "25px 5px",
-      }}
+        margin: "20px 0px",
+        width:"100%"
+      }} */
     >
       <Button
-        size="small"
+        //size="small"
         variant="contained"
+        style={{ margin: "5px" }}
         startIcon={<DocumentScannerIcon />}
         onClick={() =>
           openTab(
@@ -34,7 +38,8 @@ const Options = (props) => {
         API doc
       </Button>
       <Button
-        size="small"
+        style={{ margin: "5px" }}
+        //size="small"
         variant="outlined"
         startIcon={<DoubleArrowIcon />}
         onClick={() =>
@@ -44,7 +49,8 @@ const Options = (props) => {
         Samples
       </Button>
       <Button
-        size="small"
+        style={{ margin: "5px" }}
+        //size="small"
         variant="outlined"
         startIcon={<GitHubIcon />}
         onClick={() =>
@@ -54,7 +60,8 @@ const Options = (props) => {
         Github
       </Button>
       <Button
-        size="small"
+        style={{ margin: "5px" }}
+        //size="small"
         variant="outlined"
         startIcon={<StorageIcon />}
         onClick={() =>
@@ -63,9 +70,6 @@ const Options = (props) => {
       >
         Server side
       </Button>
-      {/*  <div id="donate-button-container">
-        <div id="donate-button"></div>
-      </div> */}
     </div>
   );
 };

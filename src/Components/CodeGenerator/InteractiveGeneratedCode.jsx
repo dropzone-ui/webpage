@@ -1,5 +1,5 @@
-//import { Highlighter } from "@unlimited-react-components/react-highlight";
-import { Highlighter } from "@unlimited-react-components/react-highlight";
+
+import { Highlighter } from "rc-highlight";
 import React, { Fragment, useEffect, useState } from "react";
 //import { Highlighter } from "../../HIGHLIGHTER";
 

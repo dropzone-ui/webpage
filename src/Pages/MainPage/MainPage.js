@@ -6,12 +6,17 @@ import Donate from "../../Components/Donate";
 import ElevateAppBar from "../../Templates/ElevateAppBar";
 import Options from "../../Components/OptionsRedirect/Options";
 //import ResponsiveDrawer from "../../Templates/ResponsiveDrawer";
-import "./MainPage.scss";
+//import "./MainPage.scss";
+import "./MainStyles.scss";
 import InteractiveCode from "../../Components/CodeGenerator/InteractiveCode";
+import RightPart from "./MainPageRightDropzone/RightPart";
+import LeftPart from "./MainPageLeftDropzone/LeftPart";
+import Footer from "../Footer/Footer";
 const MainPage = (props) => {
   return (
     <Fragment>
-      {/* <Dropzone /> */}
+      <Fragment>
+        {/* 
 
       <div className="dui-main-wrapper">
         {" "}
@@ -58,7 +63,34 @@ const MainPage = (props) => {
             <Donate />
           </div>
         </div>
-      </div>
+      </div> */}
+      </Fragment>
+      <Fragment>
+        <div className="dui-web-main-wrapper">
+          <ElevateAppBar />
+          <div className="dui-web-main-container">
+            <div className="dui-web-main-container-left">
+              <div className="dropzone-ui-logo-container">
+                <img
+                  width={"100%"}
+                  src="https://user-images.githubusercontent.com/43678736/132112022-0ca409ae-cca2-43c8-be89-110376260a3f.png"
+                  alt="dropzone-ui main logo"
+                />
+              </div>
+              <div className="dropzone-ui-logo-text">
+                Dropzone <span>UI</span>
+              </div>
+              <LeftPart />
+            </div>
+            <div className="dui-web-main-container-right">
+              <RightPart />
+              
+            </div>
+          </div>{" "}
+          <Footer />
+          {/* holaa */}
+        </div>
+      </Fragment>
     </Fragment>
   );
 };

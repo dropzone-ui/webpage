@@ -1,4 +1,4 @@
-import { Highlighter } from "@unlimited-react-components/react-highlight";
+import { Highlighter } from "rc-highlight";
 import { Fragment } from "react";
 
 

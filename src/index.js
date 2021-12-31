@@ -6,10 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 import MainPage from "./Pages/MainPage/MainPage";
 //import { Dropzone } from "@dropzone-ui/react";
 import { BrowserRouter } from "react-router-dom";
+import Main from "./Router/Main";
 const mode = 1;
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter>
+    {/*  <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter> */}
+    <Main />
   </React.StrictMode>,
   document.getElementById("dropzone-ui-web-page")
 );

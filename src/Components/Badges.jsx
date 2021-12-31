@@ -11,6 +11,7 @@ const Badges = (props) => {
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
+        margin:"10px 0"
       }}
     >
       <a
@@ -53,7 +54,7 @@ const Badges = (props) => {
         />
       </a>
 
-      <a
+     {/*  <a
         style={styles.badge}
         href="https://snyk.io/test/github/dropzone-ui/react"
       >
@@ -61,7 +62,7 @@ const Badges = (props) => {
           src="https://snyk.io/test/github/dropzone-ui/react/badge.svg"
           alt="Known Vulnerabilities"
         />
-      </a>
+      </a> */}
 
       <a
         style={styles.badge}

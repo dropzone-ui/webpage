@@ -25,13 +25,14 @@ function ElevationScroll(props) {
 }
 
 export default function ElevateAppBar(props) {
- // const { children } = props;
+  // const { children } = props;
   return (
     <React.Fragment>
       {/* <CssBaseline /> */}
       <ElevationScroll {...props}>
         <AppBar
           style={{
+            height: "64px",
             backgroundColor: "rgba(255,255,255,0.82)",
             color: "black",
             backdropFilter: "blur(20px)",
