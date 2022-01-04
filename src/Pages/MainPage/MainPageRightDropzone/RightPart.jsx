@@ -6,7 +6,7 @@ import {
   FileItem,
   FullScreenPreview,
   VideoPreview,
-} from "../../../dropzone-ui";
+} from "@dropzone-ui/react";
 import "./RightPart.scss";
 const RightPart = (props) => {
   const [files, setFiles] = useState([]);

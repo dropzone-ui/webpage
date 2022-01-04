@@ -11,13 +11,13 @@ import {
 import React, { Fragment, useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-/* import {
+import {
   Dropzone,
   FileItem,
   FullScreenPreview,
   VideoPreview,
-} from "@dropzone-ui/react"; */
-import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "../../dropzone-ui";
+} from "@dropzone-ui/react"; 
+//import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "../../dropzone-ui";
 import "./InteractiveCode.scss";
 import InteractiveGeneratedCode from "./InteractiveGeneratedCode";
 import ElevationSlider from "../../Pages/Components/FileItemProps/ElevationSlider";
