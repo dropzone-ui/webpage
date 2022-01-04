@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import MainPage from "./Pages/MainPage/MainPage";
 //import { Dropzone } from "@dropzone-ui/react";
 import { BrowserRouter } from "react-router-dom";
-import Main from "./Router/Main";
+import Main from "./Router/MainRouter";
 const mode = 1;
 ReactDOM.render(
   <React.StrictMode>

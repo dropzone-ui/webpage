@@ -15,7 +15,7 @@ import {
   createRippleFromElement,
 } from "../utils/dropzone-ui.utils";
 import DropzoneHeader from "../DropzoneHeader/DropzoneHeader";
-import DropzoneFooter from "../DropzoneFooter.tsx/DropzoneFooter";
+import DropzoneFooter from "../DropzoneFooter/DropzoneFooter";
 import { FileItemContainer } from "../../../../components/file-item";
 import { FileItemContainerProps } from "../../../file-item/components/FileItemContainer/FileItemContainerProps";
 import DropzoneLabel from "../DropzoneLabel/DropzoneLabel";

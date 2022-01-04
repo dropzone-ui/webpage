@@ -19,7 +19,7 @@ const LeftPart = (props) => {
           target="_blank"
         >
           npm
-        </a>
+        </a> this way:
       </p>
       <div className="clipboard-container">
         <span style={{ color: "#60d2ff" }}>

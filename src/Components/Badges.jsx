@@ -64,7 +64,7 @@ const Badges = (props) => {
         />
       </a> */}
 
-      <a
+   {/*    <a
         style={styles.badge}
         href="https://packagequality.com/#?package=dropzone-ui"
       >
@@ -72,9 +72,9 @@ const Badges = (props) => {
           src="https://packagequality.com/shield/dropzone-ui.svg"
           alt="Package Quality"
         />
-      </a>
+      </a> */}
 
-      <a
+    {/*   <a
         style={styles.badge}
         href="https://packagephobia.com/result?p=@dropzone-ui/react"
       >
@@ -82,14 +82,14 @@ const Badges = (props) => {
           src="https://packagephobia.com/badge?p=@dropzone-ui/react"
           alt="install size"
         />
-      </a>
+      </a> */}
 
-      <a style={styles.badge} href="http://makeapullrequest.com">
+      {/* <a style={styles.badge} href="http://makeapullrequest.com">
         <img
           src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"
           alt="PRs Welcome"
         />
-      </a>
+      </a> */}
     </div>
   );
 };

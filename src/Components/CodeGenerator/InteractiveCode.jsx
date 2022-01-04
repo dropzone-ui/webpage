@@ -8,16 +8,22 @@ import {
   RadioGroup,
   Switch,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Dropzone, FileItem, FullScreenPreview ,VideoPreview} from "@dropzone-ui/react";
-//import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "../../dropzone-ui";
+/* import {
+  Dropzone,
+  FileItem,
+  FullScreenPreview,
+  VideoPreview,
+} from "@dropzone-ui/react"; */
+import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "../../dropzone-ui";
 import "./InteractiveCode.scss";
 import InteractiveGeneratedCode from "./InteractiveGeneratedCode";
 import ElevationSlider from "../../Pages/Components/FileItemProps/ElevationSlider";
 import FileSizeSlider from "../../Pages/Components/DropzoneProps/FileSizeSlider";
 import FileLimitSlider from "../../Pages/Components/DropzoneProps/FileLimitSlider";
+import ElevateAppBar from "../../Templates/ElevateAppBar";
 //import FakeFileItem from "../../Components/FakeFileItem/FakeFileItem";
 
 const InteractiveCode = (props) => {
@@ -180,164 +186,164 @@ const InteractiveCode = (props) => {
   const [onDeleteVal, setOnDelete] = React.useState(true);
   const [elevation, setElevation] = React.useState(0);
   return (
-    <div className="dui-demo-container">
-     <div>
-       
-     </div>
-      <Dropzone
-        //style={{ fontFamily:`"Roboto","Helvetica","Arial",sans-serif` }}
-        label={label}
-        color={color}
-        minHeight={minHeight}
-        //maxHeight={maxHeight}
-        accept={accept}
-        view={viewValue === "unset" ? undefined : viewValue}
-        behaviour={behaviour === "unset" ? undefined : behaviour}
-        localization={localization}
-        onChange={updateFiles}
-        value={files}
-        footer={footerDis ? false : true}
-        header={headerDis ? false : true}
-        clickable={clickableDis ? false : true}
-        onClean={onClean || undefined}
-        maxFileSize={maxFileSize}
-        maxFiles={maxFiles}
-        //upload
-        uploadOnDrop={uploadOnDrop || undefined}
-        url={url}
-        fakeUploading={fakeupload}
-        config={config ? defaultHeader : undefined}
-        uploadingMessage={uploadingMessage}
-        disableScroll={disableScroll}
-      >
-        {files.map((file) => (
-          <FileItem
-            {...file}
-            key={file.id}
-            onDelete={onDeleteVal ? handleDelete : undefined}
-            onSee={onSee ? handleSee : undefined}
-            localization={localization}
-            alwaysActive={alwaysActive || undefined}
-            resultOnTooltip={resultOnTooltip || undefined}
-            preview={preview ? preview : undefined}
-            //onlyImage
-            info={info ? info : undefined}
-            hd={hd ? hd : undefined}
-            elevation={elevation}
-            onWatch={handleWatch}
-          />
-        ))}
-      </Dropzone>
-      <FullScreenPreview
-        imgSource={imageSrc}
-        openImage={imageSrc}
-        onClose={(e) => handleSee(undefined)}
-      />
-      <VideoPreview
-        videoSrc={videoSrc}
-        openVideo={videoSrc}
-        onClose={(e) => handleWatch(undefined)}
-        controls={controls}
-        autoplay={autoplay}
-      />
-      {/**
-       * /////////////////////////////    CONTROLS    ////////////////////////////////////
-       */}
-      <Grid container style={{ padding: "15px 0" }} spacing={1}>
-        <Grid item md={9} xs={12}>
-          <h3>{"Dropzone props"}</h3>
-          <Paper elevation={3} style={{ padding: "15px" }}>
-            <Grid container spacing={2}>
-              <Grid item md={6} xs={12}>
-                <h4 style={{ margin: "10px 5px 0 0" }}>{"Validation"}</h4>
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"Accept"}
-                </FormLabel>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  size="small"
-                  //label="Outlined"
-                  variant="outlined"
-                  onChange={handleChangeAccept}
-                  value={accept}
-                />
-                <FileSizeSlider onChange={handleChangeMaxFileSize} />
-                <FileLimitSlider onChange={handleChangeMaxFiles} />
-
-                <h4 style={{ margin: "10px 5px 0 0" }}>Upload process</h4>
-                <FormLabel component="h2" style={{ marginTop: "8px" }}>
-                  {"Start upload on drop"}
-                </FormLabel>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      onChange={(e, ch) => {
-                        setUploadOnDrop(ch);
-                      }}
-                    />
-                  }
-                  label="uploadOnDrop"
-                />
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"Url of server"}
-                </FormLabel>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  size="small"
-                  label="url"
-                  variant="outlined"
-                  onChange={handleUrl}
-                  value={url}
-                />
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"Method (POST by default)"}
-                </FormLabel>
-                <Autocomplete
-                  //disablePortal
-                  autoSelect
-                  size="small"
-                  //style={{ width: "80%" }}
-                  //fullWidth
-                  onChange={hadleSelectMethod}
-                  id="combo-box-demo"
-                  options={[
-                    { method: "POST" },
-                    { method: "PATCH" },
-                    { method: "PUT" },
-                  ]}
-                  getOptionLabel={(option) => option.method}
-                  renderInput={(params) => (
-                    <TextField {...params} label="method" />
-                  )}
-                />
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"Aditional configuration (e.g. headers, bearer token)"}
-                </FormLabel>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      onChange={(e, ch) => {
-                        handleUseConfig(ch);
-                      }}
-                    />
-                  }
-                  label="Add config"
-                />
-                {useConfig && (
+    <Fragment>
+      <ElevateAppBar />
+      <div className="dui-demo-container">
+        
+        <Dropzone
+          //style={{ fontFamily:`"Roboto","Helvetica","Arial",sans-serif` }}
+          label={label}
+          color={color}
+          minHeight={minHeight}
+          //maxHeight={maxHeight}
+          accept={accept}
+          view={viewValue === "unset" ? undefined : viewValue}
+          behaviour={behaviour === "unset" ? undefined : behaviour}
+          localization={localization}
+          onChange={updateFiles}
+          value={files}
+          footer={footerDis ? false : true}
+          header={headerDis ? false : true}
+          clickable={clickableDis ? false : true}
+          onClean={onClean || undefined}
+          maxFileSize={maxFileSize}
+          maxFiles={maxFiles}
+          //upload
+          uploadOnDrop={uploadOnDrop || undefined}
+          url={url}
+          fakeUploading={fakeupload}
+          config={config ? defaultHeader : undefined}
+          uploadingMessage={uploadingMessage}
+          disableScroll={disableScroll}
+        >
+          {files.map((file) => (
+            <FileItem
+              {...file}
+              key={file.id}
+              onDelete={onDeleteVal ? handleDelete : undefined}
+              onSee={onSee ? handleSee : undefined}
+              localization={localization}
+              alwaysActive={alwaysActive || undefined}
+              resultOnTooltip={resultOnTooltip || undefined}
+              preview={preview ? preview : undefined}
+              //onlyImage
+              info={info ? info : undefined}
+              hd={hd ? hd : undefined}
+              elevation={elevation}
+              onWatch={handleWatch}
+            />
+          ))}
+        </Dropzone>
+        <FullScreenPreview
+          imgSource={imageSrc}
+          openImage={imageSrc}
+          onClose={(e) => handleSee(undefined)}
+        />
+        <VideoPreview
+          videoSrc={videoSrc}
+          openVideo={videoSrc}
+          onClose={(e) => handleWatch(undefined)}
+          controls={controls}
+          autoplay={autoplay}
+        />
+        {/**
+         * /////////////////////////////    CONTROLS    ////////////////////////////////////
+         */}
+        <Grid container style={{ padding: "15px 0" }} spacing={1}>
+          <Grid item md={9} xs={12}>
+            <h3>{"Dropzone props"}</h3>
+            <Paper elevation={3} style={{ padding: "15px" }}>
+              <Grid container spacing={2}>
+                <Grid item md={6} xs={12}>
+                  <h4 style={{ margin: "10px 5px 0 0" }}>{"Validation"}</h4>
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"Accept"}
+                  </FormLabel>
                   <TextField
-                    id="outlined-multiline-flexible"
-                    label="config"
-                    multiline
                     fullWidth
-                    minRows={3}
-                    value={config}
-                    disabled
-                    //onChange={handleConfig}
+                    id="outlined-basic"
+                    size="small"
+                    //label="Outlined"
+                    variant="outlined"
+                    onChange={handleChangeAccept}
+                    value={accept}
                   />
-                )}
-                {/*  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                  <FileSizeSlider onChange={handleChangeMaxFileSize} />
+                  <FileLimitSlider onChange={handleChangeMaxFiles} />
+
+                  <h4 style={{ margin: "10px 5px 0 0" }}>Upload process</h4>
+                  <FormLabel component="h2" style={{ marginTop: "8px" }}>
+                    {"Start upload on drop"}
+                  </FormLabel>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        onChange={(e, ch) => {
+                          setUploadOnDrop(ch);
+                        }}
+                      />
+                    }
+                    label="uploadOnDrop"
+                  />
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"Url of server"}
+                  </FormLabel>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    size="small"
+                    label="url"
+                    variant="outlined"
+                    onChange={handleUrl}
+                    value={url}
+                  />
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"Method (POST by default)"}
+                  </FormLabel>
+                  <Autocomplete
+                    //disablePortal
+                    autoSelect
+                    size="small"
+                    //style={{ width: "80%" }}
+                    //fullWidth
+                    onChange={hadleSelectMethod}
+                    id="combo-box-demo"
+                    options={[
+                      { method: "POST" },
+                      { method: "PATCH" },
+                      { method: "PUT" },
+                    ]}
+                    getOptionLabel={(option) => option.method}
+                    renderInput={(params) => (
+                      <TextField {...params} label="method" />
+                    )}
+                  />
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"Aditional configuration (e.g. headers, bearer token)"}
+                  </FormLabel>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        onChange={(e, ch) => {
+                          handleUseConfig(ch);
+                        }}
+                      />
+                    }
+                    label="Add config"
+                  />
+                  {useConfig && (
+                    <TextField
+                      id="outlined-multiline-flexible"
+                      label="config"
+                      multiline
+                      fullWidth
+                      minRows={3}
+                      value={config}
+                      disabled
+                      //onChange={handleConfig}
+                    />
+                  )}
+                  {/*  <FormLabel component="legend" style={{ marginTop: "8px" }}>
                   {"Uploading Message"}
                 </FormLabel>
                 <TextField
@@ -349,402 +355,407 @@ const InteractiveCode = (props) => {
                   onChange={handleuploadingMessage}
                   value={uploadingMessage}
                 /> */}
-                <h4 style={{ margin: "10px 5px 0 0" }}>
-                  Fake upload (simulate upload process on development)
-                </h4>
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {
-                    "Enable fake uploading. It needs a fake url string prop to show the 'upload button'"
-                  }
-                </FormLabel>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={fakeupload}
-                      onChange={(e, ch) => {
-                        setFakeUpload(ch);
-                      }}
-                    />
-                  }
-                  label="enable fakeUpload"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <h4 style={{ margin: "10px 5px 0 0" }}>{"Language"}</h4>
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"Localization"}
-                </FormLabel>
-                <Autocomplete
-                  //disablePortal
-                  autoSelect
-                  size="small"
-                  //style={{ width: "80%" }}
-                  //fullWidth
-                  onChange={hadleSelect}
-                  id="combo-box-demo"
-                  options={languages}
-                  getOptionLabel={(option) => option.idiom}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Localization" />
-                  )}
-                />
-                <h4 style={{ margin: "10px 5px 0 0" }}>
-                  {"Behaviour on drop files"}
-                </h4>
-                <FormControl component="fieldset">
+                  <h4 style={{ margin: "10px 5px 0 0" }}>
+                    Fake upload (simulate upload process on development)
+                  </h4>
                   <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                    {'Add files or replace the file list ( "add" by default )'}
+                    {
+                      "Enable fake uploading. It needs a fake url string prop to show the 'upload button'"
+                    }
                   </FormLabel>
-                  <RadioGroup
-                    row
-                    aria-label="view"
-                    name="row-radio-buttons-group"
-                    onChange={handleCheckBehaviour}
-                    value={behaviour}
-                  >
-                    <FormControlLabel
-                      value="add"
-                      control={<Radio />}
-                      label="add"
-                    />
-                    <FormControlLabel
-                      value="replace"
-                      control={<Radio />}
-                      label="replace"
-                    />
-                    <FormControlLabel
-                      value={"unset"}
-                      control={<Radio />}
-                      label="unset"
-                    />
-                  </RadioGroup>
-                </FormControl>
-                <h4 style={{ margin: "10px 5px 0 0" }}>{"Display settings"}</h4>
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"Custom Label"}
-                </FormLabel>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  size="small"
-                  //label="Outlined"
-                  variant="outlined"
-                  onChange={handleChangeLabel}
-                  value={label}
-                />
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"minHeight"}
-                </FormLabel>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  size="small"
-                  //label="Outlined"
-                  variant="outlined"
-                  onChange={handleMinHeight}
-                  value={minHeight}
-                />
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {"maxHeight"}
-                </FormLabel>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  size="small"
-                  //label="Outlined"
-                  variant="outlined"
-                  onChange={handleMaxHeight}
-                  value={maxHeight}
-                />
-                <FormControl component="fieldset">
-                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                    {"View (FileItems layout)"}
-                  </FormLabel>
-                  <RadioGroup
-                    row
-                    aria-label="gender"
-                    name="row-radio-buttons-group"
-                    onChange={handleCheckView}
-                    value={viewValue}
-                  >
-                    <FormControlLabel
-                      disabled={disableScroll}
-                      value="list"
-                      control={<Radio />}
-                      label="list"
-                    />
-                    <FormControlLabel
-                      disabled={disableScroll}
-                      value="grid"
-                      control={<Radio />}
-                      label="grid"
-                    />
-                    <FormControlLabel
-                      disabled={disableScroll}
-                      value={"unset"}
-                      control={<Radio />}
-                      label="unset"
-                    />
-                  </RadioGroup>
-                </FormControl>
-
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {`Disable scrollbar: ( for optimizing display when using "resultOnTooltip prop on FileItem")`}
-                </FormLabel>
-                <a href="https://codesandbox.io/s/dropzone-ui-fileitem-resultontooltip-h6hu7">
-                  <img
-                    src="https://img.shields.io/badge/new-feature-green.svg"
-                    alt="npm latest package"
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={fakeupload}
+                        onChange={(e, ch) => {
+                          setFakeUpload(ch);
+                        }}
+                      />
+                    }
+                    label="enable fakeUpload"
                   />
-                </a>
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <h4 style={{ margin: "10px 5px 0 0" }}>{"Language"}</h4>
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"Localization"}
+                  </FormLabel>
+                  <Autocomplete
+                    //disablePortal
+                    autoSelect
+                    size="small"
+                    //style={{ width: "80%" }}
+                    //fullWidth
+                    onChange={hadleSelect}
+                    id="combo-box-demo"
+                    options={languages}
+                    getOptionLabel={(option) => option.idiom}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Localization" />
+                    )}
+                  />
+                  <h4 style={{ margin: "10px 5px 0 0" }}>
+                    {"Behaviour on drop files"}
+                  </h4>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                      {
+                        'Add files or replace the file list ( "add" by default )'
+                      }
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-label="view"
+                      name="row-radio-buttons-group"
+                      onChange={handleCheckBehaviour}
+                      value={behaviour}
+                    >
+                      <FormControlLabel
+                        value="add"
+                        control={<Radio />}
+                        label="add"
+                      />
+                      <FormControlLabel
+                        value="replace"
+                        control={<Radio />}
+                        label="replace"
+                      />
+                      <FormControlLabel
+                        value={"unset"}
+                        control={<Radio />}
+                        label="unset"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  <h4 style={{ margin: "10px 5px 0 0" }}>
+                    {"Display settings"}
+                  </h4>
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"Custom Label"}
+                  </FormLabel>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    size="small"
+                    //label="Outlined"
+                    variant="outlined"
+                    onChange={handleChangeLabel}
+                    value={label}
+                  />
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"minHeight"}
+                  </FormLabel>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    size="small"
+                    //label="Outlined"
+                    variant="outlined"
+                    onChange={handleMinHeight}
+                    value={minHeight}
+                  />
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {"maxHeight"}
+                  </FormLabel>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    size="small"
+                    //label="Outlined"
+                    variant="outlined"
+                    onChange={handleMaxHeight}
+                    value={maxHeight}
+                  />
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                      {"View (FileItems layout)"}
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-label="gender"
+                      name="row-radio-buttons-group"
+                      onChange={handleCheckView}
+                      value={viewValue}
+                    >
+                      <FormControlLabel
+                        disabled={disableScroll}
+                        value="list"
+                        control={<Radio />}
+                        label="list"
+                      />
+                      <FormControlLabel
+                        disabled={disableScroll}
+                        value="grid"
+                        control={<Radio />}
+                        label="grid"
+                      />
+                      <FormControlLabel
+                        disabled={disableScroll}
+                        value={"unset"}
+                        control={<Radio />}
+                        label="unset"
+                      />
+                    </RadioGroup>
+                  </FormControl>
 
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={disableScroll}
-                      onChange={(e, ch) => {
-                        setDisableScroll(ch);
-                      }}
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {`Disable scrollbar: ( for optimizing display when using "resultOnTooltip prop on FileItem")`}
+                  </FormLabel>
+                  <a href="https://codesandbox.io/s/dropzone-ui-fileitem-resultontooltip-h6hu7">
+                    <img
+                      src="https://img.shields.io/badge/new-feature-green.svg"
+                      alt="npm latest package"
                     />
-                  }
-                  label={"disableScroll"}
-                />
-                <FormLabel component="legend" style={{ marginTop: "8px" }}>
-                  {`Theme color: ( ${useColor ? color : "unset"} )`}
-                </FormLabel>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={useColor}
-                      onChange={(e, ch) => {
-                        setUseColor(ch);
-                      }}
-                    />
-                  }
-                  label={useColor ? "disable color" : "enable color"}
-                />
-                {useColor && (
-                  <div>
-                    <input
-                      placeholder="color"
-                      onChange={handleChangeColor}
-                      type="color"
-                    />
-                    {color}
-                  </div>
-                )}
-                <FormLabel component="h2" style={{ marginTop: "8px" }}>
-                  {"Clean not valid files button"}
-                </FormLabel>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={onClean}
-                      onChange={(e, ch) => {
-                        setOnClean(ch);
-                      }}
-                    />
-                  }
-                  label="onClean"
-                />
-                <FormLabel component="h2" style={{ marginTop: "8px" }}>
-                  {"Enable/disable clickable"}
-                </FormLabel>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={clickableDis}
-                      onChange={(e, ch) => {
-                        setClickableDis(ch);
-                      }}
-                    />
-                  }
-                  label="clickable"
-                />
-                <FormLabel component="h2">
-                  {"Footer and header (true by def.)"}
-                </FormLabel>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      onChange={(e, ch) => {
-                        setHeaderDis(ch);
-                      }}
-                    />
-                  }
-                  label="disable header"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      onChange={(e, ch) => {
-                        setFooterDis(ch);
-                      }}
-                    />
-                  }
-                  label="disable footer"
-                />
+                  </a>
+
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={disableScroll}
+                        onChange={(e, ch) => {
+                          setDisableScroll(ch);
+                        }}
+                      />
+                    }
+                    label={"disableScroll"}
+                  />
+                  <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                    {`Theme color: ( ${useColor ? color : "unset"} )`}
+                  </FormLabel>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={useColor}
+                        onChange={(e, ch) => {
+                          setUseColor(ch);
+                        }}
+                      />
+                    }
+                    label={useColor ? "disable color" : "enable color"}
+                  />
+                  {useColor && (
+                    <div>
+                      <input
+                        placeholder="color"
+                        onChange={handleChangeColor}
+                        type="color"
+                      />
+                      {color}
+                    </div>
+                  )}
+                  <FormLabel component="h2" style={{ marginTop: "8px" }}>
+                    {"Clean not valid files button"}
+                  </FormLabel>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={onClean}
+                        onChange={(e, ch) => {
+                          setOnClean(ch);
+                        }}
+                      />
+                    }
+                    label="onClean"
+                  />
+                  <FormLabel component="h2" style={{ marginTop: "8px" }}>
+                    {"Enable/disable clickable"}
+                  </FormLabel>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={clickableDis}
+                        onChange={(e, ch) => {
+                          setClickableDis(ch);
+                        }}
+                      />
+                    }
+                    label="clickable"
+                  />
+                  <FormLabel component="h2">
+                    {"Footer and header (true by def.)"}
+                  </FormLabel>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        onChange={(e, ch) => {
+                          setHeaderDis(ch);
+                        }}
+                      />
+                    }
+                    label="disable header"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        onChange={(e, ch) => {
+                          setFooterDis(ch);
+                        }}
+                      />
+                    }
+                    label="disable footer"
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
+            </Paper>
+          </Grid>
 
-        <Grid item md={3} xs={12}>
-          <h3>{"FileItem props"}</h3>
-          <Paper elevation={3} style={{ padding: "15px" }}>
-            <h4 style={{ margin: "10px 5px 0 0" }}>Display</h4>
-            <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {"Show info layer"}
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={info}
-                  onChange={(e, ch) => {
-                    setInfo(ch);
-                  }}
-                />
-              }
-              label="info"
-            />
-            <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {
-                "Always active (show actions and buttons if true. If false, show only on hover)"
-              }
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={alwaysActive}
-                  onChange={(e, ch) => {
-                    setAlwaysActive(ch);
-                  }}
-                />
-              }
-              label="alwaysActive"
-            />
-            <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {
-                "Display Result on layer (if true) otherwise, on tooltip on Hover"
-              }
-            </FormLabel>
-            <a href="https://codesandbox.io/s/dropzone-ui-fileitem-resultontooltip-h6hu7">
-              <img
-                src="https://img.shields.io/badge/new-feature-green.svg"
-                alt="npm latest package"
+          <Grid item md={3} xs={12}>
+            <h3>{"FileItem props"}</h3>
+            <Paper elevation={3} style={{ padding: "15px" }}>
+              <h4 style={{ margin: "10px 5px 0 0" }}>Display</h4>
+              <FormLabel component="h2" style={{ marginTop: "8px" }}>
+                {"Show info layer"}
+              </FormLabel>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={info}
+                    onChange={(e, ch) => {
+                      setInfo(ch);
+                    }}
+                  />
+                }
+                label="info"
               />
-            </a>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={resultOnTooltip}
-                  onChange={(e, ch) => {
-                    setResultOnTooltip(ch);
-                  }}
+              <FormLabel component="h2" style={{ marginTop: "8px" }}>
+                {
+                  "Always active (show actions and buttons if true. If false, show only on hover)"
+                }
+              </FormLabel>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={alwaysActive}
+                    onChange={(e, ch) => {
+                      setAlwaysActive(ch);
+                    }}
+                  />
+                }
+                label="alwaysActive"
+              />
+              <FormLabel component="h2" style={{ marginTop: "8px" }}>
+                {
+                  "Display Result on layer (if true) otherwise, on tooltip on Hover"
+                }
+              </FormLabel>
+              <a href="https://codesandbox.io/s/dropzone-ui-fileitem-resultontooltip-h6hu7">
+                <img
+                  src="https://img.shields.io/badge/new-feature-green.svg"
+                  alt="npm latest package"
                 />
-              }
-              label="resultOnTooltip"
-            />
-            resultOnTooltip
-            <h4 style={{ margin: "10px 5px 0 0" }}>
-              {"Preview (inside FileItem)"}
-            </h4>
-            <FormLabel component="legend" style={{ marginTop: "8px" }}>
-              {"Show image preview on FleItem if valid"}
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={preview}
-                  onChange={(e, ch) => {
-                    setPreview(ch);
-                  }}
-                />
-              }
-              label="preview"
-            />
-            <h4 style={{ margin: "10px 5px 0 0" }}>Full Screen Preview</h4>
-            <FormLabel component="legend" style={{ marginTop: "8px" }}>
-              {" Preview button and add handler"}
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={onSee}
-                  onChange={(e, ch) => {
-                    setOnSee(ch);
-                  }}
-                />
-              }
-              label="onSee"
-            />
-            <FormLabel component="h2" style={{ marginTop: "8px" }}>
-              {"Show preview in HD"}
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={hd}
-                  onChange={(e, ch) => {
-                    setHd(ch);
-                  }}
-                />
-              }
-              label="hd"
-            />
-            <h4 style={{ margin: "10px 5px 0 0" }}>Delete File</h4>
-            <FormLabel component="legend" style={{ marginTop: "8px" }}>
-              {'Show "delete file" button and add handler'}
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={onDeleteVal}
-                  onChange={(e, ch) => {
-                    setOnDelete(ch);
-                  }}
-                />
-              }
-              label="onDelete"
-            />{" "}
-            <ElevationSlider onChange={(v) => setElevation(v)} />
-          </Paper>
+              </a>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={resultOnTooltip}
+                    onChange={(e, ch) => {
+                      setResultOnTooltip(ch);
+                    }}
+                  />
+                }
+                label="resultOnTooltip"
+              />
+              resultOnTooltip
+              <h4 style={{ margin: "10px 5px 0 0" }}>
+                {"Preview (inside FileItem)"}
+              </h4>
+              <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                {"Show image preview on FleItem if valid"}
+              </FormLabel>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={preview}
+                    onChange={(e, ch) => {
+                      setPreview(ch);
+                    }}
+                  />
+                }
+                label="preview"
+              />
+              <h4 style={{ margin: "10px 5px 0 0" }}>Full Screen Preview</h4>
+              <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                {" Preview button and add handler"}
+              </FormLabel>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={onSee}
+                    onChange={(e, ch) => {
+                      setOnSee(ch);
+                    }}
+                  />
+                }
+                label="onSee"
+              />
+              <FormLabel component="h2" style={{ marginTop: "8px" }}>
+                {"Show preview in HD"}
+              </FormLabel>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={hd}
+                    onChange={(e, ch) => {
+                      setHd(ch);
+                    }}
+                  />
+                }
+                label="hd"
+              />
+              <h4 style={{ margin: "10px 5px 0 0" }}>Delete File</h4>
+              <FormLabel component="legend" style={{ marginTop: "8px" }}>
+                {'Show "delete file" button and add handler'}
+              </FormLabel>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={onDeleteVal}
+                    onChange={(e, ch) => {
+                      setOnDelete(ch);
+                    }}
+                  />
+                }
+                label="onDelete"
+              />{" "}
+              <ElevationSlider onChange={(v) => setElevation(v)} />
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-      <InteractiveGeneratedCode
-        {...{
-          accept,
-          maxHeight,
-          localization,
-          minHeight,
-          hd,
-          info,
-          preview,
-          alwaysActive,
-          onSee,
-          onDeleteVal,
-          viewValue,
-          footerDis,
-          headerDis,
-          elevation,
-          url,
-          method,
-          behaviour,
-          uploadingMessage,
-          config,
-          uploadOnDrop,
-          fakeupload,
-          label,
-          maxFileSize,
-          maxFiles,
-          onClean,
-          color,
-          clickableDis,
-          resultOnTooltip,
-          disableScroll,
-        }}
-      />
-    </div>
+        <InteractiveGeneratedCode
+          {...{
+            accept,
+            maxHeight,
+            localization,
+            minHeight,
+            hd,
+            info,
+            preview,
+            alwaysActive,
+            onSee,
+            onDeleteVal,
+            viewValue,
+            footerDis,
+            headerDis,
+            elevation,
+            url,
+            method,
+            behaviour,
+            uploadingMessage,
+            config,
+            uploadOnDrop,
+            fakeupload,
+            label,
+            maxFileSize,
+            maxFiles,
+            onClean,
+            color,
+            clickableDis,
+            resultOnTooltip,
+            disableScroll,
+          }}
+        />
+      </div>
+    </Fragment>
   );
 };
 export default InteractiveCode;

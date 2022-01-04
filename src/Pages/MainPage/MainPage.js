@@ -1,4 +1,4 @@
-import { Dropzone } from "@dropzone-ui/react";
+
 import { Grid } from "@mui/material";
 import React, { Fragment } from "react";
 import Badges from "../../Components/Badges";
