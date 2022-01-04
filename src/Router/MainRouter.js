@@ -10,8 +10,8 @@ const Main = (props) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/code-generator" element={<InteractiveCode />} />
+        {/* <Route path="/" element={<MainPage />} /> */}
+        <Route path="/" element={<InteractiveCode />} />
         <Route path="/lab" element={<Lab/>} />
         <Route path="/api" element={<Api />}>
           <Route path="dropzone" element={<DropzoneApi />} />
