@@ -1,4 +1,4 @@
-import { fileSizeFormater } from "../../components/file-item/utils";
+import { fileSizeFormater } from "../../utils/file-utilities/utilities";
 import { LocalLabels } from "../localization";
 
 /**
