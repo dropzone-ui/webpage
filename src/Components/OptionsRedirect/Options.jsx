@@ -5,8 +5,10 @@ import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import StorageIcon from "@mui/icons-material/Storage";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
+import { useNavigate } from "react-router-dom";
 import "./Options.scss";
 const Options = (props) => {
+  let navigate = useNavigate();
   const openTab = (url) => {
     window.open(url, "_blank").focus();
   };
@@ -24,6 +26,17 @@ const Options = (props) => {
         width:"100%"
       }} */
     >
+      <Button
+        //size="small"
+        variant="contained"
+        style={{ margin: "5px" }}
+        startIcon={<DocumentScannerIcon />}
+        onClick={() => {
+          navigate("/code-generator");
+        }}
+      >
+        Code generator
+      </Button>
       <Button
         //size="small"
         variant="contained"

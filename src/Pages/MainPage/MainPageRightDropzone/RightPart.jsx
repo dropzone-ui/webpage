@@ -1,12 +1,12 @@
-//import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "@dropzone-ui/react";
+import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "@dropzone-ui/react";
 import React, { Fragment, useState } from "react";
 import Options from "../../../Components/OptionsRedirect/Options";
-import {
+/* import {
   Dropzone,
   FileItem,
   FullScreenPreview,
   VideoPreview,
-} from "@dropzone-ui/react";
+} from "../../../dropzone-ui"; */
 import "./RightPart.scss";
 const RightPart = (props) => {
   const [files, setFiles] = useState([]);

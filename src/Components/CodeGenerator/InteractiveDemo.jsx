@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Dropzone, FileItem, FullScreenPreview } from "@dropzone-ui/react";
+import { Dropzone, FileItem, FullScreenPreview } from "../../dropzone-ui";
 import "./InteractiveDemo.scss";
 const InteractiveDemo = (props) => {
   const [files, setFiles] = useState([]);
