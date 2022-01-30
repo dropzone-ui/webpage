@@ -1,0 +1,11 @@
+.dropzone-ui-base {
+  border: 2px dashed #5d6475;
+  color: #5d6475;
+  min-height: 100px;
+  width: calc(100% - 4px);
+  
+  &:hover {
+    border: 2px dashed #5982e0;
+    color: #5982e0;
+  }
+}
