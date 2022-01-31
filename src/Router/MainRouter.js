@@ -14,8 +14,8 @@ const Main = (props) => {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/code-generator" element={<InteractiveCode />} />
-        <Route path="/dui" element={<DuiTester />} />
-       {/*  <Route path="/" element={<Lab />} />
+       {/* <Route path="/dui" element={<DuiTester />} />
+         <Route path="/" element={<Lab />} />
         <Route path="/icons" element={<IconList />} />
         <Route path="/api" element={<Api />}>
           <Route path="dropzone" element={<DropzoneApi />} />

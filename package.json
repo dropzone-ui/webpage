@@ -10,7 +10,7 @@
     "axios": "^0.24.0"
   },
   "dependencies": {
-    "@dropzone-ui/react": "^6.4.2",
+    "@dropzone-ui/react": "^6.5.3",
     "@dynamicss/dynamicss": "^2.1.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
