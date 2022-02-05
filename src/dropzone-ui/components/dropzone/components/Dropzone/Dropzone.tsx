@@ -354,6 +354,11 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
       remainingValids,
       localValidator
     );
+    // Clean input element to trigger onChange event on input
+    let element: HTMLInputElement | null = inputRef.current;
+    if (element) {
+      element.value = "";
+    }
     handleFilesChange(output);
   };
   // validator
@@ -494,6 +499,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
         className={`dropzone-ui-layer${isDragging ? ` drag` : ``}`}
       ></div>
       <input
+        aria-label="dui-hidden-input"
         ref={inputRef}
         onChange={handleOnChangeInput}
         type="file"

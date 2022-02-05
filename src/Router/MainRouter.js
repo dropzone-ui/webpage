@@ -8,14 +8,16 @@ import DropzoneApi from "../Pages/Api/DropzoneApi";
 import FileItemApi from "../Pages/Api/FileItemApi";
 import Lab from "../Pages/Lab/Lab";
 import MainPage from "../Pages/MainPage/MainPage";
+import Layer from "./Layer";
 const Main = (props) => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/code-generator" element={<InteractiveCode />} />
-       {/* <Route path="/dui" element={<DuiTester />} />
-         <Route path="/" element={<Lab />} />
+        <Route path="/dui" element={<DuiTester />} />
+        <Route path="/image" element={<Layer />} />
+        {/* <Route path="/" element={<Lab />} />
         <Route path="/icons" element={<IconList />} />
         <Route path="/api" element={<Api />}>
           <Route path="dropzone" element={<DropzoneApi />} />
@@ -27,7 +29,7 @@ const Main = (props) => {
           element={
             <main style={{ padding: "1rem" }}>
               <p>There's nothing here!</p>
-              <br/>
+              <br />
               <a href="https://duiwebpage.deelo.cloud/">return to main page</a>
             </main>
           }

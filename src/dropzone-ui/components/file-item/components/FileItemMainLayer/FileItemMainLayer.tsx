@@ -83,7 +83,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
             className={
               uploadStatus === "uploading" || !onDelete
                 ? "status-close uploading"
-                : showInfo
+                : showInfo 
                 ? "status-close hide"
                 : "status-close"
             }
@@ -136,7 +136,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
               {isImage && onOpenImage && valid && (
                 <Visibility
                   className="view-in-image-file-item"
-                  color="rgba(255,255,255,0.9)"
+                  color="rgba(255,255,255,0.851)"
                   onClick={handleOpenImage}
                   size="small"
                 />
@@ -144,7 +144,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
               {isVideo && onOpenVideo && valid && (
                 <PlayIcon
                   className="view-in-image-file-item"
-                  color="rgba(255,255,255,0.9)"
+                  color="rgba(255,255,255,0.851)"
                   onClick={handleOpenVideo}
                   size="small"
                 />

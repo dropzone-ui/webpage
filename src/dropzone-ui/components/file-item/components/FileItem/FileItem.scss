@@ -82,7 +82,7 @@
         }
       }
     }
-   
+
     .full-info {
       &::-webkit-scrollbar {
         width: 9px;
@@ -190,7 +190,7 @@
           border: 1px solid wheat;
           color: white;
           margin: 0% 0% 0% 0%;
-          padding: 0% 5%;
+          padding: 0 5px;
           border-radius: 7px;
           background-color: rgba(0, 0, 0, 0.7);
           word-break: break-word;
@@ -237,8 +237,6 @@
       background-color: rgba(180, 16, 16, 0.7);
     }
   }
-
-  
 }
 
 .file-item-container {
@@ -288,29 +286,32 @@
   font-size: 0.7rem;
   //border: 1px solid wheat;
   //color: white;
-  min-width: 20px;
-  min-height: 20px;
+  min-width: 17px;
+  min-height: 17px;
   margin: 0;
   padding: 2px 2px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.7);
+
+  background-color: rgba(32, 33, 36, 0.8);
   word-break: break-word;
+  &:hover {
+    background-color: rgba(32, 33, 36, 0.8);
+  }
 }
 
-
 //////////////////   TOOLTIP
-.dz-ui-file-item-container{
-  &.dz-ui-tooltip{
+.dz-ui-file-item-container {
+  &.dz-ui-tooltip {
     cursor: default;
     position: relative;
     display: inline-block;
-   // border-bottom: 1px dotted black;
+    // border-bottom: 1px dotted black;
     &:hover {
       z-index: 2;
       .dropzone-ui-tooltiptext {
         visibility: visible;
         opacity: 1;
-       z-index: 2;
+        z-index: 2;
       }
     }
     .dropzone-ui-tooltiptext {
@@ -329,13 +330,13 @@
       top: 180px;
       left: 66px;
       margin-left: -60px;
-  
+
       /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
       opacity: 0;
       transition: opacity 1s;
-  
+
       &.not-valid-error {
-        background: linear-gradient(to top,#c62828,#d32f2f,);
+        background: linear-gradient(to top, #c62828, #d32f2f);
         &::after {
           border-color: transparent transparent #d32f2f transparent;
         }
