@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import * as React from "react";
 import { parseSize } from "../utils/utils";
-import { PlayIconProps } from "./PlayIconProps";
+import { InfoBlackProps } from "./InfoBlackProps";
 
-const PlayIcon: FC<PlayIconProps> = (props: PlayIconProps) => {
+const InfoBlack: React.FC<InfoBlackProps> = (props: InfoBlackProps) => {
   const { size, color, colorFill, onClick, style, className } = props;
   const finalSize = parseSize(size);
   const finalStyle = style ? style : {};
@@ -14,16 +14,12 @@ const PlayIcon: FC<PlayIconProps> = (props: PlayIconProps) => {
       height={`${finalSize}px`}
       viewBox="0 0 24 24"
       width={`${finalSize}px`}
-      fill={color ? color : "#000000"}
+      fill={color || "#000000"}
       onClick={(e) => onClick?.(e)}
     >
-      <path
-        d="M0 0h24v24H0V0z"
-        opacity=".9"
-        fill={colorFill ? colorFill : "none"}
-      />
-      <path d="M8 5v14l11-7L8 5z" />
+      <path d="M0 0h24v24H0z" fill={colorFill || "none"} /> 
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
     </svg>
   );
 };
-export default PlayIcon;
+export default InfoBlack;

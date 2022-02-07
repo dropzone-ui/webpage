@@ -6,13 +6,16 @@ import {
   FileValidated,
   FullScreenPreview,
   UPLOADSTATUS,
+  VideoPreview,
 } from "../../dropzone-ui";
 import { FileItemProps } from "../../dropzone-ui/components/file-item/components/FileItem/FileItemProps";
+import IconList from "../Dui_IconsList/IconList";
 /**
  * CONSTANTES
  */
 const xhr = new XMLHttpRequest();
 const ENDPOINT = "https://duiserver2.deelo.cloud/upload-my-file";
+const regex: RegExp = /\,(?!\s*?[\{\[\"\'\w])/g;
 /**
  *
  * @param props any
@@ -23,6 +26,7 @@ const DuiTester: React.FC<any> = (props: any) => {
   const [imageSrc, setImageSrc] = React.useState<string | undefined>(undefined);
   const [progress, setProgress] = React.useState<string>("");
   const [status, setStatus] = React.useState<string>("---");
+  const [videoSrc, setVideoSrc] = React.useState<File | string | undefined>("");
   const updateFiles = (incommingFiles: FileValidated[]) => {
     console.log("incomming files", incommingFiles);
     setFiles(incommingFiles);
@@ -35,6 +39,10 @@ const DuiTester: React.FC<any> = (props: any) => {
   };
   const handleClean = (files: FileValidated[]) => {
     console.log("list cleaned", files);
+  };
+  const handleWatch = (vidSrc: string | File | undefined) => {
+    console.log("handleWatch", vidSrc);
+    setVideoSrc(vidSrc);
   };
   const customUpload = () => {
     const fileValidated: FileValidated = files[0];
@@ -82,12 +90,13 @@ const DuiTester: React.FC<any> = (props: any) => {
             `onreadystatechange The upload is completed: ${xhr.status} ${xhr.response}`
           );
           console.log("onreadystatechange responseText: ", xhr.responseText);
-          
-         // let jsonResponse = await JSON.parse(xhr.responseText);
 
+          // let jsonResponse = await JSON.parse(xhr.responseText);
+          let correct = xhr.response.replace(regex, "");
           //myrespose = await JSON.parse(myrespose);
           //const {status, message, payload} = xhr.response;
-          // console.log("=> jsonResponse", jsonResponse);
+          const jsonResponse = JSON.parse(correct);
+          console.log("=> jsonResponse", jsonResponse);
           // console.log("=> status", jsonResponse.status);
           // console.log("=> message", jsonResponse.message);
           // console.log("=> payload", jsonResponse.payload);
@@ -133,7 +142,7 @@ const DuiTester: React.FC<any> = (props: any) => {
         onClean={handleClean}
         value={files}
         maxFiles={5}
-        behaviour="replace"
+        //behaviour="replace"
         maxFileSize={2998000000}
         label="Suleta tus archivos aquí"
         //accept="*"
@@ -149,8 +158,10 @@ const DuiTester: React.FC<any> = (props: any) => {
             key={file.id}
             onDelete={onDelete}
             onSee={handleSee}
-            localization={"ES-es"}
-            alwaysActive
+            onWatch={handleWatch}
+            //elevation={2}
+            //localization={"ES-es"}
+            //alwaysActive
             resultOnTooltip
             //uploadStatus={UPLOADSTATUS.uploading}
             preview
@@ -163,6 +174,13 @@ const DuiTester: React.FC<any> = (props: any) => {
           openImage={imageSrc !== undefined}
           onClose={(e: any) => handleSee(undefined)}
         />
+        <VideoPreview
+          videoSrc={videoSrc}
+          openVideo={videoSrc !== undefined}
+          onClose={(e: any) => handleWatch(undefined)}
+          controls
+          autoplay
+        />
       </Dropzone>
       <Button variant="contained" onClick={customUpload}>
         {" "}
@@ -174,6 +192,7 @@ const DuiTester: React.FC<any> = (props: any) => {
       </Button>
       <p>{`Current progress ${progress} %`}</p>
       <p>{`Estado: ${status}`}</p>
+      <IconList />
     </div>
   );
 };

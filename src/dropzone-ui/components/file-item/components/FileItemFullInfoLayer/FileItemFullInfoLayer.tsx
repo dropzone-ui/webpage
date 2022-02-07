@@ -4,7 +4,7 @@ import {
   Localization,
   LocalLabels,
 } from "../../../../localization/localization";
-import { Cancel } from "../../../icons";
+import { Cancel } from "../../../../icons";
 
 import FileItemStatus from "../FileItemStatus/FileItemStatus";
 

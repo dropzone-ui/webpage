@@ -38,6 +38,8 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     elevation,
     alwaysActive,
     resultOnTooltip,
+    downloadUrl,
+    onDownload,
   } = mergeProps(props, FileItemPropsDefault);
   //actionOnHover
   const [hovering, setHOvering] = useState<boolean>(false);
@@ -94,7 +96,9 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
       const headerMime = file.type ? file.type.split("/")[0] : "octet";
       const tailMime = file.type ? file.type.split("/")[1] : "octet";
       setIsImage(headerMime === "image");
-      setIsVideo(headerMime === "video" && ["mp4","ogg","webm"].includes(tailMime));
+      setIsVideo(
+        headerMime === "video" && ["mp4", "ogg", "webm"].includes(tailMime)
+      );
       if (preview && valid && headerMime === "image") {
         const response = await readImagePromise(file);
         if (response) {
@@ -143,6 +147,14 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     //avoid children to trigger onClick ripple from parent
     e.stopPropagation();
   }
+  const innerDownload = (url: string | undefined) => {};
+  const handleDownload = () => {
+    if (downloadUrl && typeof downloadUrl == "string") {
+      innerDownload(downloadUrl);
+    } else {
+      onDownload?.(id, downloadUrl);
+    }
+  };
   if (file && typeof file.name == "string") {
     return (
       <div
@@ -170,6 +182,9 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
               onDelete={onDelete ? handleDelete : undefined}
               onOpenImage={onSee && preview ? handleOpenImage : undefined}
               onOpenVideo={onWatch && preview ? handleOpenVideo : undefined}
+              onDownloadFile={
+                onDownload || downloadUrl ? handleDownload : undefined
+              }
               isVideo={isVideo}
               onOpenInfo={handleOpenInfo}
               info={info || false}

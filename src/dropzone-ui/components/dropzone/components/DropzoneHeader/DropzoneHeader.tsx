@@ -12,9 +12,8 @@ import {
   Clean,
   UploadingProcess,
   ViewGrid,
-  ViewList,
-} from "../../../icons";
-import Upload from "../../../icons/Upload/Upload";
+  ViewList,Upload
+} from "../../../../icons";
 export interface DropzoneHeaderProps {
   maxFileSize?: number;
   numberOfValidFiles?: number;

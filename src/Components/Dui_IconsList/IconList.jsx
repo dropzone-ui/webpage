@@ -1,12 +1,12 @@
 import * as React from "react";
-/* import {
+import {
   Cancel,
   CheckCircle,
   Clean,
   Clear,
   Close,
-  DoDisturb,
-  Info,
+  DoDisturb,DownloadFile,
+  Info,InfoBlack,InfoDisney,
   Person,
   PhotoCamera,
   PlayIcon,
@@ -18,7 +18,7 @@ import * as React from "react";
   ViewGrid,
   ViewList,
   Visibility,
-} from "../../mega-dropzone-ui/icons"; */
+} from "../../dropzone-ui/icons";
 
 const IconList = (props) => {
   return (
@@ -30,13 +30,16 @@ const IconList = (props) => {
         flexWrap: "wrap",
       }}
     >
-     {/*  <Cancel />
+      <Cancel />
       <CheckCircle />
       <Clean />
       <Clear/>
       <Close />
       <DoDisturb />
+      <DownloadFile />
       <Info />
+      <InfoBlack />
+      <InfoDisney />
       <Person />
       <PhotoCamera />
       <PlayIcon />
@@ -47,7 +50,7 @@ const IconList = (props) => {
       <UploadingProcess />
       <Visibility />
       <ViewGrid />
-      <ViewList /> */}
+      <ViewList />
     </div>
   );
 };

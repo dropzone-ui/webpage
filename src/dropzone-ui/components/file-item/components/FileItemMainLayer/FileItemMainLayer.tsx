@@ -1,8 +1,18 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
 //import { FileItemProps } from "../FileItem/FileItemProps";
 import FileItemStatus from "../FileItemStatus/FileItemStatus";
-import { PlayIcon,Cancel, Visibility, Info } from "../../../icons";
+import {
+  PlayIcon,
+  Cancel,
+  Visibility,
+  Info,
+  Clear,
+  InfoBlack,
+  DownloadFile,
+  InfoDisney,
+} from "../../../../icons";
 import { Localization } from "../../../../localization/localization";
+import MainLayerHeader from "./MainLayerHeader";
 //import {shrinkWord} from "./../../utils";
 export interface FileItemMainLayerProps {
   showInfo: boolean;
@@ -10,6 +20,7 @@ export interface FileItemMainLayerProps {
   onOpenImage: Function | undefined;
   onOpenVideo: Function | undefined;
   onDelete: Function | undefined;
+  onDownloadFile: Function | undefined;
   //fileNamePosition: FileItemProps["fileName"];
   fileName: string;
   info: boolean;
@@ -50,6 +61,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
     onOpenInfo,
     onOpenImage,
     onOpenVideo,
+    onDownloadFile,
     sizeFormatted,
     uploadStatus,
     localization,
@@ -64,9 +76,12 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
   const handleOpenImage = () => {
     onOpenImage?.();
   };
-  const handleOpenVideo =()=>{
+  const handleOpenVideo = () => {
     onOpenVideo?.();
-  }
+  };
+  const handleDownloadFile = () => {
+    onDownloadFile?.();
+  };
   const [uploadComplete, setUploadComplete] = useState<boolean>(false);
   useEffect(() => {
     if (uploadStatus === "success") {
@@ -79,22 +94,29 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
     <Fragment>
       {hovering ? (
         <div className="info-container">
-          <div
+          {/* <div
             className={
               uploadStatus === "uploading" || !onDelete
                 ? "status-close uploading"
-                : showInfo 
+                : showInfo
                 ? "status-close hide"
                 : "status-close"
             }
           >
-            <Cancel
-              color="rgba(255,255,255,0.8)"
+         
+            <Clear
+              className="dui-file-item-icon"
+              color="rgba(255,255,255,0.851)"
               onClick={uploadStatus === "uploading" ? undefined : handleDelete}
-              colorFill="black"
+              size="small"
+              colorFill="transparent"
             />
-          </div>
-
+          </div>  */}
+          <MainLayerHeader
+            onDelete={onDelete}
+            uploadStatus={uploadStatus}
+            hovering={hovering}
+          />
           {uploadStatus && !showInfo && (
             <div
               className={uploadComplete ? "file-status hide" : "file-status"}
@@ -135,7 +157,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
 
               {isImage && onOpenImage && valid && (
                 <Visibility
-                  className="view-in-image-file-item"
+                  className="dui-file-item-icon"
                   color="rgba(255,255,255,0.851)"
                   onClick={handleOpenImage}
                   size="small"
@@ -143,17 +165,24 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
               )}
               {isVideo && onOpenVideo && valid && (
                 <PlayIcon
-                  className="view-in-image-file-item"
+                  className="dui-file-item-icon"
                   color="rgba(255,255,255,0.851)"
                   onClick={handleOpenVideo}
                   size="small"
                 />
               )}
+             { <DownloadFile
+                className="dui-file-item-icon"
+                color="rgba(255,255,255,0.851)"
+                onClick={handleOpenVideo}
+                size="small"
+              />}
               {!onlyImage && info && (
-                <Info
-                  color="rgba(255,255,255,0.8)"
+                <InfoDisney
+                  className="dui-file-item-icon"
                   onClick={handleOpenInfo}
-                  colorFill="black"
+                  color="rgba(255,255,255,0.851)"
+                  size="micro"
                 />
               )}
             </div>
@@ -162,7 +191,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
       ) : (
         <Fragment>
           <div className="info-container">
-            <div
+            {/*     <div
               className={
                 uploadStatus === "uploading" || !onDelete
                   ? "status-close uploading"
@@ -171,13 +200,17 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
                   : "status-close"
               }
             >
-              {/* <Cancel
+               <Clear
               color="rgba(255,255,255,0.8)"
               onClick={uploadStatus === "uploading" ? undefined : handleDelete}
               colorFill="black"
-            /> */}
-            </div>
-
+            /> 
+            </div> */}
+            <MainLayerHeader
+              onDelete={onDelete}
+              uploadStatus={uploadStatus}
+              hovering={hovering}
+            />
             {uploadStatus && !showInfo && (
               <div
                 className={uploadComplete ? "file-status hide" : "file-status"}
@@ -214,10 +247,6 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
                   />
                 </div>
               )}
-
-              <div
-                className={showInfo ? "size-open-info hide" : "size-open-info"}
-              ></div>
             </div>
           </div>
         </Fragment>

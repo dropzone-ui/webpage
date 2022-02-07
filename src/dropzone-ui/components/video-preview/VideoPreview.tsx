@@ -2,7 +2,7 @@ import React, { FC, Fragment } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
-import { Cancel } from "../icons";
+import { Cancel } from "../../icons";
 import { VideoPreviewProps } from "./VideoPreviewProps";
 import "./VideoPreview.scss";
 const VideoPreview: FC<VideoPreviewProps> = (props: VideoPreviewProps) => {

@@ -1,4 +1,4 @@
-import { Cancel } from "../icons";
+import { Cancel } from "../../icons";
 import "./FullScreenPreview.scss";
 import React, { FC } from "react";
 import { FullScreenPreviewProps } from "./FullScreenPreviewProps";

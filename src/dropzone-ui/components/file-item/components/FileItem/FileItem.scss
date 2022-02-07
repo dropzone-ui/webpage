@@ -10,13 +10,13 @@
   font-family: "Poppins", sans-serif;
   margin: 8px;
   //height: 157px;
-  width: 133px;
+  width: 130px;
   word-break: break-word;
 
   .file-item-icon-container {
     position: relative;
-    height: 133px;
-    width: 133px;
+    height: 130px;
+    width: 130px;
     border-radius: 8px;
     .img-container {
       &.blur {
@@ -182,20 +182,26 @@
         width: inherit;
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-end;
         justify-content: space-between;
 
         .file-item-size {
+
           font-size: 0.7rem;
-          border: 1px solid wheat;
-          color: white;
-          margin: 0% 0% 0% 0%;
-          padding: 0 5px;
-          border-radius: 7px;
-          background-color: rgba(0, 0, 0, 0.7);
+          border: 0.5px solid wheat;
+          //outline: 0.5px solid wheat;
+          
+          border: none;
+          color: rgba(255, 255, 255, 0.85);
+          margin: 1.5px 1.5px 0% 0%;
+          padding: 0 2px;
+          border-radius: 5px;
+          background-color: rgba(32, 33, 36, 0.75);
+
           word-break: break-word;
-          &.not-allowed {
-            background-color: rgba(180, 16, 16, 0.7);
+          &:hover {
+            background-color: rgba(32, 33, 36, 0.85);
+            color: rgba(255, 255, 255, 0.95);
           }
         }
         &.hide {
@@ -281,21 +287,23 @@
     }
   }
 }
-
-.view-in-image-file-item {
+/**
+ICONS ACTION LAYER
+*/
+.dui-file-item-icon {
   font-size: 0.7rem;
   //border: 1px solid wheat;
   //color: white;
-  min-width: 17px;
-  min-height: 17px;
+  min-width: 19px;
+  min-height: 19px;
   margin: 0;
   padding: 2px 2px;
   border-radius: 50%;
+  background-color: rgba(32, 33, 36, 0.65);
 
-  background-color: rgba(32, 33, 36, 0.8);
   word-break: break-word;
   &:hover {
-    background-color: rgba(32, 33, 36, 0.8);
+    background-color: rgba(32, 33, 36, 0.85);
   }
 }
 

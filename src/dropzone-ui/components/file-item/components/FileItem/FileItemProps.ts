@@ -126,6 +126,16 @@ export interface FileItemProps extends PaperProps {
      * Where to display result of validation: on InfoLayer or in Tooltip when user hovers the FileItem
      */
     resultOnTooltip?: boolean;
+    /**
+     * Url to perform a GET request in order to download the file.
+     * This  action is triggered when download button is clicked or pressed.
+     * In case onDownload prop is given
+     */
+    downloadUrl?: string;
+    /**
+     * Event that is triggered when download button is clicked or pressed
+     */
+    onDownload?: (fileId: number | string | undefined, downloadUrl?: string) => void;
 }
 /**
  * Base default props

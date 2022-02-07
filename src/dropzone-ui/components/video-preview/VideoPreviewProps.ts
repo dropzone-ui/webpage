@@ -5,7 +5,7 @@ export interface VideoPreviewProps extends OverridableProps {
      * video source in string format or File object
      * FileItemComponent returns this value in onWatch handler
      */
-    videoSrc: File | string;
+    videoSrc?: File | string;
     /**
      * boolean value. Whether to open the preview or not
      */

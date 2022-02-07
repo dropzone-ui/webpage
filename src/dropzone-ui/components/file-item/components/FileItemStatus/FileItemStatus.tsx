@@ -4,10 +4,11 @@ import { LocalLabels } from "../../../../localization/localization";
 import Loader from "../../../../utils/loader";
 import {
   CheckCircle,
+  CloudDone,
   DoDisturb,
   UploadDone,
   UploadError,
-} from "../../../icons";
+} from "../../../../icons";
 import { FileItemStatusProps } from "./FileItemStatusProps";
 
 const FileItemStatus: FC<FileItemStatusProps> = (
@@ -35,9 +36,10 @@ const FileItemStatus: FC<FileItemStatusProps> = (
           </div>
         ) : uploadStatus === "success" ? (
           <div className="file-status-ok upload">
-            <UploadDone
+            <CloudDone
               color="#4caf50"
               size="small"
+              //colorFill="white"
               //style={styles.icons}
               className="status-icon"
             />
