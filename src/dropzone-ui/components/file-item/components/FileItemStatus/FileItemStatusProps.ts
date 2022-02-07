@@ -20,4 +20,13 @@ export interface FileItemStatusProps {
     * only English and Spanish is supported
     */
     localization: Localization;
+    /**
+     * the current percentage upload progress
+     * 
+     */
+    progress?:number;
+    /**
+     * abort event 
+     */
+    onAbort?:Function;
 }

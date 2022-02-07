@@ -10,13 +10,13 @@
   font-family: "Poppins", sans-serif;
   margin: 8px;
   //height: 157px;
-  width: 130px;
+  width: 132px;
   word-break: break-word;
 
   .file-item-icon-container {
     position: relative;
-    height: 130px;
-    width: 130px;
+    height: 132px;
+    width: 132px;
     border-radius: 8px;
     .img-container {
       &.blur {
@@ -47,7 +47,7 @@
         background-position: center;
       }
     }
-    .info-container {
+    /*    .info-container {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -81,7 +81,7 @@
           //cursor: none;
         }
       }
-    }
+    } */
 
     .full-info {
       &::-webkit-scrollbar {
@@ -169,63 +169,6 @@
         display: none;
       }
     }
-    .file-item-footer {
-      display: flex;
-      width: inherit;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-end;
-      &.hide {
-        display: none;
-      }
-      .size-open-info {
-        width: inherit;
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: space-between;
-
-        .file-item-size {
-
-          font-size: 0.7rem;
-          border: 0.5px solid wheat;
-          //outline: 0.5px solid wheat;
-          
-          border: none;
-          color: rgba(255, 255, 255, 0.85);
-          margin: 1.5px 1.5px 0% 0%;
-          padding: 0 2px;
-          border-radius: 5px;
-          background-color: rgba(32, 33, 36, 0.75);
-
-          word-break: break-word;
-          &:hover {
-            background-color: rgba(32, 33, 36, 0.85);
-            color: rgba(255, 255, 255, 0.95);
-          }
-        }
-        &.hide {
-          //height: 0px;
-          display: none;
-        }
-        .file-item-open-info {
-          //padding: 0.4px 5px;
-          height: 1rem;
-          width: 1rem;
-          text-align: center;
-          background-color: rgba(0, 0, 0, 0.75);
-
-          font-size: 0.6rem;
-          font-weight: 600;
-          font-family: "Poppins", sans-serif;
-
-          cursor: pointer;
-          border-radius: 50%;
-          color: aliceblue;
-          border: 1px solid wheat;
-        }
-      }
-    }
   }
   .file-item-name {
     margin-top: 3px;
@@ -250,8 +193,10 @@
   background-size: cover;
   background-position: center;
 }
-
-.file-status {
+/**
+FILE ITEM STATUS
+*/
+/* .file-status {
   &.hide {
     display: none;
   }
@@ -286,7 +231,7 @@
       margin-top: -25px;
     }
   }
-}
+} */
 /**
 ICONS ACTION LAYER
 */
@@ -304,6 +249,7 @@ ICONS ACTION LAYER
   word-break: break-word;
   &:hover {
     background-color: rgba(32, 33, 36, 0.85);
+    outline: 0.5px solid wheat;
   }
 }
 

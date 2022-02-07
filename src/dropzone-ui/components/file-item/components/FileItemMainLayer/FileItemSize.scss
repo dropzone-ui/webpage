@@ -1,0 +1,18 @@
+.dui-file-item-size {
+  font-size: 0.7rem;
+  border: 0.5px solid wheat;
+  //outline: 0.5px solid wheat;
+
+  //border: none;
+  color: rgba(255, 255, 255, 0.89);
+  //margin: 1.5px 1.5px 0% 0%;
+  padding: 2px 1.5px;
+  border-radius: 7px;
+  background-color: rgba(32, 33, 36, 0.75);
+
+  word-break: break-word;
+  &:hover {
+    background-color: rgba(32, 33, 36, 0.85);
+    color: rgba(255, 255, 255, 0.97);
+  }
+}

@@ -1,10 +1,11 @@
-import { hexColorToRGB } from "@unlimited-react-components/kernel";
+
 import React, { FC } from "react";
-interface loaderProps{
-  color?:string ;
+import { hexColorToRGB } from "../../mega-dropzone-ui/base";
+interface LoaderProps {
+  color?: string;
 }
-const Loader: FC<loaderProps> = (props: loaderProps) => {
-  const {color="#8b6b10"}=props;
+const Loader: FC<LoaderProps> = (props: LoaderProps) => {
+  const { color = "#8b6b10" } = props;
   return (
     <svg
       width="80px"
@@ -52,7 +53,7 @@ const Loader: FC<loaderProps> = (props: loaderProps) => {
             width="25"
             height="100"
             ng-attr-fill="{{config.c2}}"
-            fill={hexColorToRGB(color,0.5)}
+            fill={hexColorToRGB(color, 0.5)}
           ></rect>
           <rect
             x="-50"
@@ -68,7 +69,7 @@ const Loader: FC<loaderProps> = (props: loaderProps) => {
             width="25"
             height="100"
             ng-attr-fill="{{config.c4}}"
-            fill={hexColorToRGB(color,0.5)}
+            fill={hexColorToRGB(color, 0.5)}
           ></rect>
           <rect
             x="0"
@@ -84,7 +85,7 @@ const Loader: FC<loaderProps> = (props: loaderProps) => {
             width="25"
             height="100"
             ng-attr-fill="{{config.c2}}"
-            fill={hexColorToRGB(color,0.5)}
+            fill={hexColorToRGB(color, 0.5)}
           ></rect>
           <rect
             x="50"
@@ -100,7 +101,7 @@ const Loader: FC<loaderProps> = (props: loaderProps) => {
             width="25"
             height="100"
             ng-attr-fill="{{config.c4}}"
-            fill={hexColorToRGB(color,0.5)}
+            fill={hexColorToRGB(color, 0.5)}
           ></rect>
           <animateTransform
             attributeName="transform"

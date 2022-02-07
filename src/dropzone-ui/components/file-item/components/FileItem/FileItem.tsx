@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useRef, useState } from "react";
 
 import { FileItemProps, FileItemPropsDefault } from "./FileItemProps";
 import "./FileItem.scss";
@@ -40,7 +40,10 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     resultOnTooltip,
     downloadUrl,
     onDownload,
+    progress,
+    onAbort,
   } = mergeProps(props, FileItemPropsDefault);
+  const dui_anchor_ref = useRef<HTMLAnchorElement>(null);
   //actionOnHover
   const [hovering, setHOvering] = useState<boolean>(false);
   const handleOnHoverEnter = () => {
@@ -147,13 +150,21 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     //avoid children to trigger onClick ripple from parent
     e.stopPropagation();
   }
-  const innerDownload = (url: string | undefined) => {};
+  const innerDownload = (url: string | undefined) => {
+    const anchorElement = dui_anchor_ref.current;
+    if(anchorElement){
+      anchorElement.click();
+    }
+  };
   const handleDownload = () => {
     if (downloadUrl && typeof downloadUrl == "string") {
       innerDownload(downloadUrl);
     } else {
       onDownload?.(id, downloadUrl);
     }
+  };
+  const handleAbort = (): void => {
+    onAbort?.(id);
   };
   if (file && typeof file.name == "string") {
     return (
@@ -196,6 +207,8 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
               localization={localization}
               onlyImage={onlyImage}
               hovering={alwaysActive || hovering}
+              progress={progress}
+              onAbort={onAbort ? handleAbort : undefined}
             />
             <FileItemFullInfoLayer
               showInfo={showInfo}
@@ -225,6 +238,15 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
             errors={errors}
             uploadMessage={uploadMessage}
           ></Tooltip>
+        )}
+        {downloadUrl && (
+          <a
+            ref={dui_anchor_ref}
+            href={downloadUrl}
+            download={file.name}
+            style={{ display: "none" }}
+            
+          />
         )}
       </div>
     );

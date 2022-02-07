@@ -13,6 +13,8 @@ import {
 } from "../../../../icons";
 import { Localization } from "../../../../localization/localization";
 import MainLayerHeader from "./MainLayerHeader";
+import MainLayerFooter from "./MainLayerFooter";
+import "./FileItemMainLayer.scss";
 //import {shrinkWord} from "./../../utils";
 export interface FileItemMainLayerProps {
   showInfo: boolean;
@@ -45,6 +47,15 @@ export interface FileItemMainLayerProps {
    */
   localization?: Localization;
   hovering?: boolean;
+  /**
+   * the current percentage upload progress
+   *
+   */
+  progress?: number;
+  /**
+   * abort event
+   */
+  onAbort?: Function;
 }
 
 const FileItemMainLayer: FC<FileItemMainLayerProps> = (
@@ -66,6 +77,8 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
     uploadStatus,
     localization,
     hovering,
+    progress,
+    onAbort
   } = props;
   const handleDelete = () => {
     onDelete?.();
@@ -92,165 +105,39 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
   }, [uploadStatus]);
   return (
     <Fragment>
-      {hovering ? (
-        <div className="info-container">
-          {/* <div
-            className={
-              uploadStatus === "uploading" || !onDelete
-                ? "status-close uploading"
-                : showInfo
-                ? "status-close hide"
-                : "status-close"
-            }
-          >
-         
-            <Clear
-              className="dui-file-item-icon"
-              color="rgba(255,255,255,0.851)"
-              onClick={uploadStatus === "uploading" ? undefined : handleDelete}
-              size="small"
-              colorFill="transparent"
-            />
-          </div>  */}
-          <MainLayerHeader
-            onDelete={onDelete}
+      <div className="dui-main-layer-container">
+        <MainLayerHeader
+          onDelete={onDelete}
+          uploadStatus={uploadStatus}
+          hovering={hovering}
+        />
+
+        {uploadStatus && !showInfo && !uploadComplete && (
+          <FileItemStatus
             uploadStatus={uploadStatus}
-            hovering={hovering}
+            localization={localization as Localization}
+            progress={progress}
+            onAbort={onAbort}
           />
-          {uploadStatus && !showInfo && (
-            <div
-              className={uploadComplete ? "file-status hide" : "file-status"}
-            >
-              <FileItemStatus
-                uploadStatus={uploadStatus}
-                localization={localization as Localization}
-              />
-            </div>
-          )}
-
-          <div className={"file-item-footer"}>
-            {!onlyImage && uploadStatus && uploadComplete ? (
-              <div className={showInfo ? "file-status hide" : "file-status"}>
-                <div className="file-status-ok">
-                  <FileItemStatus
-                    uploadStatus={uploadStatus}
-                    //message={localization==="ES-es"?"subido":"uploaded"}
-                    localization={localization as Localization}
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className={showInfo ? "file-status hide" : "file-status"}>
-                <FileItemStatus
-                  valid={valid}
-                  localization={localization as Localization}
-                />
-              </div>
-            )}
-
-            <div
-              className={showInfo ? "size-open-info hide" : "size-open-info"}
-            >
-              {!onlyImage && (
-                <div className={"file-item-size"}>{sizeFormatted}</div>
-              )}
-
-              {isImage && onOpenImage && valid && (
-                <Visibility
-                  className="dui-file-item-icon"
-                  color="rgba(255,255,255,0.851)"
-                  onClick={handleOpenImage}
-                  size="small"
-                />
-              )}
-              {isVideo && onOpenVideo && valid && (
-                <PlayIcon
-                  className="dui-file-item-icon"
-                  color="rgba(255,255,255,0.851)"
-                  onClick={handleOpenVideo}
-                  size="small"
-                />
-              )}
-             { <DownloadFile
-                className="dui-file-item-icon"
-                color="rgba(255,255,255,0.851)"
-                onClick={handleOpenVideo}
-                size="small"
-              />}
-              {!onlyImage && info && (
-                <InfoDisney
-                  className="dui-file-item-icon"
-                  onClick={handleOpenInfo}
-                  color="rgba(255,255,255,0.851)"
-                  size="micro"
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Fragment>
-          <div className="info-container">
-            {/*     <div
-              className={
-                uploadStatus === "uploading" || !onDelete
-                  ? "status-close uploading"
-                  : showInfo
-                  ? "status-close hide"
-                  : "status-close"
-              }
-            >
-               <Clear
-              color="rgba(255,255,255,0.8)"
-              onClick={uploadStatus === "uploading" ? undefined : handleDelete}
-              colorFill="black"
-            /> 
-            </div> */}
-            <MainLayerHeader
-              onDelete={onDelete}
-              uploadStatus={uploadStatus}
-              hovering={hovering}
-            />
-            {uploadStatus && !showInfo && (
-              <div
-                className={uploadComplete ? "file-status hide" : "file-status"}
-              >
-                <FileItemStatus
-                  uploadStatus={uploadStatus}
-                  localization={localization as Localization}
-                />
-              </div>
-            )}
-
-            <div className={"file-item-footer"}>
-              {!onlyImage && uploadStatus && uploadComplete ? (
-                <div className={showInfo ? "file-status hide" : "file-status"}>
-                  <div
-                    className="file-status-ok"
-                    style={{ marginBottom: "1px" }}
-                  >
-                    <FileItemStatus
-                      uploadStatus={uploadStatus}
-                      //message={localization==="ES-es"?"subido":"uploaded"}
-                      localization={localization as Localization}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div
-                  className={showInfo ? "file-status hide" : "file-status"}
-                  style={{ marginBottom: "1px" }}
-                >
-                  <FileItemStatus
-                    valid={valid}
-                    localization={localization as Localization}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </Fragment>
-      )}
+        )}
+        <MainLayerFooter
+          onlyImage={onlyImage}
+          uploadStatus={uploadStatus}
+          uploadComplete={uploadComplete}
+          localization={localization}
+          showInfo={showInfo}
+          sizeFormatted={sizeFormatted}
+          valid={valid}
+          info={info}
+          isImage={isImage}
+          isVideo={isVideo}
+          onDownloadFile={onDownloadFile}
+          onOpenImage={onOpenImage}
+          onOpenVideo={onOpenVideo}
+          onOpenInfo={onOpenInfo}
+          hovering={hovering}
+        />
+      </div>
     </Fragment>
   );
 };

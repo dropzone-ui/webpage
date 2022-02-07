@@ -136,6 +136,15 @@ export interface FileItemProps extends PaperProps {
      * Event that is triggered when download button is clicked or pressed
      */
     onDownload?: (fileId: number | string | undefined, downloadUrl?: string) => void;
+    /**
+ * the current percentage upload progress
+ *
+ */
+    progress?: number;
+    /**
+     * abort event
+     */
+    onAbort?: Function;
 }
 /**
  * Base default props

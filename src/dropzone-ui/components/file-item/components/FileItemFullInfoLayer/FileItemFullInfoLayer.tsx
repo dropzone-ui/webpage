@@ -9,7 +9,7 @@ import { Cancel } from "../../../../icons";
 import FileItemStatus from "../FileItemStatus/FileItemStatus";
 
 const FileItemFullInfoLayer: FC<FileItemFullInfoLayerProps> = (
-  props: FileItemFullInfoLayerProps,
+  props: FileItemFullInfoLayerProps
 ) => {
   const {
     showInfo,
@@ -25,7 +25,7 @@ const FileItemFullInfoLayer: FC<FileItemFullInfoLayerProps> = (
     resultOnTooltip,
   } = props;
   const FileItemFullInfoLocalizer: LocalLabels = FileItemLocalizerSelector(
-    localization as Localization,
+    localization as Localization
   ).fullInfoLayer as LocalLabels;
   const handleCloseInfo = () => {
     onClose?.();
@@ -47,22 +47,18 @@ const FileItemFullInfoLayer: FC<FileItemFullInfoLayerProps> = (
           colorFill="black"
         />
         {uploadStatus && uploadStatus !== "uploading" ? (
-          <div className={"file-status"}>
-            <FileItemStatus
-              uploadStatus={uploadStatus}
-              localization={localization as Localization}
-            />
-          </div>
+          <FileItemStatus
+            uploadStatus={uploadStatus}
+            localization={localization as Localization}
+          />
         ) : (
-          <div className="file-status">
-            <FileItemStatus
-              valid={valid}
-              localization={localization as Localization}
-            />
-          </div>
+          <FileItemStatus
+            valid={valid}
+            localization={localization as Localization}
+          />
         )}
       </span>
-      
+
       {!resultOnTooltip && !uploadMessage && errors && errors.length > 0 && (
         <div className={`name error`}>
           {errors.map((error, index) => (
@@ -118,5 +114,5 @@ export interface FileItemFullInfoLayerProps {
   /**
    * Whether to display result of validation on InfoLayer or in tooltip on Hover FileItem
    */
-   resultOnTooltip?: boolean;
+  resultOnTooltip?: boolean;
 }

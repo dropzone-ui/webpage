@@ -161,9 +161,12 @@ const DuiTester: React.FC<any> = (props: any) => {
             onWatch={handleWatch}
             //elevation={2}
             //localization={"ES-es"}
-            //alwaysActive
+            alwaysActive
             resultOnTooltip
             //uploadStatus={UPLOADSTATUS.uploading}
+            progress={45}
+            onAbort={(id?:string | number)=>{alert(`delete ${id}`)}}
+            downloadUrl="https://duiserver2.deelo.cloud/download/SSJ2.jpg"
             preview
             info
             hd

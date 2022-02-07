@@ -6,48 +6,72 @@ import {
   CheckCircle,
   CloudDone,
   DoDisturb,
+  Remove,
   UploadDone,
   UploadError,
 } from "../../../../icons";
 import { FileItemStatusProps } from "./FileItemStatusProps";
+import "./FileItemStatus.scss";
 
 const FileItemStatus: FC<FileItemStatusProps> = (
-  props: FileItemStatusProps,
+  props: FileItemStatusProps
 ) => {
   const {
     valid,
     uploadStatus,
     //message,
     localization,
+    progress,
+    onAbort,
   } = props;
   const FileItemStatusLocalizer: LocalLabels = FileItemLocalizerSelector(
-    localization,
+    localization
   ).status as LocalLabels;
+  const handleAbort = () => {
+    onAbort?.();
+  };
   return (
     <Fragment>
       {uploadStatus ? (
         uploadStatus === "uploading" ? (
-          <div className="file-status-loading">
+          <div
+            className={`dui-file-item-status-container file-status-loading${
+              progress ? " percentage" : ""
+            }`}
+          >
+            {onAbort && (
+              <div className="abort-button">
+                <Remove
+                  //className="dui-file-item-icon"
+                  color="red"
+                  onClick={handleAbort}
+                  size="semi-medium"
+                  colorFill="transparent"
+                />
+              </div>
+            )}
+
+            {progress && (
+              <div className="uploading-text up">
+                <p>{FileItemStatusLocalizer.uploading as string}</p>
+              </div>
+            )}
             <Loader />
-            <p>
-              {FileItemStatusLocalizer.uploading as string}
-              {/* localization === "ES-es" ? "Subiendo" : "uploading" */}
-            </p>
+            <div className="uploading-text down">
+              {progress ? (
+                <p className="percentage">{progress || "100%"}</p>
+              ) : (
+                <p>{FileItemStatusLocalizer.uploading as string}</p>
+              )}
+            </div>
           </div>
         ) : uploadStatus === "success" ? (
-          <div className="file-status-ok upload">
-            <CloudDone
-              color="#4caf50"
-              size="small"
-              //colorFill="white"
-              //style={styles.icons}
-              className="status-icon"
-            />
+          <div className="dui-file-item-status-container file-status-ok">
+            <CloudDone color="#4caf50" size="small" className="status-icon" />
             {FileItemStatusLocalizer.success as string}
-            {/* message || localization === "ES-es" ? "éxito" : "success" */}
           </div>
         ) : (
-          <div className="file-status-error upload">
+          <div className="dui-file-item-status-container file-status-error">
             <UploadError
               color="#f44336"
               size="semi-medium"
@@ -57,26 +81,14 @@ const FileItemStatus: FC<FileItemStatusProps> = (
           </div>
         )
       ) : valid ? (
-        <div className="file-status-ok">
-          <CheckCircle
-            color="#4caf50"
-            size="small"
-            //style={styles.icons}
-            className="status-icon"
-          />
+        <div className="dui-file-item-status-container file-status-ok">
+          <CheckCircle color="#4caf50" size="small" className="status-icon" />
           {FileItemStatusLocalizer.valid as string}
-          {/* localization === "ES-es" ? "válido" : "valid" */}
         </div>
       ) : (
-        <div className="file-status-error">
-          <DoDisturb
-            color="#f44336"
-            size="small"
-            className="status-icon"
-            //style={styles.icons}
-          />
+        <div className="dui-file-item-status-container file-status-error">
+          <DoDisturb color="#f44336" size="small" className="status-icon" />
           {FileItemStatusLocalizer.denied as string}
-          {/* localization === "ES-es" ? "No válido" : "Denied" */}
         </div>
       )}
     </Fragment>
