@@ -1,6 +1,6 @@
-import { OverridableProps } from "@unlimited-react-components/kernel";
+import { OverridableComponentProps } from "@dropzone-ui/core";
 
-export interface FileItemContainerProps extends OverridableProps {
+export interface FileItemContainerProps extends OverridableComponentProps {
   /**
    * `grid` will display files in a grid layout. `list` will display 
    * files in a horizontal list. 

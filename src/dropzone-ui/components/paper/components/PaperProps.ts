@@ -1,7 +1,7 @@
-import { OverridableProps } from "@unlimited-react-components/kernel";
+import { OverridableComponentProps } from "@dropzone-ui/core";
 
 
-export interface PaperProps extends OverridableProps {
+export interface PaperProps extends OverridableComponentProps {
     /**
      * The elevation of the paper to produce a shadow
      */

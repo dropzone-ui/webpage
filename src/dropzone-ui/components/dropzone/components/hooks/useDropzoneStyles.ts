@@ -1,5 +1,5 @@
 import { DynamicSheet, DynamiCSS } from "@dynamicss/dynamicss";
-import { asureColor, colourNameToHex, hexColorToRGB } from "@unlimited-react-components/kernel";
+import { asureColor, colourNameToHex, hexColorToRGB } from "@dropzone-ui/core";
 import { useEffect, useState } from "react";
 import { DropzoneProps } from "../Dropzone/DropzoneProps";
 

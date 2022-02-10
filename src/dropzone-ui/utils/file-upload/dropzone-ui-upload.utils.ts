@@ -1,54 +1,52 @@
-import axios from "axios";
-import { DropzoneProps } from "../Dropzone/DropzoneProps";
-import { FileValidated, UPLOADSTATUS } from "./validation.utils";
+import { DropzoneProps } from "../../components/dropzone/components/Dropzone/DropzoneProps";
+import { UploadPromiseResponse } from "../../components/dropzone/components/utils/dropzone-ui.upload.utils";
+import { FileValidated, UPLOADSTATUS } from "../../components/dropzone/components/utils/validation.utils";
+import { DuiUpload } from "./dui-uploader";
 
-export const uploadPromiseAxios = async (
+export const uploadPromiseXHR = async (
     file: FileValidated,
     url: string,
     method: DropzoneProps["method"],
-    config: any
-): Promise<UploadPromiseAxiosResponse> => {
+    headers?: Record<string, string>
+): Promise<UploadPromiseResponse> => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            const localMethod: DropzoneProps["method"] = method || "POST";
-            const fileToUpload: File = file.file;
-            const formData = new FormData();
-            formData.append("file", fileToUpload);
-            const configParams =
-                config ||
-                {
-                    headers: {
-                        "content-type": "multipart/form-data;",
-                    },
-                };
-            let response;//= { data: {} };// await axios.post(url, formData, configParams);
-            switch (localMethod) {
-                case "POST": response = await axios.post(url, formData, configParams); break;
-                case "PATCH": response = await axios.patch(url, formData, configParams); break;
-                case "PUT": response = await axios.put(url, formData, configParams); break;
-                default:
-                    response = await axios.post(url, formData, configParams);
-            }
-
-            if (!response || !response.data) {
-                // there was a problem on uploading, normally a connexion problem
+            const uploader: XMLHttpRequest | undefined = file.xhr;
+            if (!uploader) {
                 resolve(
                     {
                         uploadedFile:
                         {
-                            ...file, uploadMessage: "Connection error",
+                            ...file,
+                            uploadMessage: "Unable to upload. xhr object was not provided",
                             uploadStatus: UPLOADSTATUS.error
                         },
-                        serverResponse:
-                        {
+                        serverResponse: {
                             id: file.id,
                             serverResponse: {}
                         }
                     }
                 );
+                return;
             }
-            const responseDui: DropzoneUIResponse = response.data as DropzoneUIResponse;
+            const localMethod: DropzoneProps["method"] = method || "POST";
+            const fileToUpload: File = file.file;
+
+            const formData = new FormData();
+            formData.append("file", fileToUpload);
+            const configheaders =
+                headers || {  };
+
+            let responseDui: DropzoneUIResponse;
+            //stablish events    
+            responseDui = await DuiUpload(uploader, localMethod, url, formData,
+                {
+                    headers: configheaders,
+                    //onAbort: file.onAbort,
+                   // onProgress: file.onProgress,
+                  //  onError: file.onError,
+                });
 
             if (responseDui.status) {
                 // status is true
@@ -104,10 +102,6 @@ export const uploadPromiseAxios = async (
     });
 };
 export interface UploadPromiseAxiosResponse {
-    serverResponse: FileDuiResponse;
-    uploadedFile: FileValidated;
-}
-export interface UploadPromiseResponse {
     serverResponse: FileDuiResponse;
     uploadedFile: FileValidated;
 }

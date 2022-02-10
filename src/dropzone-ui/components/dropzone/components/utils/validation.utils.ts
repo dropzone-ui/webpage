@@ -13,6 +13,10 @@ export interface FileValidated {
     errors?: string[];
     uploadMessage?: string;
     uploadStatus?: undefined | UPLOADSTATUS;
+    xhr?:XMLHttpRequest;
+    onAbort?: Function;
+    onProgress?: (currentProgress: number) => void;
+    onError?: (error: string) => void;
 }
 export interface FileValidator {
     maxFileSize?: number;

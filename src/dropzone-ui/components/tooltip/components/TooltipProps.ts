@@ -1,7 +1,7 @@
-import { OverridableProps } from "@unlimited-react-components/kernel";
+import { OverridableComponentProps } from "@dropzone-ui/core";
 import { UPLOADSTATUS } from "../../..";
 
-export interface TooltipProps extends OverridableProps {
+export interface TooltipProps extends OverridableComponentProps {
     //message?: string;
     uploadStatus?: undefined | UPLOADSTATUS;
     /**

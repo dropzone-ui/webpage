@@ -24,7 +24,7 @@ const regex: RegExp = /\,(?!\s*?[\{\[\"\'\w])/g;
 const DuiTester: React.FC<any> = (props: any) => {
   const [files, setFiles] = React.useState<FileValidated[]>([]);
   const [imageSrc, setImageSrc] = React.useState<string | undefined>(undefined);
-  const [progress, setProgress] = React.useState<string>("");
+  const [progress, setProgress] = React.useState<number>(0);
   const [status, setStatus] = React.useState<string>("---");
   const [videoSrc, setVideoSrc] = React.useState<File | string | undefined>("");
   const updateFiles = (incommingFiles: FileValidated[]) => {
@@ -80,35 +80,60 @@ const DuiTester: React.FC<any> = (props: any) => {
         // event.loaded returns how many bytes are downloaded
         // event.total returns the total number of bytes
         // event.total is only available if server sends `Content-Length` header
-        console.log(`Uploaded ${event.loaded} of ${event.total} bytes`);
-        setProgress(`${event.loaded}/${event.total}`);
+        //console.log(`Uploaded ${event.loaded} of ${event.total} bytes`);
+        setProgress((event.loaded / event.total) * 100);
       };
-      xhr.onreadystatechange = async () => {
-        console.log("Finished", xhr);
-        if (xhr.DONE) {
+      xhr.onreadystatechange = async (e) => {
+        //console.log("Finished", xhr);
+        console.log("Finished xhr.DONE", xhr.readyState);
+        if (xhr.readyState === 4 && xhr.responseText !== "") {
           console.log(
             `onreadystatechange The upload is completed: ${xhr.status} ${xhr.response}`
           );
           console.log("onreadystatechange responseText: ", xhr.responseText);
 
           // let jsonResponse = await JSON.parse(xhr.responseText);
-          let correct = xhr.response.replace(regex, "");
+          let correct = xhr.responseText.replace(regex, "");
+
           //myrespose = await JSON.parse(myrespose);
           //const {status, message, payload} = xhr.response;
-          const jsonResponse = JSON.parse(correct);
-          console.log("=> jsonResponse", jsonResponse);
+
+          //parse with aditional "}"
+          try {
+            const jsonResponse = JSON.parse(correct);
+
+            console.log("=====> jsonResponse", jsonResponse);
+            const status: any = jsonResponse.status;
+            const message: string = jsonResponse.message;
+            const payload: any = jsonResponse.payload;
+            console.log("====> status", status);
+            console.log("====> message", message);
+            console.log("====> payload", payload);
+          } catch (error) {
+            console.log("====> ERROR", error);
+            console.log("====> ERROR", correct);
+          }
+
           // console.log("=> status", jsonResponse.status);
           // console.log("=> message", jsonResponse.message);
           // console.log("=> payload", jsonResponse.payload);
         } else {
-          console.log("Changed to " + xhr.status);
+          console.log("Naranjas Changed to " + xhr.readyState);
         }
       };
       // open request
       xhr.open("POST", ENDPOINT, true);
+      /*   xhr.setRequestHeader(
+        "content-type",
+        "multipart/form-data"
+      ); */
       xhr.setRequestHeader(
         "Accept",
         "application/json; charset=utf-8, text/plain, */*"
+      );
+      xhr.setRequestHeader(
+        "Authorization",
+        "bearer GVYTUBHVJYTBUJYUBHFVUBYVYJTBJVYTUBYTBVJYTUBJYTGUYYTVUBTURYVFHTRCYVUVFCRTUFYGBTRFYGUBVJRTYKVJGFTVYJ"
       );
       // xhr.setRequestHeader("Content-Type", "multipart/form-data");
 
@@ -164,9 +189,16 @@ const DuiTester: React.FC<any> = (props: any) => {
             alwaysActive
             resultOnTooltip
             //uploadStatus={UPLOADSTATUS.uploading}
-            progress={45}
-            onAbort={(id?:string | number)=>{alert(`delete ${id}`)}}
-            downloadUrl="https://duiserver2.deelo.cloud/download/SSJ2.jpg"
+            //progress={progress}
+            onAbort={(id?: string | number) => {
+              xhr.abort();
+              alert(`delete ${id}`);
+            }}
+            downloadUrl="https://duiserver2.deelo.cloud/download/Zj8Qo.jpg"
+            /* onDownload={(id: number | string | undefined, url?: string) => {
+              console.log("downloading id", id);
+              console.log("downloading url", url);
+            }} */
             preview
             info
             hd
@@ -186,29 +218,15 @@ const DuiTester: React.FC<any> = (props: any) => {
         />
       </Dropzone>
       <Button variant="contained" onClick={customUpload}>
-        {" "}
-        Subir{" "}
+        Subir
       </Button>
       <Button variant="outlined" onClick={customAbort}>
-        {" "}
-        Abort{" "}
+        Abort
       </Button>
-      <p>{`Current progress ${progress} %`}</p>
+      <p>{`Current progress ${progress.toFixed(2)} %`}</p>
       <p>{`Estado: ${status}`}</p>
       <IconList />
     </div>
   );
 };
 export default DuiTester;
-
-const res = {
-  status: true,
-  message: "File was uploaded successfully on dui server",
-  payload: {
-    name: "PostmanShringan.png",
-    mimetype: "image/png",
-    size: 19603,
-    path: "/files/",
-    url: "https://my-ftp-server.com/bjYJGFYgjfVGHVb",
-  },
-};

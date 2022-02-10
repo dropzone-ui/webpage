@@ -1,6 +1,6 @@
-import { OverridableProps } from "@unlimited-react-components/kernel";
+import { OverridableComponentProps } from "@dropzone-ui/core";
 
-export interface VideoPreviewProps extends OverridableProps {
+export interface VideoPreviewProps extends OverridableComponentProps {
     /**
      * video source in string format or File object
      * FileItemComponent returns this value in onWatch handler

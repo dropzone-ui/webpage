@@ -1,4 +1,3 @@
-import { mergeProps } from "@unlimited-react-components/kernel";
 import React, { useEffect, useRef, useState } from "react";
 import "./Dropzone.scss";
 import useDropzoneStyles from "../hooks/useDropzoneStyles";
@@ -32,6 +31,8 @@ import {
   FunctionLabel,
   LocalLabels,
 } from "../../../../localization/localization";
+import { mergeProps } from "@dropzone-ui/core";
+import { uploadPromiseXHR } from "../../../../utils/file-upload/dropzone-ui-upload.utils";
 
 const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
   const {
@@ -70,6 +71,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     fakeUploading,
     localization,
     disableScroll,
+    headers,
   } = mergeProps(props, DropzonePropsDefault);
   //ref for ripple
   const dz_ui_ripple_ref = useRef<HTMLDivElement>(null);
@@ -252,8 +254,10 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
           const { serverResponse, uploadedFile }: UploadPromiseAxiosResponse =
             fakeUploading
               ? await fakeUpload(currentFile)
-              : await uploadPromiseAxios(currentFile, url, method, config);
-
+              : //: await uploadPromiseAxios(currentFile, url, method, config);
+                await uploadPromiseXHR(currentFile, url, method, headers);
+          console.log("*** serverResponse", serverResponse);
+          console.log("*** uploadedFile", uploadedFile);
           serverResponses.push(serverResponse);
 
           if (uploadedFile.uploadStatus === "error") {
@@ -378,10 +382,10 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
 
       if (validatedFile.valid) {
         //not valid due to file count limit
-        const valid = countdown > 0;
-        validatedFile.valid = valid;
+        const isStillValid = countdown > 0;
+        validatedFile.valid = isStillValid;
         //add error about amount
-        if (!valid) {
+        if (!isStillValid) {
           const MaxFileErrorMessenger: FunctionLabel =
             ValidationErrorLocalizer.maxFileCount as FunctionLabel;
           validatedFile.errors = validatedFile.errors
@@ -390,6 +394,9 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
                 MaxFileErrorMessenger(maxFiles || Infinity),
               ]
             : [MaxFileErrorMessenger(maxFiles || Infinity)];
+        } else {
+          //add upload object
+          validatedFile.xhr = new XMLHttpRequest();
         }
         countdown--;
       }

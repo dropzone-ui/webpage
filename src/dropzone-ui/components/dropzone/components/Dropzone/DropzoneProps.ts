@@ -1,10 +1,10 @@
-import { OverridableProps } from "@unlimited-react-components/kernel";
+import { OverridableComponentProps } from "@dropzone-ui/core";
 import { Localization } from "../../../../localization/localization";
 import { FileItemContainerProps } from "../../../file-item/components/FileItemContainer/FileItemContainerProps";
 import { FileDuiResponse } from "../utils/dropzone-ui.upload.utils";
 import { CustomValidateFileResponse, FileValidated } from "../utils/validation.utils";
 
-export interface DropzoneProps extends OverridableProps {
+export interface DropzoneProps extends OverridableComponentProps {
   /**
    * This event is triggered when files are dropped or selected. 
    * Returns as first parameter the list of FileValidate files dropped or selected.
@@ -202,6 +202,10 @@ export interface DropzoneProps extends OverridableProps {
    * and sets the Dropzone in a grid view
    */
   disableScroll?: boolean;
+  /**
+   * headers
+   */
+  headers?: Record<string, string>;
 }
 
 export const DropzonePropsDefault: DropzoneProps = {
@@ -231,7 +235,8 @@ export const DropzonePropsDefault: DropzoneProps = {
   behaviour: "add",
   label: undefined,
   localization: "EN-en",
-  disableScroll:undefined
+  disableScroll: undefined,
+  //headers: { "content-type": "multipart/form-data" }
 };
 
 

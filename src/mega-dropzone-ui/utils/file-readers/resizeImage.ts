@@ -16,11 +16,11 @@ export default function resizeImage(
             let img: HTMLImageElement = new Image();
             img.src = base64Str;
             img.onload = () => {
-                let canvas = document.createElement('canvas');
-                const MAX_WIDTH = maxWidth;
-                const MAX_HEIGHT = maxHeight;
-                let width = img.width;
-                let height = img.height;
+                let canvas: HTMLCanvasElement = document.createElement('canvas');
+                const MAX_WIDTH: number = maxWidth;
+                const MAX_HEIGHT: number = maxHeight;
+                let width: number = img.width;
+                let height: number = img.height;
 
                 if (maxWidth > width && maxHeight > height) {
                     resolve(base64Str);
@@ -38,7 +38,7 @@ export default function resizeImage(
                     }
                 canvas.width = width
                 canvas.height = height
-                let ctx = canvas.getContext('2d')
+                let ctx: CanvasRenderingContext2D | null = canvas.getContext('2d')
                 if (ctx) {
                     ctx.drawImage(img, 0, 0, width, height);
                     resolve(canvas.toDataURL());

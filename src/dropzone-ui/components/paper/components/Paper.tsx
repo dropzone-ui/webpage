@@ -1,7 +1,7 @@
 import React, { MouseEventHandler, FC } from "react";
 import { PaperProps, PaperPropsDefault } from "./PaperProps";
 import "./Paper.scss";
-import { mergeProps } from "@unlimited-react-components/kernel";
+import { mergeProps } from "@dropzone-ui/core";
 
 const Paper: FC<PaperProps> = (props: PaperProps) => {
   const {

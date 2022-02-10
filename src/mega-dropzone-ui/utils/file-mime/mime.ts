@@ -382,5 +382,4 @@ const mimeUrlList: MimeSelector = {
     java: java,
     react: react,
     vue: vue,
-
 };

@@ -137,14 +137,19 @@ export interface FileItemProps extends PaperProps {
      */
     onDownload?: (fileId: number | string | undefined, downloadUrl?: string) => void;
     /**
- * the current percentage upload progress
- *
- */
+     * the current percentage upload progress
+     *
+     */
     progress?: number;
     /**
      * abort event
      */
     onAbort?: Function;
+    /**
+     * A reference to the XHR object that allows the upload and abort event.
+     *  and progress
+     */
+    xhr?: XMLHttpRequest;
 }
 /**
  * Base default props
@@ -166,5 +171,6 @@ export const FileItemPropsDefault: FileItemProps = {
     errors: undefined,
     elevation: false,
     alwaysActive: undefined,
+    progress: undefined
     //fileName: "bottom"
 }

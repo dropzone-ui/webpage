@@ -1,7 +1,7 @@
 import { OverridableComponentProps } from "../../../../base";
 import { ViewMode } from "../../../../dropzone-ui-types/view";
 import { Localization } from "../../../../localization/localization";
-import { FileDuiResponse } from "../../../../utils/file-upload/upload.types";
+import { FileDuiResponse } from "../../../../../dropzone-ui/utils/file-upload/upload.types";
 import { CustomValidateFileResponse, FileValidated } from "../../../../utils/file-validation/validation.types";
 
 

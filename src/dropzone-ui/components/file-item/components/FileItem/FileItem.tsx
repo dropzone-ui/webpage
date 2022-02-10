@@ -1,9 +1,16 @@
-import React, { FC, Fragment, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  Fragment,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { FileItemProps, FileItemPropsDefault } from "./FileItemProps";
 import "./FileItem.scss";
 import { Paper } from "../../../paper";
-import { mergeProps } from "@unlimited-react-components/kernel";
+import { mergeProps } from "@dropzone-ui/core";
 import {
   fileSizeFormater,
   getURLFileIco,
@@ -42,6 +49,7 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     onDownload,
     progress,
     onAbort,
+    xhr,
   } = mergeProps(props, FileItemPropsDefault);
   const dui_anchor_ref = useRef<HTMLAnchorElement>(null);
   //actionOnHover
@@ -69,21 +77,30 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
   const [imageSource, setImageSource] = useState<string | undefined>(undefined);
   //alwaysActive
   const [showInfo, setShowInfo] = useState<boolean>(false);
+  //upload progress
+  const [localProgress, setLocalProgress] = useState<number>(0);
   useEffect(() => {
-    init(file, valid || false, preview || false, imageUrl);
+    if (progress) {
+      setLocalProgress(progress);
+    }
+  }, [progress]);
+
+  useEffect(() => {
+    init(file, valid || false, preview || false, imageUrl, xhr);
 
     return () => {
       setImageSource(undefined);
       setIsImage(false);
       setIsVideo(false);
     };
-  }, [file, valid, preview, imageUrl]);
+  }, [file, valid, preview, imageUrl, xhr]);
 
   const init = async (
     file: File | undefined,
     valid: boolean,
     preview: boolean,
-    imageUrl: string | undefined
+    imageUrl: string | undefined,
+    xhr?: XMLHttpRequest
   ) => {
     //////////////////////////////
     if (!file) return;
@@ -113,9 +130,19 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
         }
       }
     }
-    //////////////////////////////
+    /////////////// UPLOAD OBJECT ///////////////
+    if (xhr && xhr !== null) {
+      xhr.upload.onprogress = (event) => {
+        handleProgress((event.loaded / event.total) * 100);
+      };
+     
+     
+    }
+    
   };
-
+  const handleProgress = (currentProgress: number): void => {
+    setLocalProgress(currentProgress);
+  };
   const handleDelete = (): void => {
     if (onDelete) {
       onDelete(id);
@@ -152,18 +179,21 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
   }
   const innerDownload = (url: string | undefined) => {
     const anchorElement = dui_anchor_ref.current;
-    if(anchorElement){
+    if (anchorElement) {
       anchorElement.click();
     }
   };
   const handleDownload = () => {
-    if (downloadUrl && typeof downloadUrl == "string") {
-      innerDownload(downloadUrl);
-    } else {
+    if (onDownload) {
       onDownload?.(id, downloadUrl);
+    } else if (downloadUrl && typeof downloadUrl == "string") {
+      innerDownload(downloadUrl);
     }
   };
   const handleAbort = (): void => {
+    //trigger abort event
+    xhr?.abort();
+    // handle externelly the abort event
     onAbort?.(id);
   };
   if (file && typeof file.name == "string") {
@@ -207,7 +237,7 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
               localization={localization}
               onlyImage={onlyImage}
               hovering={alwaysActive || hovering}
-              progress={progress}
+              progress={localProgress}
               onAbort={onAbort ? handleAbort : undefined}
             />
             <FileItemFullInfoLayer
@@ -245,7 +275,6 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
             href={downloadUrl}
             download={file.name}
             style={{ display: "none" }}
-            
           />
         )}
       </div>
@@ -253,9 +282,3 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
   } else return <Fragment></Fragment>;
 };
 export default FileItem;
-
-/**
- * {fileName === "bottom" && (
-      <div className="file-item-name">{shrinkWord(file.name)}</div>
-    )}
- */

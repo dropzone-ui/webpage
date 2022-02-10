@@ -58,6 +58,9 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
   const handleDownloadFile = () => {
     onDownloadFile?.();
   };
+  React.useEffect(()=>{
+    console.log("FIfooter",onDownloadFile);
+  },[]);
   return (
     <React.Fragment>
       <div className="dui-main-layer-footer-container">
@@ -103,7 +106,7 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
                   size="small"
                 />
               )}
-              {
+              {onDownloadFile &&
                 <DownloadFile
                   className="dui-file-item-icon"
                   color="rgba(255,255,255,0.851)"

@@ -12,7 +12,7 @@ const DownloadFile: React.FC<DownloadFileProps> = (
     <svg
       className={className || ""}
       style={onClick ? { cursor: "pointer", ...finalStyle } : finalStyle}
-      enable-background="new 0 0 24 24"
+      enableBackground="new 0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       height={`${finalSize}px`}
       viewBox="0 0 24 24"

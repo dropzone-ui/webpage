@@ -1,6 +1,7 @@
-import { getRandomInt, getRandomUploadStatus } from "../file-utilities/utilities";
+import { getRandomInt } from "../file-utilities/utilities";
 import { listOfErrors } from "../file-validation/validation.fakeerrros";
 import { FileIdGenerator } from "../file-validation/validation.methods";
+import { getRandomUploadStatus } from "../file-validation/validation.randomStatus";
 import { FileValidated, UPLOADSTATUS } from "../file-validation/validation.types";
 
 /**

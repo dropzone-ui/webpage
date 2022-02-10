@@ -59,7 +59,7 @@ const FileItemStatus: FC<FileItemStatusProps> = (
             <Loader />
             <div className="uploading-text down">
               {progress ? (
-                <p className="percentage">{progress || "100%"}</p>
+                <p className="percentage">{progress.toFixed(0) + "%" || "100%"}</p>
               ) : (
                 <p>{FileItemStatusLocalizer.uploading as string}</p>
               )}

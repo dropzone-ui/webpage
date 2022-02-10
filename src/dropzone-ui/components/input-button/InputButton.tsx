@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from "react";
 import { MaterialButton } from "@unlimited-react-components/material-button";
-import { mergeProps } from "@unlimited-react-components/kernel";
+import { mergeProps } from "@dropzone-ui/core";
 import { InputButtonDefaultProps, InputButtonProps } from "./InputButtonProps";
 import {
   customValidateFile,

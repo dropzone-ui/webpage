@@ -37,7 +37,7 @@ export interface FileValidator {
     accept?: string;
 }
 
-export interface CustomValidateFileResponse {
+export declare type CustomValidateFileResponse = {
     /**
      * if true, that means the file is valid
      */

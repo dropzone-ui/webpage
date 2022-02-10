@@ -1,4 +1,3 @@
-import { UPLOADSTATUS } from "../file-validation/validation.types";
 /**
  * Basic function to create dummy files for tests
  * @param name the file name
@@ -11,7 +10,7 @@ export const createFile = (name: string, size: number, type: string) => {
     Object.defineProperty(file, "size", {
         get() {
             return size;
-        },
+        }
     });
     return file;
 };
@@ -98,8 +97,8 @@ export const getExt = (fileName: string): string => {
 export const MAX_SIZE_WORD = 30;
 /**
  * 
- * @param word 
- * @returns 
+ * @param word the word to be shrinked
+ * @returns the shrinked word
  */
 export const shrinkWord = (word = ""): string => {
     let newWord = word;
@@ -117,23 +116,4 @@ export const shrinkWord = (word = ""): string => {
  */
 export function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min)) + min;
-}
-/**
- * Generates a random number betwen 0 and 3
- * where
- * 0 => error
- * 1 => uploading
- * 2 => success
- * 3 => undefined
- * @returns a random upload status or undefined
- */
-export const getRandomUploadStatus = (): UPLOADSTATUS | undefined => {
-    const result: number = getRandomInt(0, 4);
-    switch (result) {
-        case 0: return UPLOADSTATUS.error;
-        case 1: return UPLOADSTATUS.uploading;
-        case 2: return UPLOADSTATUS.success;
-        default:
-            return undefined;
-    }
 }

@@ -1,5 +1,9 @@
 import { asureColor, colourNameToHex, hexColorToRGB } from "../../base";
-
+/**
+ * Creates a ripple inside an HTML element
+ * @param event event that produces the ripple in the HTML element
+ * @param color color of the ripple
+ */
 export function createRipple<
   T extends HTMLButtonElement | HTMLAnchorElement | HTMLDivElement
 >(event: React.MouseEvent<T, MouseEvent>, color: string) {
@@ -35,7 +39,13 @@ export function createRipple<
   buttonAnchorDiv.appendChild(circle);
 }
 
-
+/**
+ * 
+ * @param element the HTML element
+ * @param event the mouse event that produces the ripple
+ * @param color the color of the ripple
+ * @returns 
+ */
 export function createRippleFromElement<
   T extends HTMLButtonElement | HTMLAnchorElement | HTMLDivElement
 >(element: HTMLDivElement | null, event: React.MouseEvent<T, MouseEvent>, color: string) {

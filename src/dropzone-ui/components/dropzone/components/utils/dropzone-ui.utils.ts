@@ -1,4 +1,4 @@
-import { asureColor, colourNameToHex, hexColorToRGB } from "@unlimited-react-components/kernel";
+import { asureColor, colourNameToHex, hexColorToRGB } from "@dropzone-ui/core";
 
 export function createRipple<
   T extends HTMLButtonElement | HTMLAnchorElement | HTMLDivElement
