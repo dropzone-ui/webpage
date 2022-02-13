@@ -1,6 +1,13 @@
 import { IconProps } from "../IconProps/IconProps";
-
-export const parseSize = (sizeStr: IconProps["size"]): number => {
+/**
+ * Added support for literals % and px
+ * @param sizeStr 
+ * @returns 
+ */
+export const parseSize = (sizeStr: IconProps["size"] | number): number => {
+    if (typeof sizeStr === "number") {
+        return sizeStr;
+    }
     switch (sizeStr) {
         case "micro":
             return 8;

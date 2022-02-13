@@ -1,20 +1,13 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
 //import { FileItemProps } from "../FileItem/FileItemProps";
-import FileItemStatus from "../FileItemStatus/FileItemStatus";
-import {
-  PlayIcon,
-  Cancel,
-  Visibility,
-  Info,
-  Clear,
-  InfoBlack,
-  DownloadFile,
-  InfoDisney,
-} from "../../../../icons";
+//import FileItemStatus from "../FileItemStatus/FileItemStatus";
+
 import { Localization } from "../../../../localization/localization";
-import MainLayerHeader from "./MainLayerHeader";
-import MainLayerFooter from "./MainLayerFooter";
+import MainLayerHeader from "./MainLayerHeader/MainLayerHeader";
+import MainLayerFooter from "./MainLayerFooter/MainLayerFooter";
 import "./FileItemMainLayer.scss";
+import { UPLOADSTATUS } from "../../../dropzone/components/utils/validation.utils";
+import FileItemLoader from "./FileItemLoader/FileItemLoader";
 //import {shrinkWord} from "./../../utils";
 export interface FileItemMainLayerProps {
   showInfo: boolean;
@@ -29,7 +22,7 @@ export interface FileItemMainLayerProps {
   valid: boolean;
   isImage: boolean;
   isVideo: boolean;
-  uploadStatus?: undefined | "uploading" | "success" | "error";
+  uploadStatus?: UPLOADSTATUS;
   sizeFormatted: string;
   /**
    * This feature is hidden, it is not present on documentation
@@ -78,9 +71,9 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
     localization,
     hovering,
     progress,
-    onAbort
+    onAbort,
   } = props;
-  const handleDelete = () => {
+  /*  const handleDelete = () => {
     onDelete?.();
   };
   const handleOpenInfo = () => {
@@ -94,7 +87,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
   };
   const handleDownloadFile = () => {
     onDownloadFile?.();
-  };
+  }; */
   const [uploadComplete, setUploadComplete] = useState<boolean>(false);
   useEffect(() => {
     if (uploadStatus === "success") {
@@ -105,7 +98,11 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
   }, [uploadStatus]);
   return (
     <Fragment>
-      <div className="dui-main-layer-container">
+      <div
+        className={`${"dui-main-layer-container"}${
+          uploadStatus === UPLOADSTATUS.uploading ? " loading" : ""
+        }`}
+      >
         <MainLayerHeader
           onDelete={onDelete}
           uploadStatus={uploadStatus}
@@ -113,11 +110,13 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
         />
 
         {uploadStatus && !showInfo && !uploadComplete && (
-          <FileItemStatus
+          <FileItemLoader
             uploadStatus={uploadStatus}
             localization={localization as Localization}
             progress={progress}
             onAbort={onAbort}
+            height={60}
+            width={60}
           />
         )}
         <MainLayerFooter

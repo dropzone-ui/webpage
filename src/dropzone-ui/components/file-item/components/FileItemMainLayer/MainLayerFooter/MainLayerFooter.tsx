@@ -1,13 +1,14 @@
 import * as React from "react";
 import {
+  PlayIcon,
   DownloadFile,
   InfoDisney,
-  PlayIcon,
   Visibility,
-} from "../../../../icons";
-import { Localization } from "../../../../localization/localization";
-import FileItemStatus from "../FileItemStatus/FileItemStatus";
-import FileItemSize from "./FileItemSize";
+} from "../../../../../icons";
+import { Localization } from "../../../../../localization/localization";
+import FileItemStatus from "../../FileItemStatus/FileItemStatus";
+import FileItemSize from "../FileItemSize";
+
 import "./MainLayerFooter.scss";
 export type MainLayerFooterProps = {
   hovering?: boolean;
@@ -58,9 +59,9 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
   const handleDownloadFile = () => {
     onDownloadFile?.();
   };
-  React.useEffect(()=>{
-    console.log("FIfooter",onDownloadFile);
-  },[]);
+  React.useEffect(() => {
+    console.log("FIfooter", onDownloadFile);
+  }, []);
   return (
     <React.Fragment>
       <div className="dui-main-layer-footer-container">
@@ -106,14 +107,14 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
                   size="small"
                 />
               )}
-              {onDownloadFile &&
+              {onDownloadFile && (
                 <DownloadFile
                   className="dui-file-item-icon"
                   color="rgba(255,255,255,0.851)"
                   onClick={handleDownloadFile}
                   size="small"
                 />
-              }
+              )}
               {!onlyImage && info && (
                 <InfoDisney
                   className="dui-file-item-icon"

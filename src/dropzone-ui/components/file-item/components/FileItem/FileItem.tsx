@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  Fragment,
-  ReactElement,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, Fragment, useEffect, useRef, useState } from "react";
 
 import { FileItemProps, FileItemPropsDefault } from "./FileItemProps";
 import "./FileItem.scss";
@@ -78,7 +71,9 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
   //alwaysActive
   const [showInfo, setShowInfo] = useState<boolean>(false);
   //upload progress
-  const [localProgress, setLocalProgress] = useState<number>(0);
+  const [localProgress, setLocalProgress] = useState<number | undefined>(
+    undefined
+  );
   useEffect(() => {
     if (progress) {
       setLocalProgress(progress);
@@ -135,10 +130,7 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
       xhr.upload.onprogress = (event) => {
         handleProgress((event.loaded / event.total) * 100);
       };
-     
-     
     }
-    
   };
   const handleProgress = (currentProgress: number): void => {
     setLocalProgress(currentProgress);

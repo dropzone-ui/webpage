@@ -4,9 +4,9 @@ import { DropzoneUIResponse } from "./upload.types";
 
 export declare type DuiUploadConfig = {
     headers: Record<string, string>,
-   // onAbort?: Function;
+    // onAbort?: Function;
     //onProgress?: (currentProgress: number) => void;
-   // onError?: (error: string) => void;
+    // onError?: (error: string) => void;
 }
 
 export const DuiUpload = (
@@ -18,10 +18,10 @@ export const DuiUpload = (
 ) => {
     return new Promise<DropzoneUIResponse>((resolve, reject) => {
         //const xhr = new XMLHttpRequest();
-        const { headers, 
+        const { headers,
             //onAbort, onProgress, onError 
         } = config;
-console.log("start upload", );
+        console.log("start upload",);
         xhr.upload.onload = () => {
             /* resolve(
                 {
@@ -46,37 +46,37 @@ console.log("start upload", );
             };
         } */
         //if (onError) {
-            xhr.upload.ontimeout = () => {
-                //onError("Timeout error");
-                resolve(
-                    {
-                        status: false,
-                        message: "Timeout error",
-                        payload: {}
-                    }
-                );
-            };
+        xhr.upload.ontimeout = () => {
+            //onError("Timeout error");
+            resolve(
+                {
+                    status: false,
+                    message: "Timeout error",
+                    payload: {}
+                }
+            );
+        };
         //}
         // listen for `upload.abort` event
         //if (onAbort) {
-            xhr.upload.onabort = () => {
-                
-                resolve(
-                    {
-                        status: false,
-                        message: "Upload aborted",
-                        payload: {}
-                    }
-                );
-            };
+        xhr.upload.onabort = () => {
+
+            resolve(
+                {
+                    status: false,
+                    message: "Upload aborted",
+                    payload: {}
+                }
+            );
+        };
         //
 
         // listen for `progress` event
-      /*   if (onProgress) {
-            xhr.upload.onprogress = (event) => {
-                onProgress((event.loaded / event.total) * 100);
-            };
-        } */
+        /*   if (onProgress) {
+              xhr.upload.onprogress = (event) => {
+                  onProgress((event.loaded / event.total) * 100);
+              };
+          } */
         xhr.onreadystatechange = async (e) => {
             //console.log("Finished", xhr);
             console.log("Finished xhr.DONE", xhr.readyState);
@@ -134,10 +134,14 @@ console.log("start upload", );
                 headerValues[i]
             );
         }
-        xhr.setRequestHeader(
-            "Accept",
-            "application/json; charset=utf-8, text/plain, */*"
-        );
+        // xhr.setRequestHeader(
+        //     "Accept",
+        //     "application/json; charset=utf-8, text/plain, */*"
+        // );
+        // xhr.setRequestHeader(
+        //     "Authorization",
+        //     "bearer FCJGHUIBVYGUBHGVJUKIHKGOULYBKIGKVJYTYGUKVJCYKUJCJTYTBUIYKTJKUBKVTCUVIYLKYTKVUJYTFKGYUVJYFUKBJYTF/&GUYTVJU&/IYTRTJVYT&%RTY"
+        // );
         // send request
         xhr.send(data);
     });

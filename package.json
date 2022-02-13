@@ -6,11 +6,9 @@
     "node": "16.x",
     "npm": "8.1.2"
   },
-  "peerDependencies": {
-    "axios": "^0.24.0"
-  },
+  "peerDependencies": {},
   "dependencies": {
-    "@dropzone-ui/core": "^1.1.0",
+    "@dropzone-ui/core": "^1.1.1",
     "@dropzone-ui/react": "^6.6.7",
     "@dynamicss/dynamicss": "^2.1.0",
     "@emotion/react": "^11.6.0",

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import InteractiveCode from "../Components/CodeGenerator/InteractiveCode";
 import IconList from "../Components/Dui_IconsList/IconList";
 import DuiTester from "../Components/_Tester/DuiTester";
+import DuiTesterFileItem from "../Components/_Tester/DuiTesterFileItem";
 import Api from "../Pages/Api/Api";
 import DropzoneApi from "../Pages/Api/DropzoneApi";
 import FileItemApi from "../Pages/Api/FileItemApi";
@@ -15,7 +16,10 @@ const Main = (props) => {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/code-generator" element={<InteractiveCode />} />
-        <Route path="/dui" element={<DuiTester />} />
+        <Route path="/dui">
+          <Route path="" element={<DuiTester />} />
+          <Route path="fileitem" element={<DuiTesterFileItem />} />
+        </Route>
         <Route path="/image" element={<Layer />} />
         {/* <Route path="/" element={<Lab />} />
         <Route path="/icons" element={<IconList />} />

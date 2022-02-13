@@ -44,7 +44,7 @@ const DuiTester: React.FC<any> = (props: any) => {
     console.log("handleWatch", vidSrc);
     setVideoSrc(vidSrc);
   };
-  const customUpload = () => {
+  /*  const customUpload = () => {
     const fileValidated: FileValidated = files[0];
     console.log("upload start", fileValidated);
 
@@ -54,10 +54,10 @@ const DuiTester: React.FC<any> = (props: any) => {
 
       xhr.upload.onload = () => {
         console.log(`The upload is completed: ${xhr.status} ${xhr.response}`);
-        /*    console.log("Response: ", xhr.response);
+            console.log("Response: ", xhr.response);
         console.log("Response: ", xhr.response);
         console.log("Response text: ", xhr.responseText);
-        console.log("Response type: ", xhr.responseType); */
+        console.log("Response type: ", xhr.responseType); 
         //console.log("XHR:",xhr);
 
         setStatus("loaded");
@@ -123,14 +123,11 @@ const DuiTester: React.FC<any> = (props: any) => {
       };
       // open request
       xhr.open("POST", ENDPOINT, true);
-      /*   xhr.setRequestHeader(
+         xhr.setRequestHeader(
         "content-type",
         "multipart/form-data"
-      ); */
-      xhr.setRequestHeader(
-        "Accept",
-        "application/json; charset=utf-8, text/plain, */*"
-      );
+      ); 
+     
       xhr.setRequestHeader(
         "Authorization",
         "bearer GVYTUBHVJYTBUJYUBHFVUBYVYJTBJVYTUBYTBVJYTUBJYTGUYYTVUBTURYVFHTRCYVUVFCRTUFYGBTRFYGUBVJRTYKVJGFTVYJ"
@@ -148,7 +145,7 @@ const DuiTester: React.FC<any> = (props: any) => {
     } else {
       alert("Sin archivo");
     }
-  };
+  }; */
   const customAbort = () => {
     xhr.abort();
   };
@@ -176,6 +173,10 @@ const DuiTester: React.FC<any> = (props: any) => {
         //of course this url doens´t work, is only to make upload button visible
         disableScroll
         localization={"ES-es"}
+        headers={{
+          Authorization: "bearer uBUYVFYTUVYTJTUYYTVUGYUI",
+          Accept: "application/json; charset=utf-8, text/plain, */*",
+        }}
       >
         {files.map((file) => (
           <FileItem
@@ -217,7 +218,7 @@ const DuiTester: React.FC<any> = (props: any) => {
           autoplay
         />
       </Dropzone>
-      <Button variant="contained" onClick={customUpload}>
+      <Button variant="contained" onClick={() => {}}>
         Subir
       </Button>
       <Button variant="outlined" onClick={customAbort}>

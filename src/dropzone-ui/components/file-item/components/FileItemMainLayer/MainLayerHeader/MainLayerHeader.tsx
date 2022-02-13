@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./MainLayerHeader.scss";
-import { Clear } from "../../../../icons";
+import { Clear } from "../../../../../icons";
 export type MainLayerHeaderProps = {
   onDelete?: Function;
   uploadStatus?: undefined | "uploading" | "success" | "error";
