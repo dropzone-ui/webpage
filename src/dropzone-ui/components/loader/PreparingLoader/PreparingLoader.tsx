@@ -17,9 +17,9 @@ const PreparingLoader: React.FC<PreparingLoaderProps> = (
     y,
     width,
   } = props;
-  const finalRadius = radius || 28;
-  const finalX = x || 30;
-  const finalY = y || 30;
+  const finalRadius = radius || 45;
+  const finalX = x || 50;
+  const finalY = y || 50;
   const finalSize = parseSize(size);
   const finalStyle = style ? style : {};
   return (
