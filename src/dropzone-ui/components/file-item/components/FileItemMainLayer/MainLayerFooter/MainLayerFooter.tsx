@@ -6,6 +6,7 @@ import {
   Visibility,
 } from "../../../../../icons";
 import { Localization } from "../../../../../localization/localization";
+import { UPLOADSTATUS } from "../../../../dropzone/components/utils/validation.utils";
 import FileItemStatus from "../../FileItemStatus/FileItemStatus";
 import FileItemSize from "../FileItemSize";
 
@@ -13,7 +14,7 @@ import "./MainLayerFooter.scss";
 export type MainLayerFooterProps = {
   hovering?: boolean;
   onlyImage?: boolean;
-  uploadStatus?: undefined | "uploading" | "success" | "error";
+  uploadStatus?: UPLOADSTATUS;
   uploadComplete?: boolean;
   localization?: Localization;
   showInfo?: boolean;
@@ -59,16 +60,17 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
   const handleDownloadFile = () => {
     onDownloadFile?.();
   };
-  React.useEffect(() => {
+  /*   React.useEffect(() => {
     console.log("FIfooter", onDownloadFile);
-  }, []);
+  }, []); */
   return (
     <React.Fragment>
       <div className="dui-main-layer-footer-container">
+        {/** Show only when footer is not visible */}
         <div className="dui-main-layer-footer-status">
-          {!onlyImage && uploadStatus && uploadComplete ? (
+          { !onlyImage && uploadStatus && uploadComplete  ? (
             <React.Fragment>
-              {!showInfo && (
+              {!showInfo && !hovering && (
                 <FileItemStatus
                   uploadStatus={uploadStatus}
                   localization={localization as Localization}
@@ -77,7 +79,7 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {!showInfo && (
+              {!showInfo && !hovering && (
                 <FileItemStatus
                   valid={valid}
                   localization={localization as Localization}
@@ -86,6 +88,7 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
             </React.Fragment>
           )}
         </div>
+        {/** Action buttons and file size */}
         <div className="dui-main-layer-footer">
           {!showInfo && hovering && (
             <React.Fragment>

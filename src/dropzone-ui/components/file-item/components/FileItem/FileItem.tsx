@@ -14,7 +14,7 @@ import {
 
 import FileItemFullInfoLayer from "../FileItemFullInfoLayer/FileItemFullInfoLayer";
 import FileItemImage from "../FileItemImage/FileItemImage";
-import FileItemMainLayer from "../FileItemMainLayer/FileItemMainLayer";
+import FileItemMainLayer from "../FileItemMainLayer/MainLayer/FileItemMainLayer";
 import Tooltip from "../../../tooltip/components/Tooltip";
 
 const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
@@ -42,8 +42,9 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     onDownload,
     progress,
     onAbort,
-    xhr,
+    xhr,onCancel
   } = mergeProps(props, FileItemPropsDefault);
+
   const dui_anchor_ref = useRef<HTMLAnchorElement>(null);
   //actionOnHover
   const [hovering, setHOvering] = useState<boolean>(false);
@@ -188,6 +189,14 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     // handle externelly the abort event
     onAbort?.(id);
   };
+  const handleCancel = (): void => {
+
+
+
+
+    // handle externelly the abort event
+    onCancel?.(id);
+  };
   if (file && typeof file.name == "string") {
     return (
       <div
@@ -231,6 +240,7 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
               hovering={alwaysActive || hovering}
               progress={localProgress}
               onAbort={onAbort ? handleAbort : undefined}
+              onCancel={handleCancel}
             />
             <FileItemFullInfoLayer
               showInfo={showInfo}

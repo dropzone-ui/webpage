@@ -33,7 +33,7 @@ const Tooltip: FC<TooltipProps> = (props: TooltipProps) => {
         setMessage(uploadMessage);
         if (uploadStatus === "success") {
           setSatusClassName("success");
-        } else if (uploadStatus === "error") {
+        } else if (uploadStatus === "error" || uploadStatus === "aborted") {
           setSatusClassName("not-valid-error");
         } else {
           setSatusClassName(undefined);

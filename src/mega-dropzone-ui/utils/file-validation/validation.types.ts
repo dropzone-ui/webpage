@@ -4,17 +4,17 @@ export enum UPLOADSTATUS {
     success = "success",
     error = "error"
 }
-interface FileValidatedType {
-    /**
-     * File Object
-     */
-    file: File;
-    valid?: boolean;
-    id: number | string | undefined;
-    errors?: string[];
-    uploadMessage?: string;
-    uploadStatus?: undefined | UPLOADSTATUS;
-}
+// interface FileValidatedType {
+//     /**
+//      * File Object
+//      */
+//     file: File;
+//     valid?: boolean;
+//     id: number | string | undefined;
+//     errors?: string[];
+//     uploadMessage?: string;
+//     uploadStatus?:  UPLOADSTATUS;
+// }
 export declare type FileValidated = {
     /**
      * File Object
@@ -24,7 +24,7 @@ export declare type FileValidated = {
     id: number | string | undefined;
     errors?: string[];
     uploadMessage?: string;
-    uploadStatus?: undefined | UPLOADSTATUS;
+    uploadStatus?:  UPLOADSTATUS;
 }
 export interface FileValidator {
     /**

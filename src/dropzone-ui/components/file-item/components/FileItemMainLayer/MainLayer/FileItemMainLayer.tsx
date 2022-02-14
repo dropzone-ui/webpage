@@ -1,13 +1,15 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import * as React from "react";
 //import { FileItemProps } from "../FileItem/FileItemProps";
 //import FileItemStatus from "../FileItemStatus/FileItemStatus";
 
-import { Localization } from "../../../../localization/localization";
-import MainLayerHeader from "./MainLayerHeader/MainLayerHeader";
-import MainLayerFooter from "./MainLayerFooter/MainLayerFooter";
+import { Localization } from "../../../../../localization/localization";
+import MainLayerHeader from "../MainLayerHeader/MainLayerHeader";
+import MainLayerFooter from "../MainLayerFooter/MainLayerFooter";
 import "./FileItemMainLayer.scss";
-import { UPLOADSTATUS } from "../../../dropzone/components/utils/validation.utils";
-import FileItemLoader from "./FileItemLoader/FileItemLoader";
+import { UPLOADSTATUS } from "../../../../dropzone/components/utils/validation.utils";
+// import FileItemLoader from "../FileItemLoader/FileItemLoader";
+// import FileItemStatus from "../../FileItemStatus/FileItemStatus";
+import MainLayerBody from "../MainLayerBody/MainLayerBody";
 //import {shrinkWord} from "./../../utils";
 export interface FileItemMainLayerProps {
   showInfo: boolean;
@@ -49,9 +51,10 @@ export interface FileItemMainLayerProps {
    * abort event
    */
   onAbort?: Function;
+  onCancel?: Function;
 }
 
-const FileItemMainLayer: FC<FileItemMainLayerProps> = (
+const FileItemMainLayer: React.FC<FileItemMainLayerProps> = (
   props: FileItemMainLayerProps
 ) => {
   const {
@@ -72,6 +75,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
     hovering,
     progress,
     onAbort,
+    onCancel,
   } = props;
   /*  const handleDelete = () => {
     onDelete?.();
@@ -88,8 +92,8 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
   const handleDownloadFile = () => {
     onDownloadFile?.();
   }; */
-  const [uploadComplete, setUploadComplete] = useState<boolean>(false);
-  useEffect(() => {
+  const [uploadComplete, setUploadComplete] = React.useState<boolean>(false);
+  React.useEffect(() => {
     if (uploadStatus === "success") {
       setTimeout(() => {
         setUploadComplete(true);
@@ -97,28 +101,27 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
     }
   }, [uploadStatus]);
   return (
-    <Fragment>
-      <div
-        className={`${"dui-main-layer-container"}${
-          uploadStatus === UPLOADSTATUS.uploading ? " loading" : ""
-        }`}
-      >
+    <React.Fragment>
+      <div className={"dui-main-layer-container"}>
         <MainLayerHeader
           onDelete={onDelete}
           uploadStatus={uploadStatus}
           hovering={hovering}
+          showInfo={showInfo}
         />
 
-        {uploadStatus && !showInfo && !uploadComplete && (
-          <FileItemLoader
-            uploadStatus={uploadStatus}
-            localization={localization as Localization}
-            progress={progress}
-            onAbort={onAbort}
-            height={60}
-            width={60}
-          />
-        )}
+        <MainLayerBody
+          uploadStatus={uploadStatus}
+          showInfo={showInfo}
+          uploadComplete={uploadComplete}
+          localization={localization}
+          progress={progress}
+          onAbort={onAbort}
+          valid={valid}
+          hovering={hovering}
+          onlyImage={onlyImage}
+          onCancel={onCancel}
+        />
         <MainLayerFooter
           onlyImage={onlyImage}
           uploadStatus={uploadStatus}
@@ -137,7 +140,7 @@ const FileItemMainLayer: FC<FileItemMainLayerProps> = (
           hovering={hovering}
         />
       </div>
-    </Fragment>
+    </React.Fragment>
   );
 };
 export default FileItemMainLayer;

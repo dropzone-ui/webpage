@@ -31,13 +31,13 @@ const DuiTesterFileItem: React.FC<any> = (props: any) => {
           {...f}
           key={f.id}
           onDelete={handleDelete}
-          //alwaysActive
+          alwaysActive
           //elevation={2}
-          //localization={"ZH-cn"}
+          localization={"ES-es"}
           resultOnTooltip
           
-          progress={mProgress}
-          onAbort={handleAbort}
+         progress={mProgress}
+         // onAbort={handleAbort}
           info
         />
       ))}

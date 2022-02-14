@@ -7,7 +7,7 @@ import {
   CloudDone,
   DoDisturb,
   Remove,
-  UploadDone,
+ // UploadDone,
   UploadError,
 } from "../../../../icons";
 import { FileItemStatusProps } from "./FileItemStatusProps";
@@ -64,6 +64,15 @@ const FileItemStatus: FC<FileItemStatusProps> = (
                 <p>{FileItemStatusLocalizer.uploading as string}</p>
               )}
             </div>
+          </div>
+        ) : uploadStatus === "aborted" ? (
+          <div className="dui-file-item-status-container file-status-error">
+            <UploadError
+              color="#f44336"
+              size="semi-medium"
+              className="status-icon"
+            />
+            {FileItemStatusLocalizer.aborted as string}
           </div>
         ) : uploadStatus === "success" ? (
           <div className="dui-file-item-status-container file-status-ok">

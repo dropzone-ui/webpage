@@ -3,7 +3,7 @@ import { UPLOADSTATUS } from "../../..";
 
 export interface TooltipProps extends OverridableComponentProps {
     //message?: string;
-    uploadStatus?: undefined | UPLOADSTATUS;
+    uploadStatus?:  UPLOADSTATUS;
     /**
      * whether to show a valid or rejected message ("ok", "rejected")
      * by def. valid is false (if not present, it's false too)

@@ -52,8 +52,8 @@ const IconList = (props) => {
         <Person />
         <PhotoCamera />
         <PlayIcon />
-        <Remove />
-        <RemoveOutline />
+        <Remove  />
+        <RemoveOutline  />
         <UploadDone />
         <UploadError />
         <UploadingProcess />

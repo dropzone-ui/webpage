@@ -1,6 +1,8 @@
 import * as React from "react";
+import { Clear } from "../../../../../icons";
 import { Localization } from "../../../../../localization/localization";
 import { UPLOADSTATUS } from "../../../../dropzone/components/utils/validation.utils";
+import { DynamicLoader, PreparingLoader } from "../../../../loader";
 import FileItemStatus from "../../FileItemStatus/FileItemStatus";
 import "./FileItemLoader.scss";
 interface FileItemLoaderProps {
@@ -23,12 +25,20 @@ interface FileItemLoaderProps {
    * abort event
    */
   onAbort?: Function;
+  onCancel?: Function;
 }
 const FileItemLoader: React.FC<FileItemLoaderProps> = (
   props: FileItemLoaderProps
 ) => {
-  const { uploadStatus, localization, progress, onAbort, width, height } =
-    props;
+  const {
+    uploadStatus,
+    localization,
+    progress,
+    onAbort,
+    width,
+    height,
+    onCancel,
+  } = props;
   const circleRef: React.RefObject<SVGCircleElement> =
     React.useRef<SVGCircleElement>(null);
 
@@ -50,55 +60,67 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
       setProgress(progress, myCircle, circumference);
     }
   }, [progress]);
-
+  const handleAbort = () => {
+    onAbort?.();
+  };
+  const handleCancel = () => {
+    onCancel?.();
+  };
   return (
     <React.Fragment>
-      <div className="dui-loader-container">
-        {progress || onAbort ? (
-          <div className="loader-container">
-            <svg
-              className="svg_circle_loader"
-              width={`${width || 50}px`}
-              height={`${height || 50}px`}
-            >
-              <circle
-                cx="30"
-                cy="30"
-                r="28"
-                className="circle_loader"
-                id="circle"
-                ref={circleRef}
-              ></circle>
+      {progress ? (
+        <React.Fragment>
+          {uploadStatus == UPLOADSTATUS.preparing && (
+            <div className="dui-main-loader-container" onClick={handleCancel}>
+              <div className="dui-abort-icon-container">
+               
+                  <Clear
+                    //className="dui-file-item-icon"
+                    color="rgba(255,255,255,0.70)"
+                    size={60}
+                    colorFill="transparent"
+                  />
+              </div>
+              <div className="dui-dynamic-preparing-loader-container">
+                <PreparingLoader size={width || 60} x={50} y={50} radius={46} />
+              </div>
+            </div>
+          )}
 
-              {!onAbort && (
-                <text x="30" y="35" id="pct">
-                  {`${progress} %`}
-                </text>
-              )}
-            </svg>
-            {onAbort && (
-              <svg
-                className="x-button-abort"
-                xmlns="http://www.w3.org/2000/svg"
-                height="25px"
-                viewBox="0 0 24 24"
-                width="25px"
-                fill="#ffffff"
-              >
-                <path d="M0 0h24v24H0V0z" fill="none" />
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-              </svg>
-            )}
-          </div>
-        ) : (
-          <FileItemStatus
-            uploadStatus={uploadStatus}
-            localization={localization as Localization}
-            //progress={progress}
-            //onAbort={onAbort}
-          />
-        )}
-      </div>
+          {uploadStatus == UPLOADSTATUS.uploading && (
+            <div className="dui-main-loader-container" onClick={handleAbort}>
+              <div className="dui-abort-icon-container">
+                {onAbort && (
+                  <Clear
+                    //className="dui-file-item-icon"
+                    color="rgba(255,255,255,0.70)"
+                    size={60}
+                    colorFill="transparent"
+                  />
+                )}
+              </div>
+              <div className="dui-dynamic-preparing-loader-container">
+                <DynamicLoader
+                  size={width || 60}
+                  x={30}
+                  y={30}
+                  radius={27}
+                  percentage={progress}
+                  width={6}
+                  hidePerncentage={onAbort !== undefined}
+                />
+              </div>
+            </div>
+          )}
+        </React.Fragment>
+      ) : (
+        <FileItemStatus
+          uploadStatus={uploadStatus}
+          localization={localization as Localization}
+          //progress={progress}
+          //onAbort={onAbort}
+        />
+      )}
     </React.Fragment>
   );
 };

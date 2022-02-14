@@ -2,6 +2,8 @@ import { FunctionLabel, LocalLabels } from "../../../../localization/localizatio
 import { getExt } from "../../../file-item/utils";
 
 export enum UPLOADSTATUS {
+    preparing = "preparing",
+    aborted = "aborted",
     uploading = "uploading",
     success = "success",
     error = "error"

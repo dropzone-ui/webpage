@@ -37,14 +37,14 @@ export const FileItemSpanish: LocalLabels = {
         success: "Éxito",
         valid: "Válido",
         denied: "No válido",
-        error: "Error"
-
+        error: "Error",
+        aborted: "anulado"
     },
 }
 /**
  * Spanish translation for Validation Errors
  */
- export const ValidateErrorSpanish: LocalLabels = {
+export const ValidateErrorSpanish: LocalLabels = {
     maxSizeError: (maxSize) => `El archivo es muy grande. El tam. máximo es ${fileSizeFormater(maxSize as number)}`,
     acceptError: `Tipo de archivo no permitido`,
     maxFileCount: (maxFiles) => `Cantidad máxima de archivos (${maxFiles}) alcanzada`

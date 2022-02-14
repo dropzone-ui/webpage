@@ -100,7 +100,7 @@ export interface FileItemProps extends PaperProps {
     /**
      * The current upload status of the file
      */
-    uploadStatus?: undefined | UPLOADSTATUS;
+    uploadStatus?:  UPLOADSTATUS;
     /**
      * If present, preview on full screen will
      * be presented in the real image resolution
@@ -145,6 +145,10 @@ export interface FileItemProps extends PaperProps {
      * abort event
      */
     onAbort?: Function;
+    /**
+     * cancel when preparing event
+     */
+     onCancel?: Function;
     /**
      * A reference to the XHR object that allows the upload and abort event.
      *  and progress

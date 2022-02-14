@@ -37,7 +37,8 @@ export const FileItemEnglish: LocalLabels = {
         success: "Success",
         valid: "Valid",
         denied: "Not valid",
-        error: "Error"
+        error: "Error",
+        aborted:"aborted"
     },
 }
 

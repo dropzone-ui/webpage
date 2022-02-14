@@ -25,7 +25,7 @@ export const listOfWord: FileItemProps[] = [
     id: 87,
     valid: true,
     file: createWord(),
-    uploadStatus: UPLOADSTATUS.uploading,
+    uploadStatus: UPLOADSTATUS.preparing,
     // imageUrl:"https://depor.com/resizer/BbDv4ZUAXoXb8T5xE_zjEmnHuUE=/980x0/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/7PQKSZTCEFFTJIJJRC4WN2BCLI.jpg"
 
   },
@@ -42,5 +42,12 @@ export const listOfWord: FileItemProps[] = [
     file: createWord(),
     uploadStatus: UPLOADSTATUS.error,
     uploadMessage: "there was an error on the server",
+  },
+  {
+    id: 85,
+    valid: true,
+    file: createWord(),
+    uploadStatus: UPLOADSTATUS.aborted,
+    uploadMessage: "upload aborted",
   },
 ];

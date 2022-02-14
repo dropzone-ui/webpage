@@ -1,4 +1,5 @@
 import { Localization } from "../../../../localization/localization";
+import { UPLOADSTATUS } from "../../../dropzone/components/utils/validation.utils";
 
 export interface FileItemStatusProps {
     /**
@@ -9,7 +10,7 @@ export interface FileItemStatusProps {
     /**
      * 
      */
-    uploadStatus?: undefined | "uploading" | "success" | "error";
+    uploadStatus?: UPLOADSTATUS;
     /**
      * A message for the status item
      */
