@@ -1,5 +1,6 @@
 import { OverridableComponentProps } from "@dropzone-ui/core";
-import { UPLOADSTATUS } from "../../..";
+import { UPLOADSTATUS } from "../../../utils";
+
 
 export interface TooltipProps extends OverridableComponentProps {
     //message?: string;
@@ -10,7 +11,7 @@ export interface TooltipProps extends OverridableComponentProps {
      * This value wil affect preview behaviour,
      * If not valid, the preview will not be shown, nor the view button
      */
-    valid?: boolean;
+    valid?: boolean | null;
     /**
      * Whether to see as grid or inline (horizontal list)
      */

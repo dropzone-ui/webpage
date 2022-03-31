@@ -1,4 +1,6 @@
-import { FileValidated } from "../../../mega-dropzone-ui/utils/file-validation/validation.types";
+import { FileValidated } from "../file-validation/validation.types";
+
+
 
 export interface UploadPromiseAxiosResponse {
     serverResponse: FileDuiResponse;

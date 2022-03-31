@@ -7,7 +7,7 @@ import {
 import { Cancel } from "../../../../icons";
 
 import FileItemStatus from "../FileItemStatus/FileItemStatus";
-import { UPLOADSTATUS } from "../../../dropzone/components/utils/validation.utils";
+import { UPLOADSTATUS } from "../../../../utils";
 
 const FileItemFullInfoLayer: FC<FileItemFullInfoLayerProps> = (
   props: FileItemFullInfoLayerProps
@@ -101,7 +101,7 @@ export interface FileItemFullInfoLayerProps {
   fileName: string;
   fileSize: string;
   fileType: string;
-  valid: boolean;
+  valid?: boolean | null;
   onClose: Function;
   uploadMessage?: string;
   uploadStatus?: UPLOADSTATUS;

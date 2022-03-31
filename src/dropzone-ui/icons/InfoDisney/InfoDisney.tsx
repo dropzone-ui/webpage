@@ -3,10 +3,17 @@ import { parseSize } from "../utils/utils";
 import { InfoDisneyProps } from "./InfoDisneyProps";
 
 const InfoDisney: React.FC<InfoDisneyProps> = (props: InfoDisneyProps) => {
-    const { size, color, colorFill, onClick, style, className } = props;
-    const finalSize = parseSize(size);
-    const finalStyle = style ? style : {};
-    return (
+  const {
+    size,
+    color,
+    //colorFill,
+    onClick,
+    style,
+    className,
+  } = props;
+  const finalSize: number = parseSize(size)-2;
+  const finalStyle: React.CSSProperties = style ? style : {};
+  return (
     <svg
       //alt=""
       className={className || ""}

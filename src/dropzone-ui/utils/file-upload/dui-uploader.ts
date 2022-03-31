@@ -1,5 +1,4 @@
-import { Method } from "../../../mega-dropzone-ui/dropzone-ui-types";
-import { FileValidated } from "../../../mega-dropzone-ui/utils/file-validation/validation.types";
+import { Method } from "../dropzone-ui-types";
 import { DropzoneUIResponse } from "./upload.types";
 
 export declare type DuiUploadConfig = {

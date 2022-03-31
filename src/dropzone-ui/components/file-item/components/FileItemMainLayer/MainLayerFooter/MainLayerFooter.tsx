@@ -6,7 +6,7 @@ import {
   Visibility,
 } from "../../../../../icons";
 import { Localization } from "../../../../../localization/localization";
-import { UPLOADSTATUS } from "../../../../dropzone/components/utils/validation.utils";
+import { UPLOADSTATUS } from "../../../../../utils";
 import FileItemStatus from "../../FileItemStatus/FileItemStatus";
 import FileItemSize from "../FileItemSize";
 
@@ -15,11 +15,15 @@ export type MainLayerFooterProps = {
   hovering?: boolean;
   onlyImage?: boolean;
   uploadStatus?: UPLOADSTATUS;
-  uploadComplete?: boolean;
+  // uploadComplete?: boolean;
   localization?: Localization;
   showInfo?: boolean;
   sizeFormatted?: string;
-  valid: boolean;
+  /**
+   * whether show a valid or rejected message
+   * by def. valid is false (if not present, is false too)
+   */
+  valid?: boolean | null;
   isImage?: boolean;
   isVideo?: boolean;
   info?: boolean;
@@ -34,7 +38,7 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
   const {
     onlyImage,
     uploadStatus,
-    uploadComplete,
+    // uploadComplete,
     localization,
     showInfo,
     sizeFormatted,
@@ -60,15 +64,35 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
   const handleDownloadFile = () => {
     onDownloadFile?.();
   };
-  /*   React.useEffect(() => {
-    console.log("FIfooter", onDownloadFile);
-  }, []); */
+
+  const [uploadComplete, setUploadComplete] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    if (
+      uploadStatus &&
+      ["success", "error", "success", "aborted"].includes(uploadStatus)
+    ) {
+      setTimeout(() => {
+        setUploadComplete(true);
+      }, 2000);
+    }
+    return () => {
+      setUploadComplete(false);
+    };
+  }, [uploadStatus]);
+
+/*   React.useEffect(() => {
+    console.log("MainLayerFooter", uploadStatus, uploadComplete);
+  }, [uploadStatus, uploadComplete]);
+ */
   return (
     <React.Fragment>
       <div className="dui-main-layer-footer-container">
         {/** Show only when footer is not visible */}
         <div className="dui-main-layer-footer-status">
-          { !onlyImage && uploadStatus && uploadComplete  ? (
+          {!onlyImage &&
+          uploadStatus &&
+          uploadStatus !== UPLOADSTATUS.uploading &&
+          uploadComplete ? (
             <React.Fragment>
               {!showInfo && !hovering && (
                 <FileItemStatus
@@ -79,7 +103,7 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {!showInfo && !hovering && (
+              {!showInfo && !hovering && typeof valid !== "undefined" && (
                 <FileItemStatus
                   valid={valid}
                   localization={localization as Localization}
@@ -94,22 +118,28 @@ const MainLayerFooter: React.FC<MainLayerFooterProps> = (
             <React.Fragment>
               {!onlyImage && <FileItemSize sizeFormatted={sizeFormatted} />}
 
-              {isImage && onOpenImage && valid && (
-                <Visibility
-                  className="dui-file-item-icon"
-                  color="rgba(255,255,255,0.851)"
-                  onClick={handleOpenImage}
-                  size="small"
-                />
-              )}
-              {isVideo && onOpenVideo && valid && (
-                <PlayIcon
-                  className="dui-file-item-icon"
-                  color="rgba(255,255,255,0.851)"
-                  onClick={handleOpenVideo}
-                  size="small"
-                />
-              )}
+              {isImage &&
+                onOpenImage &&
+                typeof valid === "boolean" &&
+                valid && (
+                  <Visibility
+                    className="dui-file-item-icon"
+                    color="rgba(255,255,255,0.851)"
+                    onClick={handleOpenImage}
+                    size="small"
+                  />
+                )}
+              {isVideo &&
+                onOpenVideo &&
+                typeof valid === "boolean" &&
+                valid && (
+                  <PlayIcon
+                    className="dui-file-item-icon"
+                    color="rgba(255,255,255,0.851)"
+                    onClick={handleOpenVideo}
+                    size="small"
+                  />
+                )}
               {onDownloadFile && (
                 <DownloadFile
                   className="dui-file-item-icon"

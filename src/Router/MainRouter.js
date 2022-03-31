@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import InteractiveCode from "../Components/CodeGenerator/InteractiveCode";
 import IconList from "../Components/Dui_IconsList/IconList";

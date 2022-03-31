@@ -7,15 +7,16 @@ import { mergeProps } from "@dropzone-ui/core";
 import {
   fileSizeFormater,
   getURLFileIco,
-  readImagePromise,
+  readAsDataURL as readImagePromise,
   resizeImage,
   shrinkWord,
-} from "../../utils";
+} from "../../../../utils";
 
 import FileItemFullInfoLayer from "../FileItemFullInfoLayer/FileItemFullInfoLayer";
 import FileItemImage from "../FileItemImage/FileItemImage";
 import FileItemMainLayer from "../FileItemMainLayer/MainLayer/FileItemMainLayer";
 import Tooltip from "../../../tooltip/components/Tooltip";
+import useFileItemClassName from "../../hooks/useFileItemClassName";
 
 const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
   const {
@@ -42,7 +43,8 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     onDownload,
     progress,
     onAbort,
-    xhr,onCancel
+    xhr,
+    onCancel,
   } = mergeProps(props, FileItemPropsDefault);
 
   const dui_anchor_ref = useRef<HTMLAnchorElement>(null);
@@ -76,24 +78,25 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     undefined
   );
   useEffect(() => {
-    if (progress) {
-      setLocalProgress(progress);
-    }
+    //if (progress) {
+    setLocalProgress(progress === 0 ? progress + 1 : progress);
+    //}
   }, [progress]);
 
   useEffect(() => {
-    init(file, valid || false, preview || false, imageUrl, xhr);
+    init(file, valid, preview || false, imageUrl, xhr);
 
     return () => {
       setImageSource(undefined);
       setIsImage(false);
       setIsVideo(false);
     };
-  }, [file, valid, preview, imageUrl, xhr]);
+    // eslint-disable-next-line
+  }, [file, valid, preview, imageUrl, xhr, errors, localProgress]);
 
   const init = async (
     file: File | undefined,
-    valid: boolean,
+    valid: boolean | undefined | null,
     preview: boolean,
     imageUrl: string | undefined,
     xhr?: XMLHttpRequest
@@ -115,7 +118,11 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
       setIsVideo(
         headerMime === "video" && ["mp4", "ogg", "webm"].includes(tailMime)
       );
-      if (preview && valid && headerMime === "image") {
+      if (
+        preview &&
+        (valid || typeof valid === "undefined" || valid === null) &&
+        headerMime === "image"
+      ) {
         const response = await readImagePromise(file);
         if (response) {
           const cutt = await resizeImage(response);
@@ -129,7 +136,9 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     /////////////// UPLOAD OBJECT ///////////////
     if (xhr && xhr !== null) {
       xhr.upload.onprogress = (event) => {
-        handleProgress((event.loaded / event.total) * 100);
+        if (!progress) {
+          handleProgress((event.loaded / event.total) * 100);
+        }
       };
     }
   };
@@ -190,77 +199,70 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
     onAbort?.(id);
   };
   const handleCancel = (): void => {
-
-
-
-
-    // handle externelly the abort event
+    // handle externally the cancel event
     onCancel?.(id);
   };
-  if (file && typeof file.name == "string") {
+  const classNameCreated = useFileItemClassName(resultOnTooltip as boolean);
+  if (classNameCreated && file && typeof file.name == "string") {
     return (
       <div
-        className={`dz-ui-file-item-container${
-          resultOnTooltip ? " dz-ui-tooltip" : ""
-        }`}
+        className={classNameCreated}
+        style={style}
         onClick={handleClick}
         onMouseEnter={handleOnHoverEnter}
         onMouseLeave={handleOnHoverLeave}
       >
-        <div className={`file-item-full-container-container`} style={style}>
-          <Paper
-            shadow={elevation}
-            className={`file-item-icon-container ${showInfo ? " hide" : ""}`}
-          >
-            <FileItemImage
-              imageSource={imageSource}
-              url={url}
-              fileName={file.name}
-            />
-            <FileItemMainLayer
-              showInfo={showInfo}
-              //fileNamePosition={fileName}
-              fileName={file.name}
-              onDelete={onDelete ? handleDelete : undefined}
-              onOpenImage={onSee && preview ? handleOpenImage : undefined}
-              onOpenVideo={onWatch && preview ? handleOpenVideo : undefined}
-              onDownloadFile={
-                onDownload || downloadUrl ? handleDownload : undefined
-              }
-              isVideo={isVideo}
-              onOpenInfo={handleOpenInfo}
-              info={info || false}
-              valid={valid || false}
-              isImage={isImage}
-              sizeFormatted={sizeFormatted}
-              //fileNamePosition={undefined}
-              uploadStatus={uploadStatus}
-              localization={localization}
-              onlyImage={onlyImage}
-              hovering={alwaysActive || hovering}
-              progress={localProgress}
-              onAbort={onAbort ? handleAbort : undefined}
-              onCancel={handleCancel}
-            />
-            <FileItemFullInfoLayer
-              showInfo={showInfo}
-              errors={errors}
-              fileName={file.name}
-              fileSize={fileSizeFormater(file.size)}
-              fileType={file.type}
-              valid={valid || false}
-              onClose={handleCloseInfo}
-              uploadStatus={uploadStatus}
-              uploadMessage={uploadMessage}
-              localization={localization}
-              resultOnTooltip={resultOnTooltip}
-            />
-          </Paper>
+        <Paper
+          shadow={elevation}
+          className={`file-item-icon-container ${showInfo ? " hide" : ""}`}
+        >
+          <FileItemImage
+            imageSource={imageSource}
+            url={url}
+            fileName={file.name}
+          />
+          <FileItemMainLayer
+            showInfo={showInfo}
+            fileName={file.name}
+            onDelete={onDelete ? handleDelete : undefined}
+            onOpenImage={onSee && preview ? handleOpenImage : undefined}
+            onOpenVideo={onWatch && preview ? handleOpenVideo : undefined}
+            onDownloadFile={
+              onDownload || downloadUrl ? handleDownload : undefined
+            }
+            isVideo={isVideo}
+            onOpenInfo={handleOpenInfo}
+            info={info || false}
+            valid={valid}
+            isImage={isImage}
+            sizeFormatted={sizeFormatted}
+            //fileNamePosition={undefined}
+            uploadStatus={uploadStatus}
+            localization={localization}
+            onlyImage={onlyImage}
+            hovering={alwaysActive || hovering}
+            progress={localProgress}
+            onAbort={onAbort ? handleAbort : undefined}
+            onCancel={handleCancel}
+          />
+          <FileItemFullInfoLayer
+            showInfo={showInfo}
+            errors={errors}
+            fileName={file.name}
+            fileSize={fileSizeFormater(file.size)}
+            fileType={file.type}
+            valid={valid}
+            onClose={handleCloseInfo}
+            uploadStatus={uploadStatus}
+            uploadMessage={uploadMessage}
+            localization={localization}
+            resultOnTooltip={resultOnTooltip}
+          />
+        </Paper>
 
-          {!onlyImage && (
-            <div className="file-item-name">{shrinkWord(file.name)}</div>
-          )}
-        </div>
+        {!onlyImage && (
+          <div className="file-item-name">{shrinkWord(file.name)}</div>
+        )}
         {resultOnTooltip && (
           <Tooltip
             //open={resultOnTooltip && hovering}
@@ -277,7 +279,9 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
             href={downloadUrl}
             download={file.name}
             style={{ display: "none" }}
-          />
+          >
+            download_file
+          </a>
         )}
       </div>
     );

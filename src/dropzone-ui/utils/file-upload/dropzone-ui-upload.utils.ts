@@ -1,6 +1,6 @@
 import { DropzoneProps } from "../../components/dropzone/components/Dropzone/DropzoneProps";
 import { UploadPromiseResponse } from "../../components/dropzone/components/utils/dropzone-ui.upload.utils";
-import { FileValidated, UPLOADSTATUS } from "../../components/dropzone/components/utils/validation.utils";
+import { FileValidated, UPLOADSTATUS } from "../file-validation/validation.types";
 import { DuiUpload } from "./dui-uploader";
 
 export const uploadPromiseXHR = async (
@@ -36,7 +36,7 @@ export const uploadPromiseXHR = async (
             const formData = new FormData();
             formData.append("file", fileToUpload);
             const configheaders =
-                headers || {  };
+                headers || {};
 
             let responseDui: DropzoneUIResponse;
             //stablish events    
@@ -44,8 +44,8 @@ export const uploadPromiseXHR = async (
                 {
                     headers: configheaders,
                     //onAbort: file.onAbort,
-                   // onProgress: file.onProgress,
-                  //  onError: file.onError,
+                    // onProgress: file.onProgress,
+                    //  onError: file.onError,
                 });
 
             if (responseDui.status) {

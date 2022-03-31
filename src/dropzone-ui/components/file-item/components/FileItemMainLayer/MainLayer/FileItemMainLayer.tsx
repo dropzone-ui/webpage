@@ -6,10 +6,10 @@ import { Localization } from "../../../../../localization/localization";
 import MainLayerHeader from "../MainLayerHeader/MainLayerHeader";
 import MainLayerFooter from "../MainLayerFooter/MainLayerFooter";
 import "./FileItemMainLayer.scss";
-import { UPLOADSTATUS } from "../../../../dropzone/components/utils/validation.utils";
 // import FileItemLoader from "../FileItemLoader/FileItemLoader";
 // import FileItemStatus from "../../FileItemStatus/FileItemStatus";
 import MainLayerBody from "../MainLayerBody/MainLayerBody";
+import { UPLOADSTATUS } from "../../../../../utils";
 //import {shrinkWord} from "./../../utils";
 export interface FileItemMainLayerProps {
   showInfo: boolean;
@@ -21,7 +21,11 @@ export interface FileItemMainLayerProps {
   //fileNamePosition: FileItemProps["fileName"];
   fileName: string;
   info: boolean;
-  valid: boolean;
+  /**
+     * whether show a valid or rejected message
+     * by def. valid is false (if not present, is false too)
+     */
+   valid?: boolean | null;
   isImage: boolean;
   isVideo: boolean;
   uploadStatus?: UPLOADSTATUS;
@@ -92,14 +96,19 @@ const FileItemMainLayer: React.FC<FileItemMainLayerProps> = (
   const handleDownloadFile = () => {
     onDownloadFile?.();
   }; */
-  const [uploadComplete, setUploadComplete] = React.useState<boolean>(false);
+  //UPLOADSTATUS.
+  /* const [uploadComplete, setUploadComplete] = React.useState<boolean>(false);
   React.useEffect(() => {
-    if (uploadStatus === "success") {
+    if ( uploadStatus && ["success","error","success","aborted"].includes(uploadStatus)) {
+      console.log("FileItemMainLayer-success", props);
       setTimeout(() => {
         setUploadComplete(true);
       }, 2000);
     }
-  }, [uploadStatus]);
+    return()=>{
+      setUploadComplete(false);
+    }
+  }, [uploadStatus]); */
   return (
     <React.Fragment>
       <div className={"dui-main-layer-container"}>
@@ -113,7 +122,7 @@ const FileItemMainLayer: React.FC<FileItemMainLayerProps> = (
         <MainLayerBody
           uploadStatus={uploadStatus}
           showInfo={showInfo}
-          uploadComplete={uploadComplete}
+         // uploadComplete={uploadComplete}
           localization={localization}
           progress={progress}
           onAbort={onAbort}
@@ -125,7 +134,7 @@ const FileItemMainLayer: React.FC<FileItemMainLayerProps> = (
         <MainLayerFooter
           onlyImage={onlyImage}
           uploadStatus={uploadStatus}
-          uploadComplete={uploadComplete}
+         // uploadComplete={uploadComplete}
           localization={localization}
           showInfo={showInfo}
           sizeFormatted={sizeFormatted}

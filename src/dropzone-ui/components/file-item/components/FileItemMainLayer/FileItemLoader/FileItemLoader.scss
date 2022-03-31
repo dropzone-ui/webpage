@@ -40,9 +40,15 @@ text {
   min-height: 60px;
   background-color: rgba(0, 0, 0, 0.41);
   border-radius: 50%;
+  
+  &.clickable{
+    cursor: pointer;
+  }
+  
+  
   &:hover {
     background-color: rgba(0, 0, 0, 0.61);
-    cursor: pointer;
+    
   }
   // background-color: aquamarine;
   .dui-abort-icon-container {

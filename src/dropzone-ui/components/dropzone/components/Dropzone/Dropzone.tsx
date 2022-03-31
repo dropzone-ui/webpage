@@ -1,18 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./Dropzone.scss";
+import * as React from "react";
+//import "./Dropzone.scss";
 import useDropzoneStyles from "../hooks/useDropzoneStyles";
-import {
-  customValidateFile,
-  FileValidated,
-  FileValidator,
-  UPLOADSTATUS,
-  validateFile,
-} from "../utils/validation.utils";
+
 import { DropzoneProps, DropzonePropsDefault } from "./DropzoneProps";
-import {
-  //createRipple,
-  createRippleFromElement,
-} from "../utils/dropzone-ui.utils";
+
 import DropzoneHeader from "../DropzoneHeader/DropzoneHeader";
 import DropzoneFooter from "../DropzoneFooter.tsx/DropzoneFooter";
 import { FileItemContainer } from "../../../../components/file-item";
@@ -20,7 +11,7 @@ import { FileItemContainerProps } from "../../../file-item/components/FileItemCo
 import DropzoneLabel from "../DropzoneLabel/DropzoneLabel";
 import {
   FileDuiResponse,
-  uploadPromiseAxios,
+  //uploadPromiseAxios,
   UploadPromiseAxiosResponse,
 } from "../utils/dropzone-ui.upload.utils";
 import {
@@ -33,38 +24,74 @@ import {
 } from "../../../../localization/localization";
 import { mergeProps } from "@dropzone-ui/core";
 import { uploadPromiseXHR } from "../../../../utils/file-upload/dropzone-ui-upload.utils";
+import { FileValidated, FileValidator, UPLOADSTATUS } from "../../../../utils";
+import {
+  customValidateFile,
+  validateFile,
+} from "../../../../utils/file-validation/validation.methods";
+import { createRippleFromElement } from "../../../../utils/ripple/ripple";
 
 const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
   const {
+    //it is only an output for user
     onDrop,
+    //what goes inside
     children,
+    //delete everything in dropzone
     onReset,
+    //theme color
     color,
+    //style for borders, ripple and dragEnter
     style,
+    //default is transparent, can be changed
     backgroundColor,
+    //
     onClick,
+    //function validator for each file
     validator,
+    //max file size per file
     maxFileSize,
+    //max amount of files
     maxFiles,
+    //mimetypes accepted
     accept,
+    //disable the ripple effect
     disableRipple,
+    //unable or disable open a file dalog
     clickable,
+    //change from list to grid
     onChangeView,
+    //specific view, when disableScroll is true, this prop is ignored
     view,
+    //style MAX height of container
     maxHeight,
+    //style MIN height of container
     minHeight,
+    //action when clean button is clicked, if not present, button is not showed
     onClean,
+    //start uploading if a url was given
     uploadOnDrop,
+    //unable or disable footer
     footer,
+    //unable or disable header
     header,
+    //method for uploading
     method,
+    //endpoint for uploading
     url,
-    config,
+    //special config for uploading
+    //config,
+    // the value, array of FileItems
     value,
+    //notify user when upload has started
     onUploadStart,
+    //notify user when upload has finished
     onUploadFinish,
     // onUploading,
+
+    //message for footer when uploading
     uploadingMessage,
+    //
     onChange,
     behaviour,
     label,
@@ -74,9 +101,9 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     headers,
   } = mergeProps(props, DropzonePropsDefault);
   //ref for ripple
-  const dz_ui_ripple_ref = useRef<HTMLDivElement>(null);
+  const dz_ui_ripple_ref = React.useRef<HTMLDivElement>(null);
   //re-validation: for development purposes and for preventing clean fileList in web page code generator
-  useEffect(() => {
+  React.useEffect(() => {
     if (files.length > 0) {
       let fileList: FileList = files.map((x) => x.file) as unknown as FileList;
       const remainingValids: number =
@@ -101,17 +128,18 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     ValidateErrorLocalizerSelector(localization);
 
   //ref to the hidden input tag
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   // whether is draggin or not
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = React.useState<boolean>(false);
   // list of files (local)
-  const [files, setFiles] = useState<FileValidated[]>([]);
+  const [files, setFiles] = React.useState<FileValidated[]>([]);
   const [localView, setLocalView] =
-    useState<FileItemContainerProps["view"]>("grid");
-  const [localMessage, setLocalMessage] = useState<string>("");
+    React.useState<FileItemContainerProps["view"]>("grid");
+  const [localMessage, setLocalMessage] = React.useState<string>("");
 
   //ClassName for dynamic style
-  const [onUploadingStart, setOnUploadingStart] = useState<boolean>(false);
+  const [onUploadingStart, setOnUploadingStart] =
+    React.useState<boolean>(false);
   // const [queueFiles, setQueueFiles] = useState<FileValidated[]>([]);
   // const offset:number= header && footer? 50: (!header && footer?23:(header && !footer?22:0)) ;
 
@@ -127,33 +155,33 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
   }${clickable ? ` clickable` : ``}`;
 
   //number of files
-  const [numberOfValidFiles, setNumberOfValidFiles] = useState<number>(0);
-  useEffect(() => {
+  const [numberOfValidFiles, setNumberOfValidFiles] = React.useState<number>(0);
+  React.useEffect(() => {
     if (value) {
       setFiles(value);
       setNumberOfValidFiles(value.filter((x: FileValidated) => x.valid).length);
     }
   }, [value]);
-  useEffect(() => {
+  React.useEffect(() => {
     if (disableScroll) {
       setLocalView("grid");
     } else if (view) {
       setLocalView(view);
     }
   }, [view, disableScroll]);
-  useEffect(() => {
+  React.useEffect(() => {
     if (uploadingMessage) {
       setLocalMessage(uploadingMessage);
     }
   }, [uploadingMessage]);
 
-  const handleCleanFiles = () => {
+  const handleCleanFiles = (): void => {
     let filesCleaned: FileValidated[] = [];
     filesCleaned = files.filter((x: FileValidated) => x.valid);
     try {
       onClean?.(filesCleaned);
     } catch (error) {
-      if (process.env.NODE_ENV === "production") {
+      if (process.env.NODE_ENV === "development") {
         console.error(error);
       }
     }
@@ -206,9 +234,6 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     });
   };
 
-  /**
-   * UPLOAD FILES LIKE A PRO
-   */
   const uploadFiles = async (files: FileValidated[]) => {
     const totalNumber = files.length;
     const missingUpload = files.filter(
@@ -298,10 +323,11 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
   };
   const handleFilesChange = (output: FileValidated[]) => {
     //setNumberOfValidFiles(output.filter((x:FileValidated) => x.valid).length);
+
     onDrop?.(output);
     onChange?.(behaviour === "replace" ? output : [...files, ...output]);
 
-    setFiles(output);
+    setFiles(behaviour === "replace" ? output : [...files, ...output]);
 
     if (uploadOnDrop) {
       uploadFiles(behaviour === "replace" ? output : [...files, ...output]);
@@ -384,7 +410,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
         //not valid due to file count limit
         const isStillValid = countdown > 0;
         validatedFile.valid = isStillValid;
-        //add error about amount
+        //add error about amount of files
         if (!isStillValid) {
           const MaxFileErrorMessenger: FunctionLabel =
             ValidationErrorLocalizer.maxFileCount as FunctionLabel;
@@ -513,6 +539,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
         accept={accept}
         style={{ display: "none" }}
         multiple={maxFiles ? maxFiles > 1 : true}
+        
       />
     </div>
   );

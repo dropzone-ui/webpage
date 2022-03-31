@@ -1,7 +1,7 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
 import { TooltipProps } from "./TooltipProps";
 import "./Tooltip.scss";
-import { UPLOADSTATUS } from "../../../components/dropzone/components/utils/validation.utils";
+import { UPLOADSTATUS } from "../../../utils";
 const Tooltip: FC<TooltipProps> = (props: TooltipProps) => {
   const {
     //message,
@@ -19,7 +19,7 @@ const Tooltip: FC<TooltipProps> = (props: TooltipProps) => {
     undefined,
   );
   const [message, setMessage] = useState<undefined | string>(undefined);
-  const handleChangeStatus = (uploadStatus?: UPLOADSTATUS, valid?: boolean) => {
+  const handleChangeStatus = (uploadStatus?: UPLOADSTATUS, valid?: boolean | null) => {
     if (valid) {
       //if file is valid, then it can be uploaded and can check
       // upload status

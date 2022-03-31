@@ -6,7 +6,7 @@ import {
   LocalLabels,
 } from "../../../../localization/localization";
 import { FileItemContainerProps } from "../../../file-item/components/FileItemContainer/FileItemContainerProps";
-import { fileSizeFormater } from "../../../file-item/utils";
+
 import {
   Cancel,
   Clean,
@@ -14,6 +14,7 @@ import {
   ViewGrid,
   ViewList,Upload
 } from "../../../../icons";
+import { fileSizeFormater } from "../../../../utils";
 export interface DropzoneHeaderProps {
   maxFileSize?: number;
   numberOfValidFiles?: number;

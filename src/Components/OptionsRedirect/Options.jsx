@@ -8,7 +8,11 @@ import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import { useNavigate } from "react-router-dom";
 import "./Options.scss";
 const Options = (props) => {
+  
   let navigate = useNavigate();
+
+
+
   const openTab = (url) => {
     window.open(url, "_blank").focus();
   };

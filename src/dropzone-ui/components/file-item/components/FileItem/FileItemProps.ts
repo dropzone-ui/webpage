@@ -1,5 +1,5 @@
-import { UPLOADSTATUS } from "../../../../components/dropzone/components/utils/validation.utils";
 import { Localization } from "../../../../localization/localization";
+import { UPLOADSTATUS } from "../../../../utils";
 import { PaperProps } from "../../../paper/components/PaperProps";
 
 
@@ -66,7 +66,7 @@ export interface FileItemProps extends PaperProps {
     * This value wil affect preview behaviour,
     * If not valid, the preview will not be shown, nor the view button
     */
-    valid?: boolean;
+    valid?: boolean | null;
     /**
     * This feature is hidden, it is not present on the documentation
     * because it's experimental. If you found this prop, you can test it 
@@ -100,7 +100,7 @@ export interface FileItemProps extends PaperProps {
     /**
      * The current upload status of the file
      */
-    uploadStatus?:  UPLOADSTATUS;
+    uploadStatus?: UPLOADSTATUS;
     /**
      * If present, preview on full screen will
      * be presented in the real image resolution
@@ -148,7 +148,7 @@ export interface FileItemProps extends PaperProps {
     /**
      * cancel when preparing event
      */
-     onCancel?: Function;
+    onCancel?: Function;
     /**
      * A reference to the XHR object that allows the upload and abort event.
      *  and progress
@@ -166,7 +166,7 @@ export const FileItemPropsDefault: FileItemProps = {
     id: undefined,
     style: {},
     preview: false,
-    valid: false,
+    valid: undefined,
     info: false,
     hd: undefined,
     localization: "EN-en",

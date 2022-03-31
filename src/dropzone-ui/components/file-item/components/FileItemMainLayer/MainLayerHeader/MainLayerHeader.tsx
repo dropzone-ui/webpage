@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./MainLayerHeader.scss";
 import { Clear } from "../../../../../icons";
-import { UPLOADSTATUS } from "../../../../dropzone/components/utils/validation.utils";
+import { UPLOADSTATUS } from "../../../../../utils";
 export type MainLayerHeaderProps = {
   onDelete?: Function;
   uploadStatus?: UPLOADSTATUS;

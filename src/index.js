@@ -4,14 +4,18 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import MainPage from "./Pages/MainPage/MainPage";
-//import { Dropzone } from "@dropzone-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import Main from "./Router/MainRouter";
+import { DropzoneUI, Dropzone, FileItem } from "./dropzone-ui";
+import { FileItemObject } from "./dropzone-ui/utils/file-validation/validation.types";
+import FITester from "./FITester";
 const mode = 1;
+
 ReactDOM.render(
   <React.StrictMode>
     {/*  <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter> */}
-    <Main />
+    {/*     <Main /> */}
+    <FITester />
   </React.StrictMode>,
   document.getElementById("dropzone-ui-web-page")
 );

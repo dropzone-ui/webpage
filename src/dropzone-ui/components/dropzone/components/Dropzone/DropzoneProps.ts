@@ -1,8 +1,9 @@
 import { OverridableComponentProps } from "@dropzone-ui/core";
 import { Localization } from "../../../../localization/localization";
+import { CustomValidateFileResponse, FileValidated } from "../../../../utils";
+import { FileDuiResponse } from "../../../../utils/file-upload/dropzone-ui-upload.utils";
 import { FileItemContainerProps } from "../../../file-item/components/FileItemContainer/FileItemContainerProps";
-import { FileDuiResponse } from "../utils/dropzone-ui.upload.utils";
-import { CustomValidateFileResponse, FileValidated } from "../utils/validation.utils";
+
 
 export interface DropzoneProps extends OverridableComponentProps {
   /**
@@ -133,7 +134,7 @@ export interface DropzoneProps extends OverridableComponentProps {
   header?: boolean;
   /**
    * Just like any other input component
-   * the value prop is the current value
+   * The value of the input element, required for a controlled component.
    */
   value?: FileValidated[];
   /**

@@ -1,12 +1,12 @@
 import { Localization } from "../../../../localization/localization";
-import { UPLOADSTATUS } from "../../../dropzone/components/utils/validation.utils";
+import { UPLOADSTATUS } from "../../../../utils";
 
 export interface FileItemStatusProps {
     /**
      * whether show a valid or rejected message
      * by def. valid is false (if not present, is false too)
      */
-    valid?: boolean;
+    valid?: boolean | null;
     /**
      * 
      */

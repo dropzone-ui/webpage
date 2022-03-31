@@ -1,29 +1,7 @@
 import { FunctionLabel, LocalLabels } from "../../../../localization/localization";
-import { getExt } from "../../../file-item/utils";
+import { FileValidated, FileValidator, getExt, UPLOADSTATUS } from "../../../../utils";
 
-export enum UPLOADSTATUS {
-    preparing = "preparing",
-    aborted = "aborted",
-    uploading = "uploading",
-    success = "success",
-    error = "error"
-}
-export interface FileValidated {
-    file: File;
-    valid: boolean;
-    id: number | string | undefined;
-    errors?: string[];
-    uploadMessage?: string;
-    uploadStatus?: undefined | UPLOADSTATUS;
-    xhr?:XMLHttpRequest;
-    onAbort?: Function;
-    onProgress?: (currentProgress: number) => void;
-    onError?: (error: string) => void;
-}
-export interface FileValidator {
-    maxFileSize?: number;
-    accept?: string;
-}
+
 /**
  * Separate the accept string array into an array of strings separated by commas
  * @param accept the string accept array

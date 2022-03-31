@@ -2,14 +2,11 @@ import React, { Fragment, useRef } from "react";
 import { MaterialButton } from "@unlimited-react-components/material-button";
 import { mergeProps } from "@dropzone-ui/core";
 import { InputButtonDefaultProps, InputButtonProps } from "./InputButtonProps";
-import {
-  customValidateFile,
-  FileValidated,
-  FileValidator,
-  validateFile,
-} from "../dropzone/components/utils/validation.utils";
+
 import { LocalLabels } from "../../localization/localization";
 import { ValidateErrorLocalizerSelector } from "../../localization";
+import { FileValidated, FileValidator } from "../../utils";
+import { customValidateFile, validateFile } from "../../utils/file-validation/validation.methods";
 
 const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
   let {

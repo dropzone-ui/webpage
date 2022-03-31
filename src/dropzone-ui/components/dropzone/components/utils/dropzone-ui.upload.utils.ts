@@ -1,6 +1,6 @@
 import axios from "axios";
+import { FileValidated, UPLOADSTATUS } from "../../../../utils";
 import { DropzoneProps } from "../Dropzone/DropzoneProps";
-import { FileValidated, UPLOADSTATUS } from "./validation.utils";
 
 export const uploadPromiseAxios = async (
     file: FileValidated,

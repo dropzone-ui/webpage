@@ -1,13 +1,13 @@
 import React, { FC, Fragment } from "react";
 import { FileItemLocalizerSelector } from "../../../../localization";
 import { LocalLabels } from "../../../../localization/localization";
-import Loader from "../../../../utils/loader";
+import Loader from "../../../loader/DefaultLoader/loader";
 import {
   CheckCircle,
   CloudDone,
   DoDisturb,
   Remove,
- // UploadDone,
+  // UploadDone,
   UploadError,
 } from "../../../../icons";
 import { FileItemStatusProps } from "./FileItemStatusProps";
@@ -59,7 +59,9 @@ const FileItemStatus: FC<FileItemStatusProps> = (
             <Loader />
             <div className="uploading-text down">
               {progress ? (
-                <p className="percentage">{progress.toFixed(0) + "%" || "100%"}</p>
+                <p className="percentage">
+                  {progress.toFixed(0) + "%" || "100%"}
+                </p>
               ) : (
                 <p>{FileItemStatusLocalizer.uploading as string}</p>
               )}
@@ -89,16 +91,26 @@ const FileItemStatus: FC<FileItemStatusProps> = (
             {FileItemStatusLocalizer.error as string}
           </div>
         )
-      ) : valid ? (
-        <div className="dui-file-item-status-container file-status-ok">
-          <CheckCircle color="#4caf50" size="small" className="status-icon" />
-          {FileItemStatusLocalizer.valid as string}
-        </div>
+      ) : valid !== null && typeof valid !== "undefined" ? (
+        <Fragment>
+          {valid ? (
+            <div className="dui-file-item-status-container file-status-ok">
+              <CheckCircle
+                color="#4caf50"
+                size="small"
+                className="status-icon"
+              />
+              {FileItemStatusLocalizer.valid as string}
+            </div>
+          ) : (
+            <div className="dui-file-item-status-container file-status-error">
+              <DoDisturb color="#f44336" size="small" className="status-icon" />
+              {FileItemStatusLocalizer.denied as string}
+            </div>
+          )}
+        </Fragment>
       ) : (
-        <div className="dui-file-item-status-container file-status-error">
-          <DoDisturb color="#f44336" size="small" className="status-icon" />
-          {FileItemStatusLocalizer.denied as string}
-        </div>
+        <Fragment></Fragment>
       )}
     </Fragment>
   );

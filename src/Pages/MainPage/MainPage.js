@@ -1,4 +1,3 @@
-
 import { Grid } from "@mui/material";
 import React, { Fragment } from "react";
 import Badges from "../../Components/Badges";
@@ -84,9 +83,9 @@ const MainPage = (props) => {
             </div>
             <div className="dui-web-main-container-right">
               <RightPart />
-              
             </div>
-          </div>{" "}
+          </div>
+
           <Footer />
           {/* holaa */}
         </div>
@@ -94,4 +93,5 @@ const MainPage = (props) => {
     </Fragment>
   );
 };
+
 export default MainPage;

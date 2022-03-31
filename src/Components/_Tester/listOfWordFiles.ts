@@ -1,6 +1,5 @@
-import { createWord } from "@dropzone-ui/react";
-import { UPLOADSTATUS } from "../../dropzone-ui";
-import { FileItemProps } from "../../dropzone-ui/components/file-item/components/FileItem/FileItemProps";
+import { createWord, FileItemProps, UPLOADSTATUS } from "../../dropzone-ui";
+
 export const listOfWord: FileItemProps[] = [
   {
     id: 80,

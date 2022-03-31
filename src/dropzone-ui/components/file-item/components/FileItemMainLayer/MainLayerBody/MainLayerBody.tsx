@@ -1,11 +1,15 @@
 import * as React from "react";
 import { Localization } from "../../../../../localization/localization";
-import { UPLOADSTATUS } from "../../../../dropzone/components/utils/validation.utils";
+import { UPLOADSTATUS } from "../../../../../utils";
 import FileItemStatus from "../../FileItemStatus/FileItemStatus";
 import FileItemLoader from "../FileItemLoader/FileItemLoader";
 import "./MainLayerBody.scss";
 export type MainLayerBodyProps = {
-  valid: boolean;
+  /**
+   * whether show a valid or rejected message
+   * by def. valid is false (if not present, is false too)
+   */
+  valid?: boolean | null;
 
   showInfo: boolean;
   /**
@@ -45,7 +49,7 @@ const MainLayerBody: React.FC<MainLayerBodyProps> = (
     uploadStatus,
     showInfo,
     hovering,
-    uploadComplete,
+    //uploadComplete,
     localization,
     onAbort,
     progress,
@@ -53,43 +57,89 @@ const MainLayerBody: React.FC<MainLayerBodyProps> = (
     valid,
     onCancel,
   } = props;
+
+  const [uploadComplete, setUploadComplete] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    if (
+      uploadStatus &&
+      ["success", "error", "success", "aborted"].includes(uploadStatus)
+    ) {
+      setTimeout(() => {
+        setUploadComplete(true);
+      }, 2000);
+    }
+    return () => {
+      setUploadComplete(false);
+    };
+  }, [uploadStatus]);
+
+/*   React.useEffect(() => {
+    console.log("MainLayerBody", uploadStatus, uploadComplete,progress);
+  }, [uploadStatus, uploadComplete]); */
+
   return (
-    <div
-      className="dui-file-item-main-layer-body"
-      //style={{backgroundColor:"wheat"}}
-    >
-      {uploadStatus && !showInfo && !uploadComplete && (
-        <FileItemLoader
-          uploadStatus={uploadStatus}
-          localization={localization as Localization}
-          progress={progress}
-          onAbort={onAbort}
-          height={60}
-          width={60}
-          onCancel={onCancel}
-        />
+    <div className="dui-file-item-main-layer-body">
+      {/** UPLOADING, upload isn't completed, showInfo=false and uploadStatus != undef  */}
+      {(uploadStatus === UPLOADSTATUS.preparing ||
+        uploadStatus === UPLOADSTATUS.uploading) &&
+      !showInfo &&
+      !uploadComplete ? (
+        <React.Fragment>
+          <FileItemLoader
+            uploadStatus={uploadStatus}
+            localization={localization as Localization}
+            progress={progress}
+            onAbort={onAbort}
+            height={60}
+            width={60}
+            onCancel={onCancel}
+          />
+          <div className="dui-file-status-aboslute-container">
+            {!showInfo && !onlyImage && hovering && (
+              <React.Fragment>
+                {/** When always actie or hovering he file status validation must be visible
+                 * valid, not valid
+                 *
+                 */}
+                {uploadStatus &&
+                uploadStatus !== UPLOADSTATUS.preparing &&
+                uploadStatus !== UPLOADSTATUS.uploading ? (
+                  <FileItemStatus
+                    uploadStatus={uploadStatus}
+                    localization={localization as Localization}
+                  />
+                ) : (
+                  <FileItemStatus
+                    valid={valid}
+                    localization={localization as Localization}
+                  />
+                )}
+              </React.Fragment>
+            )}
+          </div>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          {/** Upload ststus or valid status depending on the value on the corner */}
+          <div className="dui-file-status-aboslute-container">
+            {!showInfo && !onlyImage && hovering && (
+              <React.Fragment>
+                {uploadStatus ? (
+                  <FileItemStatus
+                    uploadStatus={uploadStatus}
+                    localization={localization as Localization}
+                  />
+                ) : (
+                  <FileItemStatus
+                    valid={valid}
+                    localization={localization as Localization}
+                  />
+                )}
+              </React.Fragment>
+            )}
+          </div>
+        </React.Fragment>
       )}
-      <div className="dui-file-status-aboslute-container">
-        {!onlyImage && uploadStatus && uploadComplete && hovering ? (
-          <React.Fragment>
-            {!showInfo && hovering && (
-              <FileItemStatus
-                uploadStatus={uploadStatus}
-                localization={localization as Localization}
-              />
-            )}
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {!showInfo && hovering && (
-              <FileItemStatus
-                valid={valid}
-                localization={localization as Localization}
-              />
-            )}
-          </React.Fragment>
-        )}
-      </div>
     </div>
   );
 };

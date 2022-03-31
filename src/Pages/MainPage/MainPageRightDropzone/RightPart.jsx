@@ -1,11 +1,17 @@
-import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "@dropzone-ui/react";
-import React, { Fragment, useState } from "react";
-import Options from "../../../Components/OptionsRedirect/Options";
-/* import {
+import {
   Dropzone,
+  DropzoneUI,
   FileItem,
   FullScreenPreview,
   VideoPreview,
+} from "../../../dropzone-ui";
+import React, { Fragment, useState } from "react";
+import Options from "../../../Components/OptionsRedirect/Options";
+/* import {
+  // Dropzone,
+  FileItem as NewFileItem,
+  // FullScreenPreview,
+  // VideoPreview,
 } from "../../../dropzone-ui"; */
 import "./RightPart.scss";
 const RightPart = (props) => {
@@ -17,7 +23,7 @@ const RightPart = (props) => {
     console.log("incomming files", incommingFiles);
     setFiles(
       incommingFiles.filter((f, index) => {
-        if (index < 5) {
+        if (index < 10) {
           return f;
         }
       })
@@ -47,9 +53,10 @@ const RightPart = (props) => {
           magic happens
         </p>
         <br />
-        <Dropzone
+       {/*  <Dropzone
           //footer={false}
           //header={false}
+          clickable
           style={{ minWidth: "350px" }}
           onChange={updateFiles}
           minHeight="195px"
@@ -58,7 +65,39 @@ const RightPart = (props) => {
           maxFiles={5}
           maxFileSize={29980000000}
           url="http://ec2-99-99-9-9.compute-1.amazonaws.com:2800/upload-my-file"
-          uploadOnDrop
+          // uploadOnDrop
+          fakeUploading
+          disableScroll
+        >
+          {" "}
+          {files.map((file) => (
+            <FileItem
+              {...file}
+              key={file.id}
+              onWatch={handleWatch}
+              onDelete={onDelete}
+              onSee={handleSee}
+              resultOnTooltip
+              alwaysActive
+              preview
+              info
+              hd
+            />
+          ))}
+        </Dropzone> */}
+        <DropzoneUI
+          //footer={false}
+          //header={false}
+          clickable
+          style={{ minWidth: "350px" }}
+          onChange={updateFiles}
+          minHeight="195px"
+          onClean={handleClean}
+          value={files}
+          maxFiles={5}
+          maxFileSize={29980000000}
+          url="http://ec2-99-99-9-9.compute-1.amazonaws.com:2800/upload-my-file"
+          // uploadOnDrop
           fakeUploading
           disableScroll
         >
@@ -70,6 +109,7 @@ const RightPart = (props) => {
               onDelete={onDelete}
               onSee={handleSee}
               resultOnTooltip
+              alwaysActive
               preview
               info
               hd
@@ -87,7 +127,7 @@ const RightPart = (props) => {
             controls
             autoplay
           />
-        </Dropzone>
+        </DropzoneUI>
       </div>
       <br />
       <p>
@@ -99,12 +139,28 @@ const RightPart = (props) => {
       <ul>
         <li>{"✅ File validation: Validate files before uploading."}</li>
         <li>{"🎨 File Image previews: See a thumbnail preview"}</li>
-        <li>{"🖼️ Full screen image previews: Add more interacion with a full screen preview of images"}</li>
-        <li>{"🎥 Full screen video previews. Play the video before uploading."}</li>
-        <li>{"👀 status visualization: validation and upload status is shown on a Tooltip or on Info Layer"}</li>
-        <li>{"✈️ File upload: Upload valid files to a server using Axios lib."}</li>
+        <li>
+          {
+            "🖼️ Full screen image previews: Add more interacion with a full screen preview of images"
+          }
+        </li>
+        <li>
+          {"🎥 Full screen video previews. Play the video before uploading."}
+        </li>
+        <li>
+          {
+            "👀 status visualization: validation and upload status is shown on a Tooltip or on Info Layer"
+          }
+        </li>
+        <li>
+          {"✈️ File upload: Upload valid files to a server using Axios lib."}
+        </li>
         <li>{"🎭 Out of the box design and style."}</li>
-        <li>{"🍰 Easy to use. Probably, this is the killer feature you are looking for in a package."}</li>
+        <li>
+          {
+            "🍰 Easy to use. Probably, this is the killer feature you are looking for in a package."
+          }
+        </li>
       </ul>
       <Options />
     </Fragment>
