@@ -1,0 +1,91 @@
+.dropzone-ui {
+  color: #646c7f;
+  position: relative;
+  min-height: calc(280px - 2px);
+  border-radius: 4px;
+  width: calc(100% - 2px);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .dz-ui-header {
+    height: 22px;
+    position: absolute;
+    cursor: text;
+    top: 0;
+    display: flex;
+    width: calc(100% - 10px);
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    //height: 30px;
+    //font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    padding-right: 10px;
+    //border-bottom: 1px dotted #646c7f;
+    font-size: 1rem;
+  }
+  .dz-ui-footer {
+    //margin-left: 5px;
+    height: 23px;
+    position: absolute;
+    cursor: text;
+    bottom: 0;
+    width: calc(100% - 10px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-top: 1px dotted grey;
+    background-color: #80808021;
+    //height: 30px;
+    font-family: "Poppins", sans-serif;
+    padding-left: 10px;
+    font-size: 1rem;
+  }
+  span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 500ms linear;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  .dropzone-ui-base-ripple-absolute {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    //padding-left: 15px;
+    //z-index: -1;
+    .dropzone-ui-base-ripple-relative {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span.ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 500ms linear;
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  }
+  &.clickable {
+    cursor: pointer;
+  }
+}

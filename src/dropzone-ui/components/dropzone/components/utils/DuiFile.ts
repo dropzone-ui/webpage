@@ -8,11 +8,13 @@ export default class DuiFile {
     public uploadMessage?: string;
     public uploadStatus?: undefined | UPLOADSTATUS;
     public xhr?: XMLHttpRequest;
-    public onAbort?: Function;
-    public onProgress?: (currentProgress: number) => void;
-    public onError?: (error: string) => void;
+    // public onAbort?: Function;
+    // public onProgress?: (currentProgress: number) => void;
+    // public onError?: (error: string) => void;
     constructor(fileValidated: FileValidated) {
-        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr, onAbort, onProgress, onError } = fileValidated;
+        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            //    onAbort, onProgress, onError 
+        } = fileValidated;
         console.log("Creating DuiFile: ", FileIdGenerator.getNextId());
         this.id = id || FileIdGenerator.getNextId();
         this.file = file;
@@ -21,9 +23,9 @@ export default class DuiFile {
         this.uploadMessage = uploadMessage;
         this.uploadStatus = uploadStatus;
         this.xhr = xhr || new XMLHttpRequest();
-        this.onAbort = onAbort;
-        this.onProgress = onProgress;
-        this.onError = onError;
+        // this.onAbort = onAbort;
+        // this.onProgress = onProgress;
+        // this.onError = onError;
     }
     /*  get uploadStatus():undefined | UPLOADSTATUS {
          return this.uploadStatus;
@@ -32,11 +34,21 @@ export default class DuiFile {
          this.uploadStatus = value;
      } */
     static toFileValidated(duiFile: DuiFile): FileValidated {
-        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr, onAbort, onProgress, onError } = duiFile;
-        return { id, file, valid, errors, uploadMessage, uploadStatus, xhr, onAbort, onProgress, onError };
+        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            //onAbort, onProgress, onError 
+        } = duiFile;
+        return {
+            id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            // onAbort, onProgress, onError
+        };
     }
     toFileValidated() {
-        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr, onAbort, onProgress, onError } = this;
-        return { id, file, valid, errors, uploadMessage, uploadStatus, xhr, onAbort, onProgress, onError };
+        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            //onAbort, onProgress, onError 
+        } = this;
+        return {
+            id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            //onAbort, onProgress, onError
+        };
     }
 }

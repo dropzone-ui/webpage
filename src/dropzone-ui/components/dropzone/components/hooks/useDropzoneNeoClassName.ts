@@ -11,7 +11,7 @@ import { DropzoneProps } from "../Dropzone/DropzoneProps";
  * @param minHeight the min heigth for dropzone container
  * @returns a valid classnname for the component
  */
-const useDropzoneClassName = (
+const useDropzoneNeoClassName = (
     color: string | undefined,
     backgroundColor: string | undefined,
     maxHeight: string | undefined,
@@ -19,8 +19,8 @@ const useDropzoneClassName = (
     offset: number,
     isDragging: boolean,
     clickable: boolean,
-    disableRipple: boolean,
-    className?: string
+    disableRipple: boolean
+    , className?: string
 ): string => {
     const [idStyles, setIdStyles] = useState<string>("");
     const [styleInjected, setStyleInjected] = useState<boolean>(false);
@@ -58,7 +58,7 @@ const useDropzoneClassName = (
                         },
                     },
                     {
-                        className: `dui-container-drag`,
+                        className: `drag`,
                         rules: {
                             outline: `2px dashed ${hexColorToRGB(
                                 asureColor(colourNameToHex(color)),
@@ -70,7 +70,12 @@ const useDropzoneClassName = (
                             ),
                         },
                     },
-                    
+                    {
+                        className: `dui-container-drag`,
+                        rules: {
+                            outline: "none",
+                        },
+                    }
                 ],
             };
             let idStyle: string = "";
@@ -112,4 +117,4 @@ const useDropzoneClassName = (
 
     return classNameCreated;
 }
-export default useDropzoneClassName;
+export default useDropzoneNeoClassName;

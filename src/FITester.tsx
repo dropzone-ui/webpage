@@ -4,11 +4,12 @@ import {
   FileItem,
   makeSynthticFileValidate,
 } from "./dropzone-ui";
-import DropzoneUI3 from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneUI3";
+import DropzoneNeo from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeo";
+//import DropzoneUI3 from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneUI3";
 import {
-  FileItemObject,
+  // FileItemObject,
   FileValidated,
-  UPLOADSTATUS,
+  //UPLOADSTATUS,
 } from "./dropzone-ui/utils/file-validation/validation.types";
 import "./FITester.scss";
 const makeFileItem = (): FileValidated[] => {
@@ -27,13 +28,13 @@ const makeFileItem = (): FileValidated[] => {
     },
   ];
 };
-
-const FITester: React.FC<any> = (props: any) => {
+const InnerTester = () => {
   const [files, setFiles] = React.useState<FileValidated[]>([]);
-  const [files2, setFiles2] = React.useState<FileValidated[]>([]);
+
   React.useEffect(() => {
     setTimeout(() => {
-      setFiles(makeFileItem());setFiles2([...makeFileItem(),...makeFileItem()]);
+      // setFiles(makeFileItem());
+      //setFiles2([...makeFileItem(), ...makeFileItem()]);
     }, 1500);
   }, []);
   const handleDelete = (id: number | string | undefined) => {
@@ -41,13 +42,7 @@ const FITester: React.FC<any> = (props: any) => {
       setFiles(files.filter((x) => x.id !== id));
     }
   };
-  const handleChange2 = (files: FileValidated[]) => {
-    console.log(
-      "handleChange outside => 2",
-      files2.map((x) => x.uploadStatus)
-    );
-    setFiles2(files);
-  };
+
   const handleChange = (files: FileValidated[]) => {
     /* console.log(
       "handleChange outside =>",
@@ -67,38 +62,18 @@ const FITester: React.FC<any> = (props: any) => {
       })
     );
   };
-  const handleCancel2 = (id: number) => {
-    console.log("cancel", id);
-    handleChange2(
-      files2.map((f) => {
-        if (f.id === id) {
-          return { ...f, uploadStatus: undefined };
-        } else {
-          return f;
-        }
-      })
-    );
-  };
+
   const handleAdd = () => {
     setFiles([...files, ...makeFileItem()]);
   };
   return (
-    <React.Fragment>
+    <>
       <button onClick={handleAdd}>Add</button>
-      <DropzoneUI3
+      <DropzoneNeo
         onChange={handleChange}
         value={files}
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          maxHeight: undefined,
-          flexWrap: "wrap",
-          minHeight: "300px",
-          outline: "1px crimson dashed",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow:"hidden"
-        }}
+        style={duiStyles}
+        disableScroll
       >
         {files.map((f) => {
           return (
@@ -108,50 +83,39 @@ const FITester: React.FC<any> = (props: any) => {
               info
               onDelete={handleDelete}
               progress={40}
-              //alwaysActive
+              alwaysActive
               resultOnTooltip
               onCancel={handleCancel}
               //uploadStatus={UPLOADSTATUS.uploading}
             />
           );
         })}
-      </DropzoneUI3>
-      <DropzoneUI3
-        onChange={handleChange2}
-        value={files2}
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          maxHeight: undefined,
-          flexWrap: "wrap",
-          minHeight: "300px",
-          outline: "1px teal dashed",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow:"hidden"
-        }}
-      >
-        {files2.map((f) => {
-          return (
-            <FileItem
-              {...f}
-              id={f.id}
-              info
-              onDelete={handleDelete}
-              progress={40}
-              //alwaysActive
-              resultOnTooltip
-              onCancel={handleCancel2}
-              //uploadStatus={UPLOADSTATUS.uploading}
-            />
-          );
-        })}
-      </DropzoneUI3>
+      </DropzoneNeo>
+    </>
+  );
+};
+
+const FITester: React.FC<any> = (props: any) => {
+  return (
+    <React.Fragment>
       <div className="main-container">
         <div className="left"></div>
-        <div className="right"> </div>
+        <div className="right">
+          <InnerTester />{" "}
+        </div>
       </div>
     </React.Fragment>
   );
 };
 export default FITester;
+const duiStyles: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  maxHeight: undefined,
+  flexWrap: "wrap",
+  minHeight: "300px",
+  // outline: "1px crimson dashed",
+  alignItems: "center",
+  justifyContent: "center",
+  //overflow: "hidden",
+};

@@ -16,9 +16,9 @@ export declare type FileValidated = {
     uploadMessage?: string;
     uploadStatus?: undefined | UPLOADSTATUS;
     xhr?: XMLHttpRequest;
-    onAbort?: Function;
+   /*  onAbort?: Function;
     onProgress?: (currentProgress: number) => void;
-    onError?: (error: string) => void;
+    onError?: (error: string) => void; */
 }
 export class FileItemObject {
     id: number;
