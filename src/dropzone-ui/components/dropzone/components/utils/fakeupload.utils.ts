@@ -1,5 +1,6 @@
 import { FileValidated, UPLOADSTATUS } from "../../../../utils";
-import DuiFile from "./DuiFile";
+import DuiFile from "../../../../utils/dropzone-ui-types/DuiFile";
+
 
 export const setPrepToUploading = (
     fileValidated: FileValidated

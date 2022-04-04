@@ -1,4 +1,58 @@
-import DuiFile from "./DuiFile";
+import { FileIdGenerator } from "../file-validation/validation.methods";
+import { FileValidated, UPLOADSTATUS } from "../file-validation/validation.types";
+
+export declare type DuiFileProps={
+    id: number | string | undefined;
+    file: File;
+    valid?: boolean;
+    errors?: string[];
+    uploadMessage?: string;
+    uploadStatus?: undefined | UPLOADSTATUS;
+    xhr?: XMLHttpRequest;
+}
+
+
+export default class DuiFile {
+    public id: number | string | undefined;
+    public file: File;
+    public valid?: boolean;
+    public errors?: string[];
+    public uploadMessage?: string;
+    public uploadStatus?: undefined | UPLOADSTATUS;
+    public xhr?: XMLHttpRequest;
+    constructor(fileValidated: FileValidated | DuiFileProps) {
+        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr} = fileValidated;
+        console.log("Creating DuiFile: ", FileIdGenerator.getNextId());
+        this.id = id || FileIdGenerator.getNextId();
+        this.file = file;
+        this.valid = valid;
+        this.errors = errors;
+        this.uploadMessage = uploadMessage;
+        this.uploadStatus = uploadStatus;
+        this.xhr = xhr || new XMLHttpRequest();
+    }
+
+    static toFileValidated(duiFile: DuiFile): FileValidated {
+        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            //onAbort, onProgress, onError 
+        } = duiFile;
+        return {
+            id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            // onAbort, onProgress, onError
+        };
+    }
+    toFileValidated() {
+        const { id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            //onAbort, onProgress, onError 
+        } = this;
+        return {
+            id, file, valid, errors, uploadMessage, uploadStatus, xhr,
+            //onAbort, onProgress, onError
+        };
+    }
+}
+
+
 export declare type FileListMap = {
     [id: number]: DuiFile[] | undefined;
 }

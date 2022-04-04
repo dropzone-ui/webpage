@@ -14,24 +14,21 @@ import { DropzoneProps } from "../Dropzone/DropzoneProps";
 const useDropzoneNeoClassName = (
     color: string | undefined,
     backgroundColor: string | undefined,
-    maxHeight: string | undefined,
     minHeight: string | undefined,
     offset: number,
     isDragging: boolean,
     clickable: boolean,
-    disableRipple: boolean
-    , className?: string
+    className?: string
 ): string => {
     const [idStyles, setIdStyles] = useState<string>("");
     const [styleInjected, setStyleInjected] = useState<boolean>(false);
     const [classNameCreated, setClassNameCreated] = useState<string>("");
 
     useEffect(() => {
-
         const handleInserStyle = (
             color: DropzoneProps["color"],
             backgroundColor: string | undefined,
-            maxHeight: string | undefined,
+            //maxHeight: string | undefined,
             minHeight: string | undefined,
             offset: number,
             isDragging: boolean,
@@ -39,7 +36,7 @@ const useDropzoneNeoClassName = (
             // disableRipple: boolean
             className?: string
         ) => {
-            let finalClassName: string = "dropzone-ui";
+            let finalClassName: string = "dropzone-ui-root";
             let styleSheet: DynamicSheet = {
                 id: "dropzone-ui-styles",
                 sheetRules: [
@@ -51,25 +48,13 @@ const useDropzoneNeoClassName = (
                                 1
                             )}`,
                             backgroundColor: backgroundColor,
-                            maxHeight: maxHeight,
+                            // maxHeight: maxHeight,
                             //minHeight: `calc(${minHeight} + 50px)`
                             minHeight: `calc(${minHeight} + ${offset}px)`,
                             //justifyContent: (offset === 0 || offset === 50) ? "center" : "flex-start",
                         },
                     },
-                    {
-                        className: `drag`,
-                        rules: {
-                            outline: `2px dashed ${hexColorToRGB(
-                                asureColor(colourNameToHex(color)),
-                                1
-                            )}`,
-                            backgroundColor: hexColorToRGB(
-                                asureColor(colourNameToHex(color)),
-                                0.085
-                            ),
-                        },
-                    },
+                 
                     {
                         className: `dui-container-drag`,
                         rules: {
@@ -103,14 +88,14 @@ const useDropzoneNeoClassName = (
         };
 
 
-        handleInserStyle(color, backgroundColor, maxHeight, minHeight, offset, isDragging, clickable, className
+        handleInserStyle(color, backgroundColor, minHeight, offset, isDragging, clickable, className
             // disableRipple
         );
         /*   return () => {
               removeStyle();
           } */
         // eslint-disable-next-line
-    }, [color, backgroundColor, maxHeight, minHeight, offset, isDragging, clickable, className
+    }, [color, backgroundColor, minHeight, offset, isDragging, clickable, className
         //disableRipple
 
     ]);

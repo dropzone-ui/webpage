@@ -20,38 +20,8 @@ export declare type FileValidated = {
     onProgress?: (currentProgress: number) => void;
     onError?: (error: string) => void; */
 }
-export class FileItemObject {
-    id: number;
-    valid: undefined | boolean;
-    file: File;
-    changeStatus() {
-        this.valid = true;
-
-    }
-
-    constructor(file?: File) {
-        this.id = FileIdGenerator.getNextId();
-        this.valid = undefined;
-        this.file = file || createSyntheticFile();
-    }
-    /*    set id(_id: number) {
-           this.id = _id;
-       }
-       get id() {
-           return this.id;
-       }
-       set valid(_valid: boolean | undefined) {
-           this.valid = _valid;
-       }
-       get valid() {
-           return this.valid;
-       }
-       set file(_file: File) {
-           this.file = _file;
-       } */
 
 
-}
 export declare type FileValidator = {
     /**
      * max file size in bytes

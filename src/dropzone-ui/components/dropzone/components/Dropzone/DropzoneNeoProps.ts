@@ -1,7 +1,9 @@
 import { OverridableComponentProps } from "@dropzone-ui/core";
+import { Localization } from "../../../../localization/localization";
 import { FileValidated } from "../../../../utils";
+import { Behaviour } from "../../../../utils/dropzone-ui-types";
 
-export default interface DropzoneNeoProps extends OverridableComponentProps{
+export default interface DropzoneNeoProps extends OverridableComponentProps {
     backgroundColor?: any;
     disableScroll?: boolean;
     header?: boolean;
@@ -10,6 +12,7 @@ export default interface DropzoneNeoProps extends OverridableComponentProps{
     maxHeight?: string;
     clickable?: boolean;
     disableRipple?: boolean;
+    localization?: Localization;
     //max file size per file
     maxFileSize?: number;
     //max amount of files
@@ -25,4 +28,8 @@ export default interface DropzoneNeoProps extends OverridableComponentProps{
     //FILES
     onChange?: (files: FileValidated[]) => void;
     value?: FileValidated[];
+    url?: string;
+    uploadOnDrop?: boolean;
+    preparingTime?: number;
+    behaviour?: Behaviour;
 }

@@ -5,6 +5,7 @@ import {
   makeSynthticFileValidate,
 } from "./dropzone-ui";
 import DropzoneNeo from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeo";
+import { DuiFileProps } from "./dropzone-ui/utils/dropzone-ui-types/DuiFile";
 //import DropzoneUI3 from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneUI3";
 import {
   // FileItemObject,
@@ -29,7 +30,7 @@ const makeFileItem = (): FileValidated[] => {
   ];
 };
 const InnerTester = () => {
-  const [files, setFiles] = React.useState<FileValidated[]>([]);
+  const [files, setFiles] = React.useState<FileValidated[] | DuiFileProps[]>([]);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -43,7 +44,7 @@ const InnerTester = () => {
     }
   };
 
-  const handleChange = (files: FileValidated[]) => {
+  const handleChange = (files: FileValidated[]| DuiFileProps[]) => {
     /* console.log(
       "handleChange outside =>",
       files.map((x) => x.uploadStatus)
@@ -65,6 +66,7 @@ const InnerTester = () => {
 
   const handleAdd = () => {
     setFiles([...files, ...makeFileItem()]);
+    
   };
   return (
     <>
@@ -72,14 +74,16 @@ const InnerTester = () => {
       <DropzoneNeo
         onChange={handleChange}
         value={files}
-        style={duiStyles}
+        //style={duiStyles}
         disableScroll
+        color="crimson"
       >
-        {files.map((f) => {
+        {files.map((f,index) => {
           return (
             <FileItem
               {...f}
               id={f.id}
+              key={index}
               info
               onDelete={handleDelete}
               progress={40}

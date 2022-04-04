@@ -1,14 +1,22 @@
-.dropzone-ui {
+.dropzone-ui-root {
   color: #646c7f;
   position: relative;
-  min-height: calc(280px - 2px);
-  border-radius: 4px;
-  width: calc(100% - 2px);
+  //min-height: calc(280px - 2px);
+  min-height: 280px;
+  border-radius: 6px;
+  //width: calc(100% - 2px);
+  width: 100%;
   background-color: white;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  min-width: 150px;
+  &.clickable {
+    cursor: pointer;
+  }
   .dz-ui-header {
     height: 22px;
     position: absolute;
@@ -19,19 +27,22 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    //height: 30px;
-    //font-weight: 300;
-    font-family: "Poppins", sans-serif;
+    //font-family: "Poppins", sans-serif;
+    font-family: inherit;
     padding-right: 10px;
-    //border-bottom: 1px dotted #646c7f;
     font-size: 1rem;
+    @media (max-width: 960px) {
+      width: calc(100% - 1px);
+      padding-right: 1px;
+      font-size: 0.8rem;
+    }
   }
   .dz-ui-footer {
-    //margin-left: 5px;
     height: 23px;
     position: absolute;
     cursor: text;
     bottom: 0;
+    left: 0;
     width: calc(100% - 10px);
     display: flex;
     flex-direction: column;
@@ -39,18 +50,17 @@
     justify-content: center;
     border-top: 1px dotted grey;
     background-color: #80808021;
-    //height: 30px;
     font-family: "Poppins", sans-serif;
+    font-family: inherit;
     padding-left: 10px;
     font-size: 1rem;
+    @media (max-width: 960px) {
+      width: calc(100% - 1px);
+      padding-left: 1px;
+      font-size: 0.8rem;
+    }
   }
-  span.ripple {
-    position: absolute;
-    border-radius: 50%;
-    transform: scale(0);
-    animation: ripple 500ms linear;
-    background-color: rgba(255, 255, 255, 0.7);
-  }
+  // RIPPLE
   .dropzone-ui-base-ripple-absolute {
     position: absolute;
     display: none;
@@ -58,9 +68,6 @@
     height: 100%;
     top: 0;
     left: 0;
-
-    //padding-left: 15px;
-    //z-index: -1;
     .dropzone-ui-base-ripple-relative {
       width: 100%;
       height: 100%;
@@ -84,8 +91,5 @@
         opacity: 0;
       }
     }
-  }
-  &.clickable {
-    cursor: pointer;
   }
 }

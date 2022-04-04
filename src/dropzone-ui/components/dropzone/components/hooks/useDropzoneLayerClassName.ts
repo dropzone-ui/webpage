@@ -42,6 +42,10 @@ const useDropzoneLayerClassName = (
                             top: 0,
                             width: "0%",
                             height: "0%",
+                            outline: `2px dashed ${hexColorToRGB(
+                                asureColor(colourNameToHex(color)),
+                                1
+                            )}`,
                             zIndex: 20,
                         },
                     },
@@ -66,7 +70,6 @@ const useDropzoneLayerClassName = (
                 DynamiCSS.editStyleSheet(idStyles, styleSheet.sheetRules || []);
             }
             finalClassName += `dropzone-ui-layer`;
-
             if (isDragging) {
                 finalClassName += ` dui-layer-drag`;
             }

@@ -1,8 +1,8 @@
 import { OverridableComponentProps } from "@dropzone-ui/core";
 import * as React from "react";
 import { FileValidated, UPLOADSTATUS } from "../../../../utils";
-import DuiFile from "../utils/DuiFile";
-import { DuiFileManager } from "../utils/DuiFileManager";
+import DuiFile, { DuiFileManager } from "../../../../utils/dropzone-ui-types/DuiFile";
+
 import {
   prepToUploadOne,
   setPrepToUploading,
