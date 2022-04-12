@@ -110,8 +110,8 @@ export const shrinkWord = (word = ""): string => {
 
 /**
  * Random integer between min (included) and max (excluded)
- * @param min 
- * @param max 
+ * @param min the min number
+ * @param max the max number
  * @returns a random number between min (included) and max (excluded)
  */
 export function getRandomInt(min: number, max: number): number {

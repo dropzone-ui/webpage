@@ -1,9 +1,11 @@
 import { ValidateErrorLocalizerSelector } from "../../localization";
 import { FunctionLabel, Localization, LocalLabels } from "../../localization/localization";
+import { DuiFileType } from "../dropzone-ui-types/DuiFile";
+import { DuiFileValidator } from "../dropzone-ui-types/validation";
 import { getExt } from "../file-utilities/utilities";
 //import { listOfErrors } from "./validation.fakeerros";
 import {
-    CustomValidateFileResponse, FileValidated, FileValidator, //UPLOADSTATUS
+    CustomValidateFileResponse, DuiFileValidatorProps, FileValidated, FileValidator, //UPLOADSTATUS
 } from "./validation.types";
 
 /**
@@ -62,22 +64,26 @@ export const validateAccept = (accept: string[], file: File): boolean => {
     return valid;
 }
 /**
- * Function that validate whether  afile is valid or not
+ * Function that validate whether a file is valid, or not
  * according to the Filevalidator properties
  * @param file a File object to be evaluated
- * @param validator the validator object 
+ * @param validatorProps the validator object 
  * @returns a FileValidated object
  */
 export const validateFile = (
     file: File,
-    validator: FileValidator,
+    validator: undefined | ((f: File) => CustomValidateFileResponse),
+    validatorProps: FileValidator,
     localErrors: LocalLabels
 ): FileValidated => {
 
     const idGenerated = FileIdGenerator.getNextId();
     let errors: string[] = [];
+    if (validator) {
+        return { id: idGenerated, file, ...validator(file) };
+    }
 
-    const { maxFileSize, accept } = validator;
+    const { maxFileSize, accept } = validatorProps;
 
     //check file size
     if (maxFileSize && file.size > maxFileSize) {
@@ -168,7 +174,7 @@ export const fileListvalidator = (
     //Iterate the File list
     for (let i = 0, f: File; (f = preValidatedFiles[i]); i++) {
         // Validate the file list with
-        let validatedFile: FileValidated = validator ? customValidateFile(f, validator) : validateFile(f, localValidator, ValidationErrorLocalizer);
+        let validatedFile: FileValidated = validateFile(f, validator, localValidator, ValidationErrorLocalizer);
         if (validatedFile.valid) {
             //not valid due to file count limit
             const valid = countdown > 0;
@@ -186,3 +192,92 @@ export const fileListvalidator = (
     }
     return output;
 };
+
+
+/**
+ * For each DuiFile sets the valid prop of DuiFile to "true" or "false"
+ * depending on the result of the individual validation. 
+ * It also add the list of errors.
+ * @param duiFileList 
+ * @param remainingValids 
+ * @param localValidatorProps 
+ * @param validator 
+ * @param maxFiles 
+ * @param localization 
+ * @returns a new DuiFile list with each item validated
+ */
+export const validateDuiFileList = (
+    duiFileList: DuiFileType[],
+    remainingValids: number,
+    localValidatorProps: DuiFileValidatorProps,
+    validator: ((f: File) => CustomValidateFileResponse) | undefined,
+    maxFiles: number | undefined,
+    localization?: Localization
+): DuiFileType[] => {
+    let fileListResult: DuiFileType[] = [...duiFileList];
+    if (!remainingValids) return fileListResult;
+    let remaining: number = remainingValids;
+    const ValidationErrorLocalizer: LocalLabels =
+        ValidateErrorLocalizerSelector(localization);
+    const maxFileErrorMessenger: FunctionLabel = ValidationErrorLocalizer.maxFileCount as FunctionLabel;
+    for (let i = 0; i < duiFileList.length; i++) {
+        let currentDuiFile: DuiFileType = duiFileList[i];
+
+        currentDuiFile = validateDuiFile(currentDuiFile, validator, localValidatorProps, ValidationErrorLocalizer);
+        if (currentDuiFile.valid) {
+            //not valid due to file count limit
+            const valid = remaining > 0;
+            currentDuiFile.valid = valid;
+            //add error about amount
+            if (!valid) {
+                currentDuiFile.errors = currentDuiFile.errors
+                    ? [...currentDuiFile.errors, maxFileErrorMessenger(maxFiles || Infinity)]
+                    : [maxFileErrorMessenger(maxFiles || Infinity)];
+            }
+            remaining--;
+        }
+        fileListResult.push(currentDuiFile);
+
+    }
+    return fileListResult;
+}
+export const isStillValid = (): boolean => {
+    let result: boolean = false;
+
+    return result;
+}
+/**
+ * 
+ * @param duiFile 
+ * @param validator 
+ * @param validatorProps 
+ * @param localErrors 
+ * @returns 
+ */
+export const validateDuiFile = (
+    duiFile: DuiFileType,
+    validator: undefined | ((f: File) => CustomValidateFileResponse),
+    validatorProps: FileValidator,
+    localErrors: LocalLabels
+): DuiFileType => {
+    let duiFileResult: DuiFileType = { ...duiFile };
+    let errors: string[] = [];
+    if (validator) {
+        return { ...duiFileResult, ...validator(duiFileResult.file) };
+    }
+    const { maxFileSize, accept } = validatorProps;
+    //check file size
+    const file: File = duiFile.file;
+    if (maxFileSize && file.size > maxFileSize) {
+        const maxFileSizeErrorMessenger: FunctionLabel = localErrors.maxSizeError as FunctionLabel;
+        errors.push(maxFileSizeErrorMessenger(maxFileSize));
+    }
+    //check file type
+    if (accept && !validateAccept(separateAccept(accept), file)) {
+        errors.push(localErrors.acceptError as string);
+    }
+    const isValid: boolean = errors.length > 0;
+    duiFileResult = { ...duiFileResult, valid: isValid, errors: isValid ? errors : undefined };
+    return duiFileResult;
+
+}

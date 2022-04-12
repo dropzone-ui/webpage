@@ -30,6 +30,7 @@ import {
   validateFile,
 } from "../../../../utils/file-validation/validation.methods";
 import { createRippleFromElement } from "../../../../utils/ripple/ripple";
+import { Method } from "../../../../utils/dropzone-ui-types";
 
 const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
   const {
@@ -280,7 +281,7 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
             fakeUploading
               ? await fakeUpload(currentFile)
               : //: await uploadPromiseAxios(currentFile, url, method, config);
-                await uploadPromiseXHR(currentFile, url, method, headers);
+                await uploadPromiseXHR(currentFile, url, method as Method, headers);
           console.log("*** serverResponse", serverResponse);
           console.log("*** uploadedFile", uploadedFile);
           serverResponses.push(serverResponse);
@@ -402,9 +403,12 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
     const output: FileValidated[] = [];
     let countdown: number = remainingValids;
     for (let i = 0, f: File; (f = preValidatedFiles[i]); i++) {
-      let validatedFile: FileValidated = validator
-        ? customValidateFile(f, validator)
-        : validateFile(f, localValidator, ValidationErrorLocalizer);
+      let validatedFile: FileValidated = validateFile(
+        f,
+        validator,
+        localValidator,
+        ValidationErrorLocalizer
+      );
 
       if (validatedFile.valid) {
         //not valid due to file count limit
@@ -539,7 +543,6 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
         accept={accept}
         style={{ display: "none" }}
         multiple={maxFiles ? maxFiles > 1 : true}
-        
       />
     </div>
   );

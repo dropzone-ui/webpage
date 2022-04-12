@@ -2,7 +2,7 @@ import { OverridableComponentProps } from "@dropzone-ui/core";
 import * as React from "react";
 import {
   CustomValidateFileResponse,
-  fileListToFileValdateArray,
+  fileListToFileValidateArray,
   FileValidated,
   UPLOADSTATUS,
 } from "../../../../utils";
@@ -360,7 +360,7 @@ const DropzoneUI: React.FC<DropzoneUIProps> = (props: DropzoneUIProps) => {
     // Procesing files
     let fileList: FileList = evt.dataTransfer.files;
     const fileValidatedList: FileValidated[] =
-      fileListToFileValdateArray(fileList);
+      fileListToFileValidateArray(fileList);
     console.log("Kamui", fileValidatedList);
   };
   const handleOnChangeInput: React.ChangeEventHandler<HTMLInputElement> = (
@@ -371,7 +371,7 @@ const DropzoneUI: React.FC<DropzoneUIProps> = (props: DropzoneUIProps) => {
     } */
     let fileList: FileList = evt.target.files as FileList;
     const fileValidatedList: FileValidated[] =
-      fileListToFileValdateArray(fileList);
+      fileListToFileValidateArray(fileList);
     console.log("Input", fileValidatedList);
     // handleFilesChange(output);
   };

@@ -5,7 +5,7 @@ import {
   makeSynthticFileValidate,
 } from "./dropzone-ui";
 import DropzoneNeo from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeo";
-import { DuiFileProps } from "./dropzone-ui/utils/dropzone-ui-types/DuiFile";
+import { DuiFileType } from "./dropzone-ui/utils/dropzone-ui-types/DuiFile";
 //import DropzoneUI3 from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneUI3";
 import {
   // FileItemObject,
@@ -30,7 +30,7 @@ const makeFileItem = (): FileValidated[] => {
   ];
 };
 const InnerTester = () => {
-  const [files, setFiles] = React.useState<FileValidated[] | DuiFileProps[]>([]);
+  const [files, setFiles] = React.useState<FileValidated[] | DuiFileType[]>([]);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -44,7 +44,7 @@ const InnerTester = () => {
     }
   };
 
-  const handleChange = (files: FileValidated[]| DuiFileProps[]) => {
+  const handleChange = (files: FileValidated[] | DuiFileType[]) => {
     /* console.log(
       "handleChange outside =>",
       files.map((x) => x.uploadStatus)
@@ -66,7 +66,6 @@ const InnerTester = () => {
 
   const handleAdd = () => {
     setFiles([...files, ...makeFileItem()]);
-    
   };
   return (
     <>
@@ -75,10 +74,18 @@ const InnerTester = () => {
         onChange={handleChange}
         value={files}
         //style={duiStyles}
-        disableScroll
         color="crimson"
+        uploadConfig={{
+          url: "https://duiserver2.deelo.cloud/upload-my-file",
+          method: "POST",
+          uploadLabel: "file",
+          headers: {
+            auth: "bearer JVKUBVBYT&R%G/TYR%&%V/TYRC&UTVGYYCRVYTTg",
+            "my header": "my_header value",
+          },
+        }}
       >
-        {files.map((f,index) => {
+        {files.map((f, index) => {
           return (
             <FileItem
               {...f}

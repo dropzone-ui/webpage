@@ -42,7 +42,7 @@ import { createListOfMultiTypeFile, createSyntheticFile } from "../utils/file-sy
 import { makeSynthticFileValidate } from "./file-synthetic/syntheticfileGenerator";
 // VALIDATION 
 import { fileListvalidator, FileIdGenerator, customValidateFile, separateAccept, validateAccept, validateFile } from "./file-validation/validation.methods";
-import { fileListToFileValdateArray } from "./fileListToFileValidateArray/fileListToFileValidateArray";
+import { fileListToFileValidateArray } from "./fileListToFileValidateArray/fileListToFileValidateArray";
 
 
 
@@ -80,4 +80,4 @@ export { createListOfMultiTypeFile, createSyntheticFile, makeSynthticFileValidat
 //VALIDATION
 export { fileListvalidator, FileIdGenerator, customValidateFile, separateAccept, validateAccept, validateFile }
 //PARSE
-export {fileListToFileValdateArray};
+export {fileListToFileValidateArray};

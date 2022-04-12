@@ -1,5 +1,8 @@
+import { DropzoneLocalizer, DropzoneLocalizerSelector } from "../../../../localization";
+import { LocalLabels } from "../../../../localization/localization";
 import { FileValidated, UPLOADSTATUS } from "../../../../utils";
-import DuiFile from "../../../../utils/dropzone-ui-types/DuiFile";
+import DuiFile, { DuiFileType } from "../../../../utils/dropzone-ui-types/DuiFile";
+import { DuiUploadResponse } from "./upload.utils";
 
 
 export const setPrepToUploading = (
@@ -27,10 +30,13 @@ export const uploadOne = (fileValidated: FileValidated): Promise<FileValidated> 
         }, 2000);
     });
 };
-
+/**
+ * Awaits the given time before start uploading
+ * @param preparingTime the time in miliseconds
+ * @returns an empty object
+ */
 export const sleepPreparing = (preparingTime?: number): Promise<Object> => {
     console.log("upoload preparingTime One", preparingTime);
-
     return new Promise((resolve, reject) => {
         if (!preparingTime) {
             resolve({});
@@ -43,7 +49,11 @@ export const sleepPreparing = (preparingTime?: number): Promise<Object> => {
 }
 
 
-///////////////////////////
+/**
+ * 
+ * @param fileValidated 
+ * @returns 
+ */
 export const prepToUploadOne = (
     fileValidated: DuiFile
 ): Promise<Object> => {
@@ -69,5 +79,54 @@ export const uploadOneDuiFile = (fileValidated: DuiFile): Promise<Object> => {
                 uploadStatus: UPLOADSTATUS.success,
             });
         }, 2000);
+    });
+};
+
+
+/**
+ * 
+ * @param duiFile the duiFile to upload 
+ * @param DropzoneLocalizer the localization
+ * @returns a duiUploadResponse object that describes the result
+ */
+export const fakeDuiUpload = (
+    duiFile: DuiFileType,
+    DropzoneLocalizer = DropzoneLocalizerSelector("EN-en")
+): Promise<DuiUploadResponse> => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const randomNumber: number = Math.floor(Math.random() * 10);
+            if (randomNumber % 2 === 0) {
+                const status = true;
+                const message = DropzoneLocalizer.fakeuploadsuccess as string;
+                const payload = { url: "" };
+                resolve({
+                    uploadedFile: {
+                        ...duiFile,
+                        uploadStatus: UPLOADSTATUS.success,
+                        uploadMessage: message,
+                    },
+                    serverResponse: {
+                        id: duiFile.id,
+                        serverResponse: { status, message, payload },
+                    },
+                });
+            } else {
+                const status = false;
+                const message = DropzoneLocalizer.fakeUploadError as string;
+                const payload = {};
+                resolve({
+                    uploadedFile: {
+                        ...duiFile,
+                        uploadStatus: UPLOADSTATUS.error,
+                        uploadMessage: message,
+                    },
+                    serverResponse: {
+                        id: duiFile.id,
+                        serverResponse: { status, message, payload },
+                    },
+                });
+            }
+        }, 1700);
     });
 };

@@ -113,16 +113,16 @@ export interface DropzoneProps extends OverridableComponentProps {
    */
   maxHeight?: string;
   /**
- * The max height of the container
- * in string format
- * by default "500px"
- * 
- * examples: 
- *    "50vh"
- *    "20%"
- *    "40em"
- *    "1rem"
- */
+   * The max height of the container
+   * in string format
+   * by default "500px"
+   * 
+   * examples: 
+   *    "50vh"
+   *    "20%"
+   *    "40em"
+   *    "1rem"
+   */
   minHeight?: string;
   /**
    * if true, shows the dropzone footer

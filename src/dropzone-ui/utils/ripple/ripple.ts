@@ -16,7 +16,13 @@ const asureRippleColor = (color: string): string => {
     0.4
   );
 }
-
+/**
+ * 
+ * @param duiContainerAbs html element
+ * @param duiContainerRel  html element
+ * @param color the color of the ripple
+ * @returns 
+ */
 export function createDuiRippleFromDiv2
   <T extends HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>
   (
@@ -24,7 +30,7 @@ export function createDuiRippleFromDiv2
     duiContainerRel: T | null,
     color: string
   ) {
-  if (!duiContainerRel || !duiContainerAbs) { return; }
+  if (!duiContainerRel || !duiContainerAbs) return;
   duiContainerAbs.style.display = "block";
   //removeRippleIfExist(duiContainerRel, "dui-ripple");
   // creating the span circle ripple
@@ -46,7 +52,7 @@ export function createDuiRippleFromDiv2
   /*   circle.style.left = `${0}px`;
     circle.style.top = `${0}px`; */
   circle.style.backgroundColor = asureRippleColor(color);
-  
+
   duiContainerRel.appendChild(circle);
   setTimeout(() => {
     duiContainerAbs.style.display = "none";

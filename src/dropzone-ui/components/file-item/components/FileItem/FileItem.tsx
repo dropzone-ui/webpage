@@ -195,7 +195,7 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
   const handleAbort = (): void => {
     //trigger abort event
     xhr?.abort();
-    // handle externelly the abort event
+    // handle externally the abort event
     onAbort?.(id);
   };
   const handleCancel = (): void => {

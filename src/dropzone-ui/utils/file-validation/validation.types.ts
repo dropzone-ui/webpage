@@ -1,5 +1,3 @@
-import { FileIdGenerator } from "./validation.methods";
-import { createSyntheticFile } from "../file-synthetic/SyntheticFile"
 export enum UPLOADSTATUS {
     preparing = "preparing",
     aborted = "aborted",
@@ -44,3 +42,14 @@ export declare type CustomValidateFileResponse = {
     errors?: string[]
 }
 
+
+export declare type DuiFileValidatorProps = {
+    /**
+     * max file size in bytes
+     */
+    maxFileSize?: number;
+    /**
+     * a comma separated list of mime types or file extensions.
+     */
+    accept?: string;
+}

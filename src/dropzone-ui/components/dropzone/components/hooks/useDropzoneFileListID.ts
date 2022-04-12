@@ -1,8 +1,7 @@
 import * as React from "react";
-import { DuiFileManager } from "../../../../utils/dropzone-ui-types/DuiFile";
+import { DuiFileManager } from "../../../../utils/dropzone-ui-types/DuiFileManager";
 
-const useDropzoneFileListId = (
-
+const useDropzoneFileListID = (
 ): number => {
     const [duiFileId, setDuiFileID] = React.useState<number | undefined>(
         undefined
@@ -17,4 +16,4 @@ const useDropzoneFileListId = (
 
     return duiFileId || 0;
 }
-export default useDropzoneFileListId;
+export default useDropzoneFileListID;

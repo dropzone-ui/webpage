@@ -1,16 +1,16 @@
-import { DropzoneProps } from "../../components/dropzone/components/Dropzone/DropzoneProps";
 import { UploadPromiseResponse } from "../../components/dropzone/components/utils/dropzone-ui.upload.utils";
+import { DuiUpload } from "../../components/dropzone/components/utils/upload.utils";
+import { Method } from "../dropzone-ui-types";
 import { FileValidated, UPLOADSTATUS } from "../file-validation/validation.types";
-import { DuiUpload } from "./dui-uploader";
+
 
 export const uploadPromiseXHR = async (
     file: FileValidated,
     url: string,
-    method: DropzoneProps["method"],
+    method: Method,
     headers?: Record<string, string>
 ): Promise<UploadPromiseResponse> => {
     return new Promise(async (resolve, reject) => {
-
         try {
             const uploader: XMLHttpRequest | undefined = file.xhr;
             if (!uploader) {
@@ -30,23 +30,19 @@ export const uploadPromiseXHR = async (
                 );
                 return;
             }
-            const localMethod: DropzoneProps["method"] = method || "POST";
+            const localMethod: Method = method || "POST";
             const fileToUpload: File = file.file;
 
             const formData = new FormData();
             formData.append("file", fileToUpload);
-            const configheaders =
-                headers || {};
+           
 
             let responseDui: DropzoneUIResponse;
             //stablish events    
             responseDui = await DuiUpload(uploader, localMethod, url, formData,
-                {
-                    headers: configheaders,
-                    //onAbort: file.onAbort,
-                    // onProgress: file.onProgress,
-                    //  onError: file.onError,
-                });
+               
+                    headers|| {});
+             
 
             if (responseDui.status) {
                 // status is true
