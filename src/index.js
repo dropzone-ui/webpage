@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -9,15 +9,25 @@ import Main from "./Router/MainRouter";
 import { DropzoneUI, Dropzone, FileItem } from "./dropzone-ui";
 import { FileItemObject } from "./dropzone-ui/utils/file-validation/validation.types";
 import FITester from "./FITester";
-const mode = 1;
+//const mode = 1;
 
-ReactDOM.render(
+/* ReactDOM.render(
+  <React.StrictMode>
+    <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter> 
+     <Main /> 
+    <FITester />
+  </React.StrictMode>,
+  document.getElementById("dropzone-ui-web-page")
+); */
+const root = ReactDOM.createRoot(
+  document.getElementById("dropzone-ui-web-page")
+);
+root.render(
   <React.StrictMode>
     {/*  <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter> */}
     {/*     <Main /> */}
     <FITester />
-  </React.StrictMode>,
-  document.getElementById("dropzone-ui-web-page")
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

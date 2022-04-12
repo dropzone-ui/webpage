@@ -77,7 +77,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     fakeUpload,
     onClean,
   } = mergeProps(props, defaultDrozoneNeoProps);
-  const { url, method, headers, uploadLabel } = uploadConfig as DuiUploadConfig;
+  const { url, method, headers, uploadLabel,cleanOnUpload=true } = uploadConfig as DuiUploadConfig;
   //localizers
   const DropzoneLocalizer: LocalLabels =
     DropzoneLocalizerSelector(localization);
@@ -110,7 +110,15 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       localization,
       validateFiles
     );
+const filterDuiFilesForUploading=(localFiles: DuiFileType[], cleanOnUpload:boolean)=>{
+  let missingUpload: number = localFiles.filter(
+    (x: DuiFileType) => x.valid && x.uploadStatus !== "success" 
+  ).length;
+if(cleanOnUpload){
 
+}
+  return missingUpload;
+}
   /**
    * Upload the list of files
    * @returns
@@ -145,7 +153,8 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       DuiFileManager.setFileListMapPreparing(
         duiFileId,
         localFiles,
-        validateFiles as boolean
+        validateFiles as boolean,
+        cleanOnUpload as boolean
       ) || [];
     //CHANGE
     handleFilesChange(

@@ -75,8 +75,9 @@ const InnerTester = () => {
           uploadLabel: "file",
           headers: {
             auth: "bearer JVKUBVBYT&R%G/TYR%&%V/TYRC&UTVGYYCRVYTTg",
-            "my header": "my_header value",
+            //"my header": "my_header value",
           },
+          cleanOnUpload:true
         }}
       >
         {files.map((duiFile, index) => {
@@ -87,7 +88,7 @@ const InnerTester = () => {
               key={index}
               info
               onDelete={handleDelete}
-              progress={40}
+              //progress={40}
               alwaysActive
               resultOnTooltip
               onCancel={handleCancel}

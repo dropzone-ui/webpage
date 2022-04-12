@@ -93,6 +93,7 @@ export const uploadOnePromiseXHR = async (
             }
         } catch (error) {
             // on error
+            console.log("ERROR", error);
             const duiUploadResponse: DuiUploadResponse = unableToUploadResult(duiFile);
             resolve(duiUploadResponse);
         }

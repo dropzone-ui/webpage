@@ -75,33 +75,49 @@ export class DuiFileManager {
         }
     }
     /**
-     * Updates(replaces) the duiFile list on preparing stage and returns the new array
+     * Updates(replaces) the duiFile list on preparing stage and returns the new array.
+     * Removes the non valid files if cleanOnUpload is true and validateFiles is also true
+     * Then sets on preparing stage all files according to the following creiteria:
+     * If theuploadStatus is diferent than "sucess" AND
+     * then, update the files on preparing stage. Otherwise keep the duiFile props.
+     * Finally, updates the duiFileInstance list on DuiFileManager.
      * @param duiFileId the id to access the right list
      * @param localFiles the list of duiFiles
+     * @param validateFiles flag that indicates that validation is active or o¿not
+     * @param cleanOnUpload flag to determine whther to clena the list oof non valid files or not
      * @returns a list of DuiFileInstance
      */
     public static setFileListMapPreparing(
         duiFileId: number,
         localFiles: DuiFileType[],
-        validateFiles: boolean
+        validateFiles: boolean,
+        cleanOnUpload: boolean
     ): DuiFileInstance[] | undefined {
         if (!(typeof duiFileId === "number")) return undefined;
         try {
-            DuiFileManager.setFileList(duiFileId, [
-                ...localFiles.map(
-                    (f: DuiFileType) => {
-                        if (f.uploadStatus !== UPLOADSTATUS.success) {
-                            if (validateFiles) {
-                                if (f.valid)
-                                    return new DuiFileInstance({ ...f, uploadStatus: UPLOADSTATUS.preparing })
-
-                            } else
-                                return new DuiFileInstance({ ...f, uploadStatus: UPLOADSTATUS.preparing })
-                        }
-                        return new DuiFileInstance(f);
+            let resultDuiList: DuiFileInstance[] = [];
+            //remove non valids if cleanOnUpload is true and validateFiles is also true
+            if (validateFiles && cleanOnUpload) {
+                for (let i = 0; i < localFiles.length; i++) {
+                    const duiFile: DuiFileType = localFiles[i];
+                    const { valid } = duiFile;
+                    if (valid) {
+                        resultDuiList.push(new DuiFileInstance(duiFile));
                     }
-                ),
-            ]);
+
+                }
+            }
+            //sets on preparing stage all files according to the following creiteria:
+            // If theuploadStatus is diferent than "sucess" AND
+            // If validateFiles is true and the file is true OR validateFiles is false
+            // then update the files on preparing stage. Otherwise keep the duiFile props.
+            for (let i = 0; i < resultDuiList.length; i++) {
+                const duiFile: DuiFileType = localFiles[i];
+                const { valid, uploadStatus } = duiFile;
+                if (uploadStatus !== UPLOADSTATUS.success && (validateFiles && valid || !validateFiles))
+                    resultDuiList[i].uploadStatus = UPLOADSTATUS.preparing;
+            }
+            DuiFileManager.setFileList(duiFileId, resultDuiList);
             return DuiFileManager.fileLists[duiFileId];
         } catch (error) {
             console.error("Error on get List", error);
