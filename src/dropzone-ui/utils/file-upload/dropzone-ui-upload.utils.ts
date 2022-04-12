@@ -80,6 +80,7 @@ export const uploadPromiseXHR = async (
             }
         } catch (error) {
             // on error
+            console.log("uploadPromiseXHR ERROR", error);
             resolve(
                 {
                     uploadedFile:

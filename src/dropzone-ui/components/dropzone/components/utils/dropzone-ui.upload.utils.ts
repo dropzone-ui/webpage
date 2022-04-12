@@ -86,6 +86,7 @@ export const uploadPromiseAxios = async (
             }
         } catch (error) {
             // on error
+            console.log("uploadPromiseXHR ERROR", error);
             resolve(
                 {
                     uploadedFile:
