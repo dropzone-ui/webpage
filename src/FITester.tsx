@@ -32,12 +32,6 @@ const makeFileItem = (): FileValidated[] => {
 const InnerTester = () => {
   const [files, setFiles] = React.useState<FileValidated[] | DuiFileType[]>([]);
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      // setFiles(makeFileItem());
-      //setFiles2([...makeFileItem(), ...makeFileItem()]);
-    }, 1500);
-  }, []);
   const handleDelete = (id: number | string | undefined) => {
     if (typeof id === "number") {
       setFiles(files.filter((x) => x.id !== id));
@@ -45,10 +39,6 @@ const InnerTester = () => {
   };
 
   const handleChange = (files: FileValidated[] | DuiFileType[]) => {
-    /* console.log(
-      "handleChange outside =>",
-      files.map((x) => x.uploadStatus)
-    ); */
     setFiles(files);
   };
   const handleCancel = (id: number) => {
@@ -67,10 +57,14 @@ const InnerTester = () => {
   const handleAdd = () => {
     setFiles([...files, ...makeFileItem()]);
   };
+  const handleClean = () => {
+    setFiles([...files.filter((x) => x.valid)]);
+  };
   return (
     <>
       <button onClick={handleAdd}>Add</button>
       <DropzoneNeo
+        onClean={handleClean}
         onChange={handleChange}
         value={files}
         //style={duiStyles}
@@ -85,11 +79,11 @@ const InnerTester = () => {
           },
         }}
       >
-        {files.map((f, index) => {
+        {files.map((duiFile, index) => {
           return (
             <FileItem
-              {...f}
-              id={f.id}
+              {...duiFile}
+              id={duiFile.id}
               key={index}
               info
               onDelete={handleDelete}
@@ -109,11 +103,10 @@ const InnerTester = () => {
 const FITester: React.FC<any> = (props: any) => {
   return (
     <React.Fragment>
+      <InnerTester />{" "}
       <div className="main-container">
         <div className="left"></div>
-        <div className="right">
-          <InnerTester />{" "}
-        </div>
+        <div className="right"> </div>
       </div>
     </React.Fragment>
   );

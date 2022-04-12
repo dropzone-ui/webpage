@@ -105,6 +105,7 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
     onUploadFinish?: (responses: DuiFileResponse[]) => void;
     uploadConfig?: DuiUploadConfig;
     fakeUpload?:boolean;
+    onClean?:Function;
 
 }
 export const defaultDrozoneNeoProps: DropzoneNeoProps =

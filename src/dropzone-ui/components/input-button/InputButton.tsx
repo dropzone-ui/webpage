@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from "react";
+import * as React from "react";
 import { MaterialButton } from "@unlimited-react-components/material-button";
 import { mergeProps } from "@dropzone-ui/core";
 import { InputButtonDefaultProps, InputButtonProps } from "./InputButtonProps";
@@ -7,6 +7,8 @@ import { LocalLabels } from "../../localization/localization";
 import { ValidateErrorLocalizerSelector } from "../../localization";
 import { FileValidated, FileValidator } from "../../utils";
 import { customValidateFile, validateFile } from "../../utils/file-validation/validation.methods";
+import { DuiFileType } from "../../utils/dropzone-ui-types/DuiFile";
+import { fileListToDuiFileTypeArray } from "../../utils/fileListToFileValidateArray/fileListToFileValidateArray";
 
 const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
   let {
@@ -23,7 +25,9 @@ const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
     validator,
     variant,localization
   } = mergeProps(props, InputButtonDefaultProps);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+    //state for checking upload start
+    const [isUploading, setIsUploading] = React.useState<boolean>(false);
   const localValidator: FileValidator = {
     //It is assumed that input tag already validated accept property
     //accept: accept,
@@ -31,22 +35,13 @@ const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
   };
   const ValidationErrorLocalizer: LocalLabels =
   ValidateErrorLocalizerSelector(localization);
+
   const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (
     evt: React.ChangeEvent<HTMLInputElement>,
   ): void => {
-    let files: FileList = evt.target.files as FileList;
-    const output: FileValidated[] = [];
-
-    if (files && files.length > 0) {
-      for (let i = 0, f: File; (f = files[i]); i++) {
-        let validatedFile: FileValidated = validator
-          ? customValidateFile(f, validator)
-          : validateFile(f, localValidator, ValidationErrorLocalizer);
-        output.push(validatedFile);
-      }
-    }
-
-    onChange?.(output);
+    if (isUploading) return;
+    let fileList: FileList = evt.target.files as FileList;
+    let duiFileListOutput: DuiFileType[] = fileListToDuiFileTypeArray(fileList);
   };
   function clickInput(e: React.MouseEvent<MouseEvent>): void {
     e.stopPropagation();
@@ -57,7 +52,7 @@ const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
     }
   }
   return (
-    <Fragment>
+    <React.Fragment>
       <MaterialButton
         style={style}
         color={color}
@@ -78,7 +73,7 @@ const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
         multiple={multiple}
         accept={accept}
       />
-    </Fragment>
+    </React.Fragment>
   );
 };
 

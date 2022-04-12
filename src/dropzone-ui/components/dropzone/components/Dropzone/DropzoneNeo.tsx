@@ -75,6 +75,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     validator,
     onUploadFinish,
     fakeUpload,
+    onClean,
   } = mergeProps(props, defaultDrozoneNeoProps);
   const { url, method, headers, uploadLabel } = uploadConfig as DuiUploadConfig;
   //localizers
@@ -220,9 +221,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
   );
 
   // HANDLERS for CLICK, DRAG NAD DROP
-  function handleClick(): //<T extends HTMLDivElement>
-  //evt: React.MouseEvent<T, MouseEvent>
-  void {
+  function handleClick(): void {
     //handleClickUtil(evt);
     if (isUploading) return;
     makeRipple();
@@ -269,10 +268,13 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     setIsDragging(false);
     if (isUploading) return;
     let fileList: FileList = evt.dataTransfer.files;
+  
     let duiFileListOutput: DuiFileType[] = fileListToDuiFileTypeArray(fileList);
+
     //validate dui files
     if (validateFiles)
       duiFileListOutput = outerDuiValidation(duiFileListOutput);
+
     //init xhr on each dui file
     if (url) duiFileListOutput = toUploadableDuiFileList(duiFileListOutput);
 
@@ -308,6 +310,9 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       setLocalFiles([]);
     }
   };
+  const handleClean = (): void => {
+    onClean?.();
+  };
   /**
    * Performs the changes in the DuiFile list.
    * Makes a new array of DuiFiles according to the "behaviour" prop.
@@ -321,7 +326,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     duiFileList: DuiFileType[],
     isUploading?: boolean
   ): void => {
-    console.log("files change", isUploading, duiFileList);
+
     let finalDuiFileList: DuiFileType[] =
       behaviour === "add" && !isUploading
         ? [...localFiles, ...duiFileList]
@@ -383,8 +388,11 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
             maxFiles={maxFiles}
             localization={localization}
             urlPresent={url !== undefined}
-            onUploadStart={!uploadOnDrop ? uploadfiles : undefined}
-            numberOfValidFiles={2}
+            onUploadStart={
+              !uploadOnDrop ? () => uploadfiles(localFiles) : undefined
+            }
+            numberOfValidFiles={numberOfValidFiles}
+            onClean={handleClean}
           />
         )}
         {children}

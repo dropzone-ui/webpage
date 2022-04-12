@@ -25,10 +25,6 @@ export { DropzoneLocalizerSelector, DropzoneLocalizer, DropzoneItalian, Dropzone
 export { default as Dropzone } from "./components/dropzone/components/Dropzone/Dropzone";
 export * from "./components/dropzone/components/Dropzone/Dropzone";
 
-export { default as DropzoneUI } from "./components/dropzone/components/Dropzone/DropzoneUI";
-export * from "./components/dropzone/components/Dropzone/DropzoneUI";
-
-
 export { default as DropzoneLabel } from "./components/dropzone/components/DropzoneLabel/DropzoneLabel";
 export * from "./components/dropzone/components/DropzoneLabel/DropzoneLabel";
 

@@ -1,7 +1,6 @@
 import { ValidateErrorLocalizerSelector } from "../../localization";
 import { FunctionLabel, Localization, LocalLabels } from "../../localization/localization";
 import { DuiFileType } from "../dropzone-ui-types/DuiFile";
-import { DuiFileValidator } from "../dropzone-ui-types/validation";
 import { getExt } from "../file-utilities/utilities";
 //import { listOfErrors } from "./validation.fakeerros";
 import {
@@ -214,7 +213,7 @@ export const validateDuiFileList = (
     maxFiles: number | undefined,
     localization?: Localization
 ): DuiFileType[] => {
-    let fileListResult: DuiFileType[] = [...duiFileList];
+    let fileListResult: DuiFileType[] = [];
     if (!remainingValids) return fileListResult;
     let remaining: number = remainingValids;
     const ValidationErrorLocalizer: LocalLabels =
@@ -224,6 +223,8 @@ export const validateDuiFileList = (
         let currentDuiFile: DuiFileType = duiFileList[i];
 
         currentDuiFile = validateDuiFile(currentDuiFile, validator, localValidatorProps, ValidationErrorLocalizer);
+        //console.log("validateDuiFileList after validation", currentDuiFile);
+
         if (currentDuiFile.valid) {
             //not valid due to file count limit
             const valid = remaining > 0;
@@ -276,7 +277,7 @@ export const validateDuiFile = (
     if (accept && !validateAccept(separateAccept(accept), file)) {
         errors.push(localErrors.acceptError as string);
     }
-    const isValid: boolean = errors.length > 0;
+    const isValid: boolean = errors.length === 0;
     duiFileResult = { ...duiFileResult, valid: isValid, errors: isValid ? errors : undefined };
     return duiFileResult;
 

@@ -115,7 +115,7 @@ export const DuiUpload = (
     headers: Record<string, string>
 ) => {
     return new Promise<DuiServerResponse>((resolve, reject) => {
-        console.log("start upload",);
+        console.log("DuiUpload", xhr, method, endpoint, data, headers);
         xhr.upload.onload = () => { };
 
         xhr.upload.ontimeout = () => {
@@ -177,6 +177,7 @@ export const DuiUpload = (
         const headerKeys: string[] = Object.keys(headers);
         //const headerValues: string[] = Object.values(headers);
         for (let i = 0; i < headerKeys.length; i++) {
+            console.log("DuiUpload headers", headerKeys[i], headers[headerKeys[i]]);
             xhr.setRequestHeader(
                 headerKeys[i],
                 headers[headerKeys[i]]

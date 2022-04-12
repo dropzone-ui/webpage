@@ -1,6 +1,5 @@
 import {
-  Dropzone,
-  DropzoneUI,
+  Dropzone as DropzoneUI,
   FileItem,
   FullScreenPreview,
   VideoPreview,
@@ -53,7 +52,7 @@ const RightPart = (props) => {
           magic happens
         </p>
         <br />
-       {/*  <Dropzone
+        {/*  <Dropzone
           //footer={false}
           //header={false}
           clickable

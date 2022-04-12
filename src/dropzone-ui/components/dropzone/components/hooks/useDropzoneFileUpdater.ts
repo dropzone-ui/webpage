@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Localization } from "../../../../localization/localization";
 import { UPLOADSTATUS } from "../../../../utils";
-import DuiFile, {DuiFileType } from "../../../../utils/dropzone-ui-types/DuiFile";
+import DuiFile, { DuiFileType } from "../../../../utils/dropzone-ui-types/DuiFile";
 import { DuiFileManager } from "../../../../utils/dropzone-ui-types/DuiFileManager";
 import { validateDuiFileList } from "../../../../utils/file-validation/validation.methods";
 import { DuiFileValidatorProps } from "../../../../utils/file-validation/validation.types";
@@ -30,11 +30,15 @@ const useDropzoneFileListUpdater = (
     localization?: Localization,
     validateFiles?: boolean
 ): [DuiFileType[], number, React.Dispatch<React.SetStateAction<DuiFileType[]>>] => {
+    //state for managing the files locally
     const [localFiles, setLocalFiles] = React.useState<DuiFileType[]>([]);
+    // the current number of valid files
     const [numberOfValidFiles, setNumberOfValidFiles] = React.useState<number>(0);
     React.useEffect(() => {
         let arrOfDuiFiles: DuiFile[] | undefined =
             DuiFileManager.getFileListMap(duiFileId);
+
+        //console.table(value);
         if (!isUploading) {
             setLocalFiles(value);
         } else {
@@ -47,7 +51,7 @@ const useDropzoneFileListUpdater = (
                         (value[i].uploadStatus === undefined) &&
                         (arrOfDuiFiles[i].uploadStatus === UPLOADSTATUS.preparing)
                     ) {
-                        console.log("changeeeee");
+                        console.log("useDropzoneFileListUpdater onCancel i", i);
                         arrOfDuiFiles[i].uploadStatus = undefined;
                     }
                 }
@@ -64,13 +68,17 @@ const useDropzoneFileListUpdater = (
             maxFiles,
             localization
         );
-        if (validateFiles) {
-            setNumberOfValidFiles(validatedDuiFileList.filter((x) => x.valid).length);
-        } else {
-            setNumberOfValidFiles(validatedDuiFileList.length);
-        }
+
         setLocalFiles(validatedDuiFileList);
-    }, [maxFileSize, accept, maxFiles, localization, validateFiles]);
+    }, [maxFileSize, accept, maxFiles, localization]);
+
+    React.useEffect(() => {
+        if (validateFiles) {
+            setNumberOfValidFiles(localFiles.filter((x) => x.valid).length);
+        } else {
+            setNumberOfValidFiles(localFiles.length);
+        }
+    }, [localFiles, validateFiles]);
     return [localFiles, numberOfValidFiles, setLocalFiles];
 }
 export default useDropzoneFileListUpdater;
