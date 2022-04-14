@@ -72,7 +72,7 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
     <React.Fragment>
       {progress !== undefined && progress >= 0 ? (
         <React.Fragment>
-          {uploadStatus === UPLOADSTATUS.preparing && (
+          {uploadStatus === UPLOADSTATUS.preparing && onCancel && (
             <div
               className="dui-main-loader-container clickable"
               onClick={handleCancel}
@@ -126,8 +126,6 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
         <FileItemStatus
           uploadStatus={uploadStatus}
           localization={localization as Localization}
-          //progress={progress}
-          //onAbort={onAbort}
         />
       )}
     </React.Fragment>

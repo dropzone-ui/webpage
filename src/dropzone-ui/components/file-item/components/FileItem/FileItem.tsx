@@ -75,11 +75,11 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
   const [showInfo, setShowInfo] = useState<boolean>(false);
   //upload progress
   const [localProgress, setLocalProgress] = useState<number | undefined>(
-    undefined
+    1
   );
   useEffect(() => {
     //if (progress) {
-    setLocalProgress(progress === 0 ? progress + 1 : progress);
+    setLocalProgress(!progress || progress === 0 ? 1 : progress);
     //}
   }, [progress]);
 
@@ -141,8 +141,12 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
         }
       };
     }
+    //if (!localProgress) {
+      //handleProgress(1);
+    //}
   };
   const handleProgress = (currentProgress: number): void => {
+    console.log("FileItem handle progress", currentProgress);
     setLocalProgress(currentProgress);
   };
   const handleDelete = (): void => {
@@ -243,7 +247,7 @@ const FileItem: FC<FileItemProps> = (props: FileItemProps) => {
             hovering={alwaysActive || hovering}
             progress={localProgress}
             onAbort={onAbort ? handleAbort : undefined}
-            onCancel={handleCancel}
+            onCancel={onCancel? handleCancel: undefined}
           />
           <FileItemFullInfoLayer
             showInfo={showInfo}

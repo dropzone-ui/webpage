@@ -72,7 +72,7 @@ const DynamicLoader: React.FC<DynamicLoaderProps> = (
           x={`${finalX}`}
           y={`${(finalX * 7) / 6}`}
         >
-          {`${percentage} %`}
+          {`${percentage.toFixed(0)} %`}
         </text>
       )}
     </svg>

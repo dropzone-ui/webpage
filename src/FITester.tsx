@@ -5,6 +5,7 @@ import {
   makeSynthticFileValidate,
 } from "./dropzone-ui";
 import DropzoneNeo from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeo";
+import DropzoneNeoProps from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeoProps";
 import { DuiFileType } from "./dropzone-ui/utils/dropzone-ui-types/DuiFile";
 //import DropzoneUI3 from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneUI3";
 import {
@@ -13,6 +14,22 @@ import {
   //UPLOADSTATUS,
 } from "./dropzone-ui/utils/file-validation/validation.types";
 import "./FITester.scss";
+const dropzoneProps: DropzoneNeoProps = {
+  color: "crimson",
+  autoClean: true,
+  uploadConfig: {
+    url: "https://duiserver2.deelo.cloud/upload-my-file",
+    method: "POST",
+    uploadLabel: "file",
+    headers: {
+      auth: "bearer JVKUBVBYT&R%G/TYR%&%V/TYRC&UTVGYYCRVYTTg",
+      //"my header": "my_header value",
+    },
+    cleanOnUpload: true,
+    autoUpload: true,
+    preparingTime: 1500,
+  },
+};
 const makeFileItem = (): FileValidated[] => {
   return [
     {
@@ -68,31 +85,42 @@ const InnerTester = () => {
         onChange={handleChange}
         value={files}
         //style={duiStyles}
-        color="crimson"
-        uploadConfig={{
-          url: "https://duiserver2.deelo.cloud/upload-my-file",
-          method: "POST",
-          uploadLabel: "file",
-          headers: {
-            auth: "bearer JVKUBVBYT&R%G/TYR%&%V/TYRC&UTVGYYCRVYTTg",
-            //"my header": "my_header value",
-          },
-          cleanOnUpload:true
-        }}
+        {...dropzoneProps}
       >
         {files.map((duiFile, index) => {
           return (
             <FileItem
               {...duiFile}
-              id={duiFile.id}
               key={index}
               info
               onDelete={handleDelete}
-              //progress={40}
               alwaysActive
               resultOnTooltip
               onCancel={handleCancel}
-              //uploadStatus={UPLOADSTATUS.uploading}
+            />
+          );
+        })}
+        {files.map((duiFile, index) => {
+          return (
+            <FileItem
+              {...duiFile}
+              key={index * 5}
+              info
+              alwaysActive
+              resultOnTooltip
+            />
+          );
+        })}
+        {files.map((duiFile, index) => {
+          return (
+            <FileItem
+              {...duiFile}
+              key={index * 10}
+              info
+              onDelete={handleDelete}
+              resultOnTooltip
+              onCancel={handleCancel}
+              onAbort={() => {}}
             />
           );
         })}

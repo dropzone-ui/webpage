@@ -1,4 +1,5 @@
 import { OverridableComponentProps } from "@dropzone-ui/core";
+import axios from "axios";
 import { Localization } from "../../../../localization/localization";
 import { CustomValidateFileResponse, FileValidated } from "../../../../utils";
 import { FileDuiResponse } from "../../../../utils/file-upload/dropzone-ui-upload.utils";
@@ -11,6 +12,7 @@ export interface DropzoneProps extends OverridableComponentProps {
    * Returns as first parameter the list of FileValidate files dropped or selected.
    */
   onDrop?: (filesDropped: FileValidated[]) => void;
+  
   /**
    * server Url or endpoint to upload the files
    */
@@ -25,6 +27,7 @@ export interface DropzoneProps extends OverridableComponentProps {
    * default:
    * config = {
    *   headers: { 
+   *    
    *     "content-type": "multipart/form-data", 
    *   }, 
    * } 
@@ -239,5 +242,4 @@ export const DropzonePropsDefault: DropzoneProps = {
   disableScroll: undefined,
   //headers: { "content-type": "multipart/form-data" }
 };
-
 

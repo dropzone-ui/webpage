@@ -118,9 +118,9 @@ export const DuiUpload = (
     return new Promise<DuiServerResponse>((resolve, reject) => {
         console.log("DuiUpload", xhr, method, endpoint, data, headers);
         xhr.upload.onload = () => {
-            console.log("DuiUpload onLoad", xhr.readyState,xhr.response);
+            console.log("DuiUpload onLoad", xhr.readyState, xhr.response);
 
-         };
+        };
 
         xhr.upload.ontimeout = () => {
             //onError("Timeout error");
@@ -146,7 +146,7 @@ export const DuiUpload = (
         //currently listening on FileItem component hook
         xhr.onreadystatechange = async (e) => {
             //console.log("Finished", xhr);
-            console.log("DuiUpload onreadystatechange", xhr.readyState,xhr.response);
+            console.log("DuiUpload onreadystatechange", xhr.readyState, xhr.response);
             if (xhr.readyState === 4 && xhr.response !== "") {
                 let duiRes: DuiServerResponse;
                 try {
@@ -223,3 +223,16 @@ export const preparingToUploadOne = (
         }, 1500);
     });
 };
+/**
+ * Sleeps for 1200 miliseconds for showing a better transition
+ * on uploading
+ * @returns true is everything is ok
+ */
+export const sleepTransition = (
+): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(true);
+        }, 1200);
+    });
+}

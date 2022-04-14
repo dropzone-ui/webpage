@@ -29,6 +29,7 @@ import {
   DuiFileResponse,
   DuiUploadResponse,
   preparingToUploadOne,
+  sleepTransition,
   toUploadableDuiFileList,
   uploadOnePromiseXHR,
 } from "../utils/upload.utils";
@@ -68,8 +69,6 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     //upload
     uploadConfig,
     //actions
-    uploadOnDrop,
-    preparingTime,
     behaviour,
     disabled,
     validator,
@@ -77,7 +76,15 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     fakeUpload,
     onClean,
   } = mergeProps(props, defaultDrozoneNeoProps);
-  const { url, method, headers, uploadLabel,cleanOnUpload=true } = uploadConfig as DuiUploadConfig;
+  const {
+    url,
+    method,
+    headers,
+    uploadLabel,
+    cleanOnUpload = true,
+    preparingTime = 1500,
+    autoUpload = false,
+  } = uploadConfig as DuiUploadConfig;
   //localizers
   const DropzoneLocalizer: LocalLabels =
     DropzoneLocalizerSelector(localization);
@@ -110,18 +117,8 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       localization,
       validateFiles
     );
-const filterDuiFilesForUploading=(localFiles: DuiFileType[], cleanOnUpload:boolean)=>{
-  let missingUpload: number = localFiles.filter(
-    (x: DuiFileType) => x.valid && x.uploadStatus !== "success" 
-  ).length;
-if(cleanOnUpload){
-
-}
-  return missingUpload;
-}
   /**
    * Upload the list of files
-   * @returns
    */
   const uploadfiles = async (localFiles: DuiFileType[]): Promise<void> => {
     // set flag to true
@@ -194,6 +191,8 @@ if(cleanOnUpload){
         arrOfDuiFiles[i].uploadStatus = uploadedFile.uploadStatus;
         arrOfDuiFiles[i].uploadMessage = uploadedFile.uploadMessage;
         //CHNAGE
+        if (!(arrOfDuiFiles[i].uploadStatus === UPLOADSTATUS.aborted))
+          await sleepTransition();
         handleFilesChange(
           arrOfDuiFiles.map((x: DuiFileInstance) => x.toFileValidated()),
           true
@@ -232,7 +231,7 @@ if(cleanOnUpload){
   // HANDLERS for CLICK, DRAG NAD DROP
   function handleClick(): void {
     //handleClickUtil(evt);
-    if (isUploading) return;
+    if (isUploading || !clickable) return;
     makeRipple();
     handleClickInput(inputRef.current);
   }
@@ -277,7 +276,7 @@ if(cleanOnUpload){
     setIsDragging(false);
     if (isUploading) return;
     let fileList: FileList = evt.dataTransfer.files;
-  
+
     let duiFileListOutput: DuiFileType[] = fileListToDuiFileTypeArray(fileList);
 
     //validate dui files
@@ -335,7 +334,6 @@ if(cleanOnUpload){
     duiFileList: DuiFileType[],
     isUploading?: boolean
   ): void => {
-
     let finalDuiFileList: DuiFileType[] =
       behaviour === "add" && !isUploading
         ? [...localFiles, ...duiFileList]
@@ -345,7 +343,7 @@ if(cleanOnUpload){
     } else {
       setLocalFiles(finalDuiFileList);
     }
-    if (uploadOnDrop && !isUploading) uploadfiles(finalDuiFileList);
+    if (autoUpload && !isUploading) uploadfiles(finalDuiFileList);
   };
   /**
    * Performs the validation process for each DuiFile
@@ -398,7 +396,7 @@ if(cleanOnUpload){
             localization={localization}
             urlPresent={url !== undefined}
             onUploadStart={
-              !uploadOnDrop ? () => uploadfiles(localFiles) : undefined
+              !autoUpload ? () => uploadfiles(localFiles) : undefined
             }
             numberOfValidFiles={numberOfValidFiles}
             onClean={handleClean}
