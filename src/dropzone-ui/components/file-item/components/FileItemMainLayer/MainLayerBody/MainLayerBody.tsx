@@ -13,8 +13,8 @@ export type MainLayerBodyProps = {
 
   showInfo: boolean;
   /**
-   * This feature is hidden, it is not present on documentation
-   * because is experimental. If you found this prop, you can test it
+   * This feature is hidden, it is not present on the documentation
+   * because it's experimental. If you found this prop, you can test it
    * and comment us if any issue is found. Thanks in advance.
    *
    * Make file name, info layer, size and "valid message"
@@ -94,7 +94,7 @@ const MainLayerBody: React.FC<MainLayerBodyProps> = (
             width={60}
             onCancel={onCancel}
           />
-          <div className="dui-file-status-aboslute-container">
+          <div className="dui-file-status-absolute-container">
             {!showInfo && !onlyImage && hovering && (
               <React.Fragment>
                 {/** When always actie or hovering he file status validation must be visible

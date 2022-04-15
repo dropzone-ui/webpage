@@ -2,25 +2,20 @@ import * as React from "react";
 import { Localization } from "../../../../../localization/localization";
 import { UPLOADSTATUS } from "../../../../../utils";
 import FileItemStatus from "../../FileItemStatus/FileItemStatus";
+import FileItemUploadingStatus from "../../FileItemStatus/FileItemUploadingStatus";
+import FileItemUploadStatus from "../../FileItemStatus/FileItemUploadStatus";
+import FileItemValidStatus from "../../FileItemStatus/FileItemValidStatus";
 import FileItemLoader from "../FileItemLoader/FileItemLoader";
 import "./MainLayerBody.scss";
-export type MainLayerBodyProps = {
+
+export type MainLayerBodyNeoProps = {
   /**
    * whether show a valid or rejected message
    * by def. valid is false (if not present, is false too)
    */
   valid?: boolean | null;
 
-  showInfo: boolean;
-  /**
-   * This feature is hidden, it is not present on documentation
-   * because is experimental. If you found this prop, you can test it
-   * and comment us if any issue is found. Thanks in advance.
-   *
-   * Make file name, info layer, size and "valid message"
-   * not visible
-   */
-  onlyImage?: boolean;
+ 
   uploadStatus?: UPLOADSTATUS;
 
   /**
@@ -42,18 +37,18 @@ export type MainLayerBodyProps = {
   onCancel?: Function;
   uploadComplete?: boolean;
 };
-const MainLayerBody: React.FC<MainLayerBodyProps> = (
-  props: MainLayerBodyProps
+const MainLayerBodyNeo: React.FC<MainLayerBodyNeoProps> = (
+  props: MainLayerBodyNeoProps
 ) => {
   const {
     uploadStatus,
-    showInfo,
+
     hovering,
     //uploadComplete,
     localization,
     onAbort,
     progress,
-    onlyImage,
+
     valid,
     onCancel,
   } = props;
@@ -62,7 +57,7 @@ const MainLayerBody: React.FC<MainLayerBodyProps> = (
   React.useEffect(() => {
     if (
       uploadStatus &&
-      ["success", "error", "success", "aborted"].includes(uploadStatus)
+      ["success", "error", "aborted"].includes(uploadStatus)
     ) {
       setTimeout(() => {
         setUploadComplete(true);
@@ -73,17 +68,10 @@ const MainLayerBody: React.FC<MainLayerBodyProps> = (
     };
   }, [uploadStatus]);
 
-/*   React.useEffect(() => {
-    console.log("MainLayerBody", uploadStatus, uploadComplete,progress);
-  }, [uploadStatus, uploadComplete]); */
-
   return (
     <div className="dui-file-item-main-layer-body">
-      {/** UPLOADING, upload isn't completed, showInfo=false and uploadStatus != undef  */}
-      {(uploadStatus === UPLOADSTATUS.preparing ||
-        uploadStatus === UPLOADSTATUS.uploading) &&
-      !showInfo &&
-      !uploadComplete ? (
+      {/** Uploading or preparing stage? */}
+      {!uploadComplete && (
         <React.Fragment>
           <FileItemLoader
             uploadStatus={uploadStatus}
@@ -93,54 +81,24 @@ const MainLayerBody: React.FC<MainLayerBodyProps> = (
             height={60}
             width={60}
             onCancel={onCancel}
+          /> 
+          <FileItemUploadStatus
+            uploadStatus={uploadStatus}
+            localization={localization}
           />
-          <div className="dui-file-status-aboslute-container">
-            {!showInfo && !onlyImage && hovering && (
-              <React.Fragment>
-                {/** When always actie or hovering he file status validation must be visible
-                 * valid, not valid
-                 *
-                 */}
-                {uploadStatus &&
-                uploadStatus !== UPLOADSTATUS.preparing &&
-                uploadStatus !== UPLOADSTATUS.uploading ? (
-                  <FileItemStatus
-                    uploadStatus={uploadStatus}
-                    localization={localization as Localization}
-                  />
-                ) : (
-                  <FileItemStatus
-                    valid={valid}
-                    localization={localization as Localization}
-                  />
-                )}
-              </React.Fragment>
-            )}
-          </div>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          {/** Upload ststus or valid status depending on the value on the corner */}
-          <div className="dui-file-status-aboslute-container">
-            {!showInfo && !onlyImage && hovering && (
-              <React.Fragment>
-                {uploadStatus ? (
-                  <FileItemStatus
-                    uploadStatus={uploadStatus}
-                    localization={localization as Localization}
-                  />
-                ) : (
-                  <FileItemStatus
-                    valid={valid}
-                    localization={localization as Localization}
-                  />
-                )}
-              </React.Fragment>
-            )}
-          </div>
         </React.Fragment>
       )}
+      <div className="dui-file-status-aboslute-container">
+        {uploadComplete && hovering ? (
+          <FileItemUploadStatus
+            uploadStatus={uploadStatus}
+            localization={localization}
+          />
+        ) : (
+          <FileItemValidStatus valid={valid} localization={localization} />
+        )}
+      </div>
     </div>
   );
 };
-export default MainLayerBody;
+export default MainLayerBodyNeo;

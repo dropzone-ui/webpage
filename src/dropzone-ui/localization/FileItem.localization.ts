@@ -24,7 +24,7 @@ export const FileItemLocalizer: ComponentLocalizer = {
  * @param local the Localization
  * @returns a ComponentLocalizer object that contains the translation
  */
-export const FileItemLocalizerSelector = (local: Localization): LocalLabels => {
+export const FileItemLocalizerSelector = (local?: Localization): LocalLabels => {
     switch (local) {
         case "ES-es": return FileItemLocalizer["ES-es"];
         case "EN-en": return FileItemLocalizer["EN-en"];

@@ -7,28 +7,18 @@
 }
 
 .svg_circle_loader {
-  /* border: 1px solid #14ff00; */
-  //background-color: rgba(0, 0, 0, 0.21);
   border-radius: 50%;
-  /* &:hover {
-    //  background-color: rgba(0, 0, 0, 0.61);
-  } */
 }
 
-text {
-  /* dominant-baseline: middle;
-     */
+text.dui-text-dynamic-loader {
   text-anchor: middle;
   font-size: 1em;
-  //font-family: Arial;
   fill: aliceblue;
 }
-
 .loader-container {
   height: 60px;
   width: 60px;
   position: relative;
-  /* width: 200px; */
   outline: 1px solid skyblue;
 }
 
@@ -44,13 +34,9 @@ text {
   &.clickable{
     cursor: pointer;
   }
-  
-  
   &:hover {
     background-color: rgba(0, 0, 0, 0.61);
-    
   }
-  // background-color: aquamarine;
   .dui-abort-icon-container {
     position: absolute;
     width: 100%;
@@ -58,9 +44,6 @@ text {
     display: flex;
     align-items: center;
     justify-content: center;
-    /*   &:hover{
-      background-color: rgba(0, 0, 0, 0.61);
-    } */
   }
   .dui-dynamic-preparing-loader-container {
     position: absolute;
@@ -71,7 +54,6 @@ text {
     justify-content: center;
   }
 }
-
 .x-button-abort {
   position: absolute;
   left: 8px;
@@ -81,12 +63,9 @@ text {
   border-radius: 50%;
   overflow: hidden;
   fill: rgba(255, 255, 255, 0.808);
-  //background-color: rgba(0, 0, 0, 0.21);
 }
 .x-button-abort:hover {
   fill: rgba(255, 255, 255, 0.925);
-  //background-color: rgba(0, 0, 0, 0.61);
-  //background-color: gray;
 }
 .circle_loader {
   fill: none;
@@ -94,5 +73,4 @@ text {
   stroke-width: 6px;
   transform-origin: center;
   transform: rotate(-90deg);
-  /*  width: 100px; */
 }

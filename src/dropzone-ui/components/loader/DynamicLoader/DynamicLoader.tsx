@@ -68,7 +68,7 @@ const DynamicLoader: React.FC<DynamicLoaderProps> = (
 
       {!hidePerncentage && percentage && (
         <text
-          className="dui-text-loader"
+          className="dui-text-dynamic-loader"
           x={`${finalX}`}
           y={`${(finalX * 7) / 6}`}
         >

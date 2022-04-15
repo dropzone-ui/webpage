@@ -1,8 +1,13 @@
 import * as React from "react";
 import { Clear } from "../../../../../icons";
-import { Localization } from "../../../../../localization/localization";
+import { FileItemLocalizerSelector } from "../../../../../localization";
+import {
+  Localization,
+  LocalLabels,
+} from "../../../../../localization/localization";
 import { UPLOADSTATUS } from "../../../../../utils";
 import { DynamicLoader, PreparingLoader } from "../../../../loader";
+import DefaultLoaderNeo from "../../../../loader/DefaultLoader/DefaultLoaderNeo";
 import FileItemStatus from "../../FileItemStatus/FileItemStatus";
 import "./FileItemLoader.scss";
 interface FileItemLoaderProps {
@@ -10,21 +15,21 @@ interface FileItemLoaderProps {
   width?: number;
   uploadStatus?: UPLOADSTATUS;
   /**
-   * language to be used
-   * for now
-   * only English and Spanish is supported
+   * language to be used for now
+   * only English, Russian, Chinesse, French, protuguese and Spanish is supported
    */
   localization?: Localization;
-
   /**
    * the current percentage upload progress
-   *
    */
   progress?: number;
   /**
    * abort event
    */
   onAbort?: Function;
+  /**
+   * cancel event
+   */
   onCancel?: Function;
 }
 const FileItemLoader: React.FC<FileItemLoaderProps> = (
@@ -39,6 +44,9 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
     //height,
     onCancel,
   } = props;
+  const FileItemStatusLocalizer: LocalLabels = FileItemLocalizerSelector(
+    localization
+  ).status as LocalLabels;
   // console.log("Loader", progress);
   const circleRef: React.RefObject<SVGCircleElement> =
     React.useRef<SVGCircleElement>(null);
@@ -49,8 +57,6 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
     circumference: number
   ) {
     myCircle.style.strokeDashoffset = `${circumference * (1 - percent / 100)}`;
-    /* let pct = document.getElementById("pct");
-    pct.innerHTML = percent.toFixed(0) + "%"; */
   }
 
   React.useEffect(() => {
@@ -68,30 +74,41 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
   const handleCancel = () => {
     onCancel?.();
   };
+  if (!uploadStatus) {
+    return <></>;
+  }
   return (
     <React.Fragment>
-      {progress !== undefined && progress >= 0 ? (
+      {uploadStatus === UPLOADSTATUS.preparing && (
         <React.Fragment>
-          {uploadStatus === UPLOADSTATUS.preparing && onCancel && (
-            <div
-              className="dui-main-loader-container clickable"
-              onClick={handleCancel}
-            >
+          <div
+            className="dui-main-loader-container clickable"
+            onClick={handleCancel}
+          >
+            {onCancel && (
               <div className="dui-abort-icon-container">
                 <Clear
-                  //className="dui-file-item-icon"
                   color="rgba(255,255,255,0.70)"
                   size={60}
                   colorFill="transparent"
                 />
               </div>
-              <div className="dui-dynamic-preparing-loader-container">
-                <PreparingLoader size={width || 60} x={50} y={50} radius={46} />
-              </div>
-            </div>
-          )}
+            )}
 
-          {uploadStatus === UPLOADSTATUS.uploading && (
+            <div className="dui-dynamic-preparing-loader-container">
+              <PreparingLoader size={width || 60} x={50} y={50} radius={46} />
+            </div>
+          </div>
+        </React.Fragment>
+      )}
+
+      {uploadStatus === UPLOADSTATUS.uploading && (
+        <React.Fragment>
+          {typeof progress === "undefined" ? (
+            <DefaultLoaderNeo
+              label={FileItemStatusLocalizer.uploading as string}
+            />
+          ) : (
             <div
               className={`dui-main-loader-container${
                 onAbort ? " clickable" : ""
@@ -101,7 +118,6 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
               <div className="dui-abort-icon-container">
                 {onAbort && (
                   <Clear
-                    //className="dui-file-item-icon"
                     color="rgba(255,255,255,0.70)"
                     size={60}
                     colorFill="transparent"
@@ -122,11 +138,6 @@ const FileItemLoader: React.FC<FileItemLoaderProps> = (
             </div>
           )}
         </React.Fragment>
-      ) : (
-        <FileItemStatus
-          uploadStatus={uploadStatus}
-          localization={localization as Localization}
-        />
       )}
     </React.Fragment>
   );

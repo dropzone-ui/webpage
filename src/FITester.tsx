@@ -6,11 +6,23 @@ import {
 } from "./dropzone-ui";
 import DropzoneNeo from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeo";
 import DropzoneNeoProps from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeoProps";
+import FileItemLoader from "./dropzone-ui/components/file-item/components/FileItemMainLayer/FileItemLoader/FileItemLoader";
+import FileItemMainLayerNeo from "./dropzone-ui/components/file-item/components/FileItemMainLayer/MainLayer/FileItemMainLayerNeo";
+import MainLayerBodyNeo from "./dropzone-ui/components/file-item/components/FileItemMainLayer/MainLayerBody/MainLayerBodyNeo";
+import FileItemUploadingStatus from "./dropzone-ui/components/file-item/components/FileItemStatus/FileItemUploadingStatus";
+import FileItemUploadStatus from "./dropzone-ui/components/file-item/components/FileItemStatus/FileItemUploadStatus";
+import FileItemValidStatus from "./dropzone-ui/components/file-item/components/FileItemStatus/FileItemValidStatus";
+import {
+  DynamicLoader,
+  PreparingLoader,
+} from "./dropzone-ui/components/loader";
+import DefaultLoaderNeo from "./dropzone-ui/components/loader/DefaultLoader/DefaultLoaderNeo";
 import { DuiFileType } from "./dropzone-ui/utils/dropzone-ui-types/DuiFile";
 //import DropzoneUI3 from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneUI3";
 import {
   // FileItemObject,
   FileValidated,
+  UPLOADSTATUS,
   //UPLOADSTATUS,
 } from "./dropzone-ui/utils/file-validation/validation.types";
 import "./FITester.scss";
@@ -77,9 +89,71 @@ const InnerTester = () => {
   const handleClean = () => {
     setFiles([...files.filter((x) => x.valid)]);
   };
+  const [status, setStatus] = React.useState<UPLOADSTATUS>(
+    UPLOADSTATUS.preparing
+  );
+  const handleStatus = () => {
+    if (status === UPLOADSTATUS.preparing) {
+      setStatus(UPLOADSTATUS.uploading);
+    }
+    if (status === UPLOADSTATUS.uploading) {
+      setStatus(UPLOADSTATUS.success);
+    }
+    if (status === UPLOADSTATUS.success) {
+      setStatus(UPLOADSTATUS.preparing);
+    }
+  };
   return (
-    <>
-      <button onClick={handleAdd}>Add</button>
+    <div>
+      <FileItemMainLayerNeo
+        fileName={"file.name"}
+        onDelete={() => {}}
+        onOpenImage={undefined}
+        onOpenVideo={undefined}
+        onDownloadFile={undefined}
+        isVideo={false}
+        onOpenInfo={handleStatus}
+        info={true}
+        valid={true}
+        isImage={true}
+        sizeFormatted={"305 MB"}
+        uploadStatus={status}
+        hovering={true}
+        progress={1}
+        //onAbort={() => {}}
+        onCancel={() => {}}
+      />
+      <FileItemMainLayerNeo
+        fileName={"file.name"}
+        onDelete={() => {}}
+        onOpenImage={undefined}
+        onOpenVideo={undefined}
+        onDownloadFile={undefined}
+        isVideo={false}
+        onOpenInfo={handleStatus}
+        info={true}
+        valid={true}
+        isImage={true}
+        sizeFormatted={"305 MB"}
+        uploadStatus={status}
+        hovering={true}
+        //progress={1}
+        //onAbort={() => {}}
+        //onCancel={() => {}}
+      />
+      {/* <div
+        style={{
+          width: "133px",
+          height: "133px",
+          outline: "1px grey solid",
+          borderRadius: "6px",
+          display:"flex",
+          alignItems:"center",
+          justifyContent:"center"
+        }}
+      >
+        <DefaultLoaderNeo color="crimson" />
+      </div> */}
       <DropzoneNeo
         onClean={handleClean}
         onChange={handleChange}
@@ -125,7 +199,7 @@ const InnerTester = () => {
           );
         })}
       </DropzoneNeo>
-    </>
+    </div>
   );
 };
 

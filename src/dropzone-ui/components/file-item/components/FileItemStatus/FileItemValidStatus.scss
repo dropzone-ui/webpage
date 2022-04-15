@@ -1,0 +1,16 @@
+.dui-file-item-valid-status-container {
+  text-align: center;
+  font-size: 0.8rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 4px;
+  padding: 0.5px;
+  &.file-status-nonvalid {
+    color: #f44336;
+  }
+  &.file-status-valid {
+    color: #5c7a1f;
+  }
+}
