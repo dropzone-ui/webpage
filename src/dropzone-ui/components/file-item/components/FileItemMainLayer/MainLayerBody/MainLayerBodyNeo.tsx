@@ -15,7 +15,6 @@ export type MainLayerBodyNeoProps = {
    */
   valid?: boolean | null;
 
- 
   uploadStatus?: UPLOADSTATUS;
 
   /**
@@ -81,7 +80,7 @@ const MainLayerBodyNeo: React.FC<MainLayerBodyNeoProps> = (
             height={60}
             width={60}
             onCancel={onCancel}
-          /> 
+          />
           <FileItemUploadStatus
             uploadStatus={uploadStatus}
             localization={localization}
@@ -89,13 +88,17 @@ const MainLayerBodyNeo: React.FC<MainLayerBodyNeoProps> = (
         </React.Fragment>
       )}
       <div className="dui-file-status-aboslute-container">
-        {uploadComplete && hovering ? (
-          <FileItemUploadStatus
-            uploadStatus={uploadStatus}
-            localization={localization}
-          />
-        ) : (
-          <FileItemValidStatus valid={valid} localization={localization} />
+        {hovering && (
+          <React.Fragment>
+            {uploadComplete ? (
+              <FileItemUploadStatus
+                uploadStatus={uploadStatus}
+                localization={localization}
+              />
+            ) : (
+              <FileItemValidStatus valid={valid} localization={localization} />
+            )}
+          </React.Fragment>
         )}
       </div>
     </div>

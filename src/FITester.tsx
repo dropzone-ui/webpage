@@ -1,3 +1,4 @@
+import { Skeleton } from "@mui/material";
 import * as React from "react";
 import {
   createSyntheticFile,
@@ -17,6 +18,7 @@ import {
   PreparingLoader,
 } from "./dropzone-ui/components/loader";
 import DefaultLoaderNeo from "./dropzone-ui/components/loader/DefaultLoader/DefaultLoaderNeo";
+import DuiSkeleton from "./dropzone-ui/components/skeleton/Skeleton";
 import { DuiFileType } from "./dropzone-ui/utils/dropzone-ui-types/DuiFile";
 //import DropzoneUI3 from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneUI3";
 import {
@@ -123,6 +125,7 @@ const InnerTester = () => {
         //onAbort={() => {}}
         onCancel={() => {}}
       />
+      <DuiSkeleton />
       <FileItemMainLayerNeo
         fileName={"file.name"}
         onDelete={() => {}}
@@ -141,19 +144,7 @@ const InnerTester = () => {
         //onAbort={() => {}}
         //onCancel={() => {}}
       />
-      {/* <div
-        style={{
-          width: "133px",
-          height: "133px",
-          outline: "1px grey solid",
-          borderRadius: "6px",
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center"
-        }}
-      >
-        <DefaultLoaderNeo color="crimson" />
-      </div> */}
+
       <DropzoneNeo
         onClean={handleClean}
         onChange={handleChange}

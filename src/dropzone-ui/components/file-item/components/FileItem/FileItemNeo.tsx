@@ -1,8 +1,7 @@
 import React, { FC, Fragment, useEffect, useRef, useState } from "react";
 
 import { FileItemProps, FileItemPropsDefault } from "./FileItemProps";
-import "./FileItem.scss";
-import { Paper } from "../../../paper";
+import "./FileItemNeo.scss";
 import { mergeProps } from "@dropzone-ui/core";
 import {
   fileSizeFormater,
@@ -14,10 +13,9 @@ import {
 
 import FileItemFullInfoLayer from "../FileItemFullInfoLayer/FileItemFullInfoLayer";
 import FileItemImage from "../FileItemImage/FileItemImage";
-import FileItemMainLayer from "../FileItemMainLayer/MainLayer/FileItemMainLayer";
 import Tooltip from "../../../tooltip/components/Tooltip";
-import useFileItemClassName from "../../hooks/useFileItemClassName";
 import FileItemMainLayerNeo from "../FileItemMainLayer/MainLayer/FileItemMainLayerNeo";
+import useFileItemNeoClassName from "../../hooks/useFileItemNeoClassName";
 
 const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
   const {
@@ -52,18 +50,11 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
   //actionOnHover
   const [hovering, setHOvering] = useState<boolean>(false);
   const handleOnHoverEnter = () => {
-    //if (!alwaysActive) {
     setHOvering(true);
-    //}
   };
   const handleOnHoverLeave = () => {
-    //if (!alwaysActive) {
     setHOvering(false);
-    //}
   };
-  /*   useEffect(() => {
-    setHOvering(alwaysActive || false);
-  }, [alwaysActive]); */
 
   //size
   const sizeFormatted: string = file ? fileSizeFormater(file.size) : "0 KB";
@@ -75,9 +66,7 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
   //alwaysActive
   const [showInfo, setShowInfo] = useState<boolean>(false);
   //upload progress
-  const [localProgress, setLocalProgress] = useState<number | undefined>(
-    1
-  );
+  const [localProgress, setLocalProgress] = useState<number | undefined>(1);
   useEffect(() => {
     //if (progress) {
     setLocalProgress(!progress || progress === 0 ? 1 : progress);
@@ -143,24 +132,19 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
       };
     }
     //if (!localProgress) {
-      //handleProgress(1);
+    //handleProgress(1);
     //}
   };
   const handleProgress = (currentProgress: number): void => {
-    console.log("FileItem handle progress", currentProgress);
     setLocalProgress(currentProgress);
   };
   const handleDelete = (): void => {
-    if (onDelete) {
-      onDelete(id);
-    }
+    onDelete?.(id);
   };
   const handleOpenInfo = () => {
     setShowInfo(true);
   };
   const handleCloseInfo = () => {
-    setShowInfo(true);
-
     setShowInfo(false);
   };
   const handleOpenVideo = async () => {
@@ -193,7 +177,7 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
   const handleDownload = () => {
     if (onDownload) {
       onDownload?.(id, downloadUrl);
-    } else if (downloadUrl && typeof downloadUrl == "string") {
+    } else if (typeof downloadUrl == "string") {
       innerDownload(downloadUrl);
     }
   };
@@ -207,7 +191,10 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
     // handle externally the cancel event
     onCancel?.(id);
   };
-  const classNameCreated = useFileItemClassName(resultOnTooltip as boolean);
+  const classNameCreated = useFileItemNeoClassName(
+    resultOnTooltip as boolean,
+    elevation
+  );
   if (classNameCreated && file && typeof file.name == "string") {
     return (
       <div
@@ -217,17 +204,14 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
         onMouseEnter={handleOnHoverEnter}
         onMouseLeave={handleOnHoverLeave}
       >
-        <Paper
-          shadow={elevation}
-          className={`file-item-icon-container ${showInfo ? " hide" : ""}`}
-        >
-          <FileItemImage
-            imageSource={imageSource}
-            url={url}
-            fileName={file.name}
-          />
+        <FileItemImage
+          imageSource={imageSource}
+          url={url}
+          fileName={file.name}
+        />
 
-          {!showInfo && <FileItemMainLayerNeo
+        {!showInfo && (
+          <FileItemMainLayerNeo
             fileName={file.name}
             onDelete={onDelete ? handleDelete : undefined}
             onOpenImage={onSee && preview ? handleOpenImage : undefined}
@@ -246,22 +230,22 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
             hovering={alwaysActive || hovering}
             progress={localProgress}
             onAbort={onAbort ? handleAbort : undefined}
-            onCancel={onCancel? handleCancel: undefined}
-          />}
-          <FileItemFullInfoLayer
-            showInfo={showInfo}
-            errors={errors}
-            fileName={file.name}
-            fileSize={fileSizeFormater(file.size)}
-            fileType={file.type}
-            valid={valid}
-            onClose={handleCloseInfo}
-            uploadStatus={uploadStatus}
-            uploadMessage={uploadMessage}
-            localization={localization}
-            resultOnTooltip={resultOnTooltip}
+            onCancel={onCancel ? handleCancel : undefined}
           />
-        </Paper>
+        )}
+        <FileItemFullInfoLayer
+          showInfo={showInfo}
+          errors={errors}
+          fileName={file.name}
+          fileSize={fileSizeFormater(file.size)}
+          fileType={file.type}
+          valid={valid}
+          onClose={handleCloseInfo}
+          uploadStatus={uploadStatus}
+          uploadMessage={uploadMessage}
+          localization={localization}
+          resultOnTooltip={resultOnTooltip}
+        />
 
         {!onlyImage && (
           <div className="file-item-name">{shrinkWord(file.name)}</div>

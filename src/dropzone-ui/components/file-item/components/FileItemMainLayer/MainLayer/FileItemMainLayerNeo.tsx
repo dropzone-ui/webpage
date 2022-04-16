@@ -83,8 +83,8 @@ const FileItemMainLayerNeo: React.FC<FileItemMainLayerNeoProps> = (
           uploadStatus={uploadStatus}
           hovering={hovering}
         />
-
-        <MainLayerBodyNeo
+ 
+        <MainLayerBodyNeo 
           uploadStatus={uploadStatus}
           localization={localization}
           progress={progress}
