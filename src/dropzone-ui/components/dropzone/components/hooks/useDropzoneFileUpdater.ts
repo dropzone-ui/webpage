@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Localization } from "../../../../localization/localization";
 import { UPLOADSTATUS } from "../../../../utils";
-import DuiFile, { DuiFileType } from "../../../../utils/dropzone-ui-types/DuiFile";
+import DuiFileInstance, { DuiFile } from "../../../../utils/dropzone-ui-types/DuiFile";
 import { DuiFileManager } from "../../../../utils/dropzone-ui-types/DuiFileManager";
 import { validateDuiFileList } from "../../../../utils/file-validation/validation.methods";
 import { DuiFileValidatorProps } from "../../../../utils/file-validation/validation.types";
@@ -21,7 +21,7 @@ import { CustomValidateFileResponse } from "../utils/validation.utils";
  */
 const useDropzoneFileListUpdater = (
     duiFileId: number | undefined,
-    value: DuiFileType[],
+    value: DuiFile[],
     isUploading: boolean,
     maxFileSize?: number,
     accept?: string,
@@ -29,13 +29,13 @@ const useDropzoneFileListUpdater = (
     validator?: ((f: File) => CustomValidateFileResponse),
     localization?: Localization,
     validateFiles?: boolean
-): [DuiFileType[], number, React.Dispatch<React.SetStateAction<DuiFileType[]>>] => {
+): [DuiFile[], number, React.Dispatch<React.SetStateAction<DuiFile[]>>] => {
     //state for managing the files locally
-    const [localFiles, setLocalFiles] = React.useState<DuiFileType[]>([]);
+    const [localFiles, setLocalFiles] = React.useState<DuiFile[]>([]);
     // the current number of valid files
     const [numberOfValidFiles, setNumberOfValidFiles] = React.useState<number>(0);
     React.useEffect(() => {
-        let arrOfDuiFiles: DuiFile[] | undefined =
+        let arrOfDuiFiles: DuiFileInstance[] | undefined =
             DuiFileManager.getFileListMap(duiFileId);
 
         //console.table(value);
@@ -60,7 +60,7 @@ const useDropzoneFileListUpdater = (
     }, [duiFileId, value, isUploading]);
     React.useEffect(() => {
         const localValidator: DuiFileValidatorProps = { maxFileSize, accept };
-        const validatedDuiFileList: DuiFileType[] = validateDuiFileList(
+        const validatedDuiFileList: DuiFile[] = validateDuiFileList(
             localFiles,
             maxFiles ? maxFiles - numberOfValidFiles : Infinity,
             localValidator,

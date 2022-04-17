@@ -7,8 +7,8 @@ import { LocalLabels } from "../../localization/localization";
 import { ValidateErrorLocalizerSelector } from "../../localization";
 import { FileValidated, FileValidator } from "../../utils";
 import { customValidateFile, validateFile } from "../../utils/file-validation/validation.methods";
-import { DuiFileType } from "../../utils/dropzone-ui-types/DuiFile";
-import { fileListToDuiFileTypeArray } from "../../utils/fileListToFileValidateArray/fileListToFileValidateArray";
+import { DuiFile } from "../../utils/dropzone-ui-types/DuiFile";
+import { fileListToDuiFileArray } from "../../utils/fileListToFileValidateArray/fileListToFileValidateArray";
 
 const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
   let {
@@ -41,7 +41,7 @@ const InputButton: React.FC<InputButtonProps> = (props: InputButtonProps) => {
   ): void => {
     if (isUploading) return;
     let fileList: FileList = evt.target.files as FileList;
-    let duiFileListOutput: DuiFileType[] = fileListToDuiFileTypeArray(fileList);
+    let duiFileListOutput: DuiFile[] = fileListToDuiFileArray(fileList);
   };
   function clickInput(e: React.MouseEvent<MouseEvent>): void {
     e.stopPropagation();

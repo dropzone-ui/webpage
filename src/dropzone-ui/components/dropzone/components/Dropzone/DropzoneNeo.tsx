@@ -14,9 +14,9 @@ import DropzoneHeaderNeo from "../DropzoneHeader/DropzoneHeaderNeo";
 import useDropzoneLayerClassName from "../hooks/useDropzoneLayerClassName";
 import DropzoneFooterNeo from "../DropzoneFooter.tsx/DropzoneFooterNeo";
 import DuiFileInstance, {
-  DuiFileType,
+  DuiFile,
 } from "../../../../utils/dropzone-ui-types/DuiFile";
-import { fileListToDuiFileTypeArray } from "../../../../utils/fileListToFileValidateArray/fileListToFileValidateArray";
+import { fileListToDuiFileArray } from "../../../../utils/fileListToFileValidateArray/fileListToFileValidateArray";
 import { fakeDuiUpload, sleepPreparing } from "../utils/fakeupload.utils";
 import DropzoneDisabledLayer from "../DropzoneDisabledLayer/DropzoneDisabledLayer";
 import useDropzoneFileListUpdater from "../hooks/useDropzoneFileUpdater";
@@ -28,7 +28,7 @@ import { validateDuiFileList } from "../../../../utils/file-validation/validatio
 import {
   DuiFileResponse,
   DuiUploadResponse,
-  preparingToUploadOne,
+  instantPreparingToUploadOne,
   sleepTransition,
   toUploadableDuiFileList,
   uploadOnePromiseXHR,
@@ -40,6 +40,7 @@ import {
 import { DropzoneLocalizerSelector } from "../../../../localization";
 import { DuiUploadConfig } from "../../../../utils/dropzone-ui-types/DuiUploadConfig";
 import { DuiFileManager } from "../../../../utils/dropzone-ui-types/DuiFileManager";
+import DropzoneLabelNeo from "../DropzoneLabel/DropzoneLabelNeo";
 const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
   const {
     children,
@@ -75,6 +76,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     onUploadFinish,
     fakeUpload,
     onClean,
+    label,
   } = mergeProps(props, defaultDrozoneNeoProps);
   const {
     url,
@@ -104,7 +106,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
   //state for managing the number of valid files
 
   //state for managin files
-  //const [files, setFiles] = React.useState<DuiFileType[]>([]);
+  //const [files, setFiles] = React.useState<DuiFile[]>([]);
   const [localFiles, numberOfValidFiles, setLocalFiles] =
     useDropzoneFileListUpdater(
       duiFileId,
@@ -120,7 +122,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
   /**
    * Upload the list of files
    */
-  const uploadfiles = async (localFiles: DuiFileType[]): Promise<void> => {
+  const uploadfiles = async (localFiles: DuiFile[]): Promise<void> => {
     // set flag to true
     // recieve on the new list
     // initialize new list of DuiFileInstances
@@ -129,9 +131,12 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       return;
     }
     const totalNumber: number = localFiles.length;
-    const missingUpload: number = localFiles.filter(
-      (x: DuiFileType) => x.valid && x.uploadStatus !== "success"
-    ).length;
+    const missingUpload: number = localFiles.filter((x: DuiFile) => {
+      return (
+        (!validateFiles || (validateFiles && x.valid)) &&
+        x.uploadStatus !== "success"
+      );
+    }).length;
     let totalRejected: number = 0;
     let currentCountUpload: number = 0;
     const uploadingMessenger: FunctionLabel =
@@ -146,6 +151,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     //PREPARING stage
     //use methods to update on static class
     //obtain a fresher dui file list
+
     arrOfDuiFiles =
       DuiFileManager.setFileListMapPreparing(
         duiFileId,
@@ -169,7 +175,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       if (arrOfDuiFiles[i].uploadStatus === UPLOADSTATUS.preparing) {
         //set stage to "uploading" in one file and notify change
         // PREPARING => UPLOADING
-        await preparingToUploadOne(arrOfDuiFiles[i]);
+        await instantPreparingToUploadOne(arrOfDuiFiles[i]);
         setLocalMessage(
           uploadingMessenger(`${++currentCountUpload}/${missingUpload}`)
         );
@@ -277,7 +283,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
     if (isUploading) return;
     let fileList: FileList = evt.dataTransfer.files;
 
-    let duiFileListOutput: DuiFileType[] = fileListToDuiFileTypeArray(fileList);
+    let duiFileListOutput: DuiFile[] = fileListToDuiFileArray(fileList);
 
     //validate dui files
     if (validateFiles)
@@ -299,7 +305,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
   ): void => {
     if (isUploading) return;
     let fileList: FileList = evt.target.files as FileList;
-    let duiFileListOutput: DuiFileType[] = fileListToDuiFileTypeArray(fileList);
+    let duiFileListOutput: DuiFile[] = fileListToDuiFileArray(fileList);
     //validate dui files
     if (validateFiles)
       duiFileListOutput = outerDuiValidation(duiFileListOutput);
@@ -331,10 +337,10 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
    * @param isUploading a flag that dscribes whther the uploading process is active or not
    */
   const handleFilesChange = (
-    duiFileList: DuiFileType[],
+    duiFileList: DuiFile[],
     isUploading?: boolean
   ): void => {
-    let finalDuiFileList: DuiFileType[] =
+    let finalDuiFileList: DuiFile[] =
       behaviour === "add" && !isUploading
         ? [...localFiles, ...duiFileList]
         : [...duiFileList];
@@ -355,11 +361,9 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
    * @param duiFileListToValidate the duiFileList to validate
    * @returns a list of validated DuiFile list
    */
-  const outerDuiValidation = (
-    duiFileListToValidate: DuiFileType[]
-  ): DuiFileType[] => {
+  const outerDuiValidation = (duiFileListToValidate: DuiFile[]): DuiFile[] => {
     const localValidator: DuiFileValidatorProps = { maxFileSize, accept };
-    const validatedDuiFileList: DuiFileType[] = validateDuiFileList(
+    const validatedDuiFileList: DuiFile[] = validateDuiFileList(
       duiFileListToValidate,
       maxFiles ? maxFiles - numberOfValidFiles : Infinity,
       localValidator,
@@ -402,7 +406,13 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
             onClean={handleClean}
           />
         )}
-        {children}
+        {children && value && localFiles.length > 0 ? (
+          <React.Fragment>{children}</React.Fragment>
+        ) : (
+          <React.Fragment>
+            {label || (DropzoneLocalizer.defaultLabel as string)}
+          </React.Fragment>
+        )}
         {footer && (
           <DropzoneFooterNeo
             accept={accept}

@@ -1,7 +1,7 @@
 import { OverridableComponentProps } from "@dropzone-ui/core";
 
 
-export interface SkeletonProps extends OverridableComponentProps {
+export interface DuiSkeletonProps extends OverridableComponentProps {
     /**
      * The animation.
      * If `false` the animation effect is disabled.
@@ -21,14 +21,15 @@ export interface SkeletonProps extends OverridableComponentProps {
       * Height of the skeleton.
       */
     height?: number | string;
-
 }
 
-
-export const SkeletonDefaultProps: SkeletonPropsType = {
+/**
+ * Dafult properties for Skeleton Component
+ */
+export const DuiSkeletonDefaultProps: DuiSkeletonPropsType = {
     animation: "pulse",
     variant: "rectangular",
     width: "133px",
     height: "133px"
 }
-export declare type SkeletonPropsType = SkeletonProps;
+export declare type DuiSkeletonPropsType = DuiSkeletonProps;

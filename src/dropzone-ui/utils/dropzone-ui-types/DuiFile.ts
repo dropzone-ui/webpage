@@ -1,7 +1,7 @@
 import { FileIdGenerator } from "../file-validation/validation.methods";
 import { FileValidated, UPLOADSTATUS } from "../file-validation/validation.types";
 //DuiFile
-export declare type DuiFileType = {
+export declare type DuiFile = {
     id: number | string | undefined;
     file: File;
     valid?: boolean;
@@ -20,7 +20,7 @@ export default class DuiFileInstance {
     public uploadMessage?: string;
     public uploadStatus?: undefined | UPLOADSTATUS;
     public xhr?: XMLHttpRequest;
-    constructor(fileValidated: FileValidated | DuiFileType) {
+    constructor(fileValidated: FileValidated | DuiFile) {
         const { id, file, valid, errors, uploadMessage, uploadStatus, xhr } = fileValidated;
         console.log("Creating DuiFile: ", FileIdGenerator.getNextId());
         this.id = id || FileIdGenerator.getNextId();

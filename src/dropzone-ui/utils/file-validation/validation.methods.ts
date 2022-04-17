@@ -1,6 +1,6 @@
 import { ValidateErrorLocalizerSelector } from "../../localization";
 import { FunctionLabel, Localization, LocalLabels } from "../../localization/localization";
-import { DuiFileType } from "../dropzone-ui-types/DuiFile";
+import { DuiFile } from "../dropzone-ui-types/DuiFile";
 import { getExt } from "../file-utilities/utilities";
 //import { listOfErrors } from "./validation.fakeerros";
 import {
@@ -206,21 +206,21 @@ export const fileListvalidator = (
  * @returns a new DuiFile list with each item validated
  */
 export const validateDuiFileList = (
-    duiFileList: DuiFileType[],
+    duiFileList: DuiFile[],
     remainingValids: number,
     localValidatorProps: DuiFileValidatorProps,
     validator: ((f: File) => CustomValidateFileResponse) | undefined,
     maxFiles: number | undefined,
     localization?: Localization
-): DuiFileType[] => {
-    let fileListResult: DuiFileType[] = [];
+): DuiFile[] => {
+    let fileListResult: DuiFile[] = [];
     if (!remainingValids) return fileListResult;
     let remaining: number = remainingValids;
     const ValidationErrorLocalizer: LocalLabels =
         ValidateErrorLocalizerSelector(localization);
     const maxFileErrorMessenger: FunctionLabel = ValidationErrorLocalizer.maxFileCount as FunctionLabel;
     for (let i = 0; i < duiFileList.length; i++) {
-        let currentDuiFile: DuiFileType = duiFileList[i];
+        let currentDuiFile: DuiFile = duiFileList[i];
 
         currentDuiFile = validateDuiFile(currentDuiFile, validator, localValidatorProps, ValidationErrorLocalizer);
         //console.log("validateDuiFileList after validation", currentDuiFile);
@@ -256,12 +256,12 @@ export const isStillValid = (): boolean => {
  * @returns 
  */
 export const validateDuiFile = (
-    duiFile: DuiFileType,
+    duiFile: DuiFile,
     validator: undefined | ((f: File) => CustomValidateFileResponse),
     validatorProps: FileValidator,
     localErrors: LocalLabels
-): DuiFileType => {
-    let duiFileResult: DuiFileType = { ...duiFile };
+): DuiFile => {
+    let duiFileResult: DuiFile = { ...duiFile };
     let errors: string[] = [];
     if (validator) {
         return { ...duiFileResult, ...validator(duiFileResult.file) };

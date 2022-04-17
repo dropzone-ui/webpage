@@ -2,7 +2,7 @@ import { OverridableComponentProps } from "@dropzone-ui/core";
 import { Localization } from "../../../../localization/localization";
 import { CustomValidateFileResponse } from "../../../../utils";
 import { Behaviour } from "../../../../utils/dropzone-ui-types";
-import { DuiFileType } from "../../../../utils/dropzone-ui-types/DuiFile";
+import { DuiFile } from "../../../../utils/dropzone-ui-types/DuiFile";
 import { DuiUploadConfig } from "../../../../utils/dropzone-ui-types/DuiUploadConfig";
 import { DuiFileResponse } from "../utils/upload.utils";
 
@@ -12,7 +12,7 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
    * OnChange() returns as first parameter the list of validated duiFiles,
    * with the following structure:
    * 
-   * const duiFile:DuiFileType =
+   * const duiFile:DuiFile =
    * {
    *    file: File;
    *    valid: boolean;
@@ -25,12 +25,12 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
    * This event is also triggered when upload starts and when upload 
    * finishes for each file in order to update the props on very FileItem
    */
-  onChange?: (files: DuiFileType[]) => void;
+  onChange?: (files: DuiFile[]) => void;
   /**
    * Just like any other input component
    * The value of the input element, required for a controlled component.
    */
-  value?: DuiFileType[];
+  value?: DuiFile[];
   ///////////////          STYLING          ///////////                             
   /**
    * The background color for dropzone container,
@@ -48,6 +48,7 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
    *    "1rem"
    */
   minHeight?: string;
+  //// DISPLAY SETTINGS
   /**
    * If false, hides the dropzone footer
    * By default is true
@@ -88,6 +89,10 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
    * By deault takes the value of "color" prop and adds opacity
    */
   colorOnDrag?: string;
+  /**
+ * Label to place when no files selected
+ */
+  label?: string;
   ////////////        FILES MANAGEMENT         ///////////
 
   /**
@@ -112,7 +117,7 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
    * Unlike Onchange, onUploadStart will only return a list of files thta are candidates to be uploaded,
    * in case they are valid or upload status is "error"
    */
-  onUploadStart?: (files: DuiFileType[]) => void;
+  onUploadStart?: (files: DuiFile[]) => void;
   /**
   * This event returns as first aparameter the list of responses for each file following the structure:
   * responses = [
@@ -180,7 +185,7 @@ export const defaultDrozoneNeoProps: DropzoneNeoProps =
   uploadOnDrop: false,
   //maxFileSize: 28000,
   //maxFiles: 10,
- 
+
   behaviour: "add",
   disabled: false,
   validateFiles: true,

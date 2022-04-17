@@ -1,12 +1,8 @@
 import * as React from "react";
-import {
-  createSyntheticFile,
-  FileItem,
-  makeSynthticFileValidate,
-} from "./dropzone-ui";
+import { createSyntheticFile, makeSynthticFileValidate } from "./dropzone-ui";
 import DropzoneNeo from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeo";
 import DropzoneNeoProps from "./dropzone-ui/components/dropzone/components/Dropzone/DropzoneNeoProps";
-import FileItemMainLayerNeo from "./dropzone-ui/components/file-item/components/FileItemMainLayer/MainLayer/FileItemMainLayerNeo";
+import FileItemNeo from "./dropzone-ui/components/file-item/components/FileItem/FileItemNeo";
 import { DuiFile } from "./dropzone-ui/utils/dropzone-ui-types/DuiFile";
 import {
   FileValidated,
@@ -25,7 +21,7 @@ const dropzoneProps: DropzoneNeoProps = {
       //"my header": "my_header value",
     },
     cleanOnUpload: true,
-    autoUpload: true,
+    // autoUpload: true,
     preparingTime: 1500,
   },
 };
@@ -46,35 +42,37 @@ const makeFileItem = (): FileValidated[] => {
   ];
 };
 const InnerTester = () => {
-  const [duiFiles, setDuiFiles] = React.useState<FileValidated[] | DuiFile[]>([]);
+  const [files, setFiles] = React.useState<FileValidated[] | DuiFile[]>([]);
 
   const handleDelete = (id: number | string | undefined) => {
     if (typeof id === "number") {
-      setDuiFiles(duiFiles.filter((x) => x.id !== id));
+      setFiles(files.filter((x) => x.id !== id));
     }
   };
 
-  const handleChange = (duiFiles: FileValidated[] | DuiFile[]) => {
-    setDuiFiles(duiFiles);
+  const handleChange = (files: FileValidated[] | DuiFile[]) => {
+    setFiles([...files.map(f=>{return{...f
+      //, valid:false
+    }})]);
   };
   const handleCancel = (id: number) => {
     console.log("cancel", id);
     handleChange(
-      duiFiles.map((duiFile) => {
-        if (duiFile.id === id) {
-          return { ...duiFile, uploadStatus: undefined };
+      files.map((f) => {
+        if (f.id === id) {
+          return { ...f, uploadStatus: undefined };
         } else {
-          return duiFile;
+          return f;
         }
       })
     );
   };
 
   const handleAdd = () => {
-    setDuiFiles([...duiFiles, ...makeFileItem()]);
+    setFiles([...files, ...makeFileItem()]);
   };
   const handleClean = () => {
-    setDuiFiles([...duiFiles.filter((x) => x.valid)]);
+    setFiles([...files.filter((x) => x.valid)]);
   };
   const [status, setStatus] = React.useState<UPLOADSTATUS>(
     UPLOADSTATUS.preparing
@@ -96,13 +94,14 @@ const InnerTester = () => {
       <DropzoneNeo
         onClean={handleClean}
         onChange={handleChange}
-        value={duiFiles}
+        value={files}
         //style={duiStyles}
+        validateFiles={true}
         {...dropzoneProps}
       >
-        {duiFiles.map((duiFile, index) => {
+        {files.map((duiFile, index) => {
           return (
-            <FileItem
+            <FileItemNeo
               {...duiFile}
               key={index}
               info
@@ -110,17 +109,61 @@ const InnerTester = () => {
               alwaysActive
               resultOnTooltip
               onCancel={handleCancel}
-              
+              onAbort={()=>{}}
+              preview
             />
           );
         })}
-        
+        {files.map((duiFile, index) => {
+          return (
+            <FileItemNeo
+            {...duiFile}
+            key={index*5}
+            info
+            onDelete={handleDelete}
+            alwaysActive
+            resultOnTooltip
+            onCancel={handleCancel}
+            //onAbort={()=>{}}
+            preview
+            />
+          );
+        })}
+        {files.map((duiFile, index) => {
+          return (
+            <FileItemNeo
+              onDelete={handleDelete}
+              {...duiFile}
+              // id={duiFile.id as number +10}
+              key={index * 15}
+              info
+              // alwaysActive
+              resultOnTooltip
+              xhr={undefined}
+              preview
+              imageUrl="https://user-images.githubusercontent.com/43678736/132112022-0ca409ae-cca2-43c8-be89-110376260a3f.png"
+            />
+          );
+        })}
+        {/*   {files.map((duiFile, index) => {
+          return (
+            <FileItemNeo
+              {...duiFile}
+              key={index * 10}
+              info
+              onDelete={handleDelete}
+              resultOnTooltip
+              onCancel={handleCancel}
+              onAbort={() => {}}
+            />
+          );
+        })} */}
       </DropzoneNeo>
     </div>
   );
 };
 
-const FITester: React.FC<any> = (props: any) => {
+const FITesterNeo: React.FC<any> = (props: any) => {
   return (
     <React.Fragment>
       <InnerTester />{" "}
@@ -131,7 +174,7 @@ const FITester: React.FC<any> = (props: any) => {
     </React.Fragment>
   );
 };
-export default FITester;
+export default FITesterNeo;
 const duiStyles: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",

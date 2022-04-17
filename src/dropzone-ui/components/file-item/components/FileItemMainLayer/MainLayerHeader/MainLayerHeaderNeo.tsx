@@ -6,12 +6,13 @@ export type MainLayerHeaderNeoProps = {
   onDelete?: Function;
   uploadStatus?: UPLOADSTATUS;
   hovering?: boolean;
+  hide?: boolean;
 };
 
 const MainLayerHeaderNeo: React.FC<MainLayerHeaderNeoProps> = (
   props: MainLayerHeaderNeoProps
 ) => {
-  const { uploadStatus, onDelete, hovering } = props;
+  const { uploadStatus, onDelete, hovering, hide } = props;
   const handleDelete = () => {
     onDelete?.();
   };
@@ -19,12 +20,13 @@ const MainLayerHeaderNeo: React.FC<MainLayerHeaderNeoProps> = (
   return (
     <div className="dui-main-layer-header-container">
       {hovering &&
-        ![
-          UPLOADSTATUS.preparing,
-          UPLOADSTATUS.uploading,
-          undefined,
-          null,
-        ].includes(uploadStatus) &&
+        !hide &&
+        //  ![
+        uploadStatus !== UPLOADSTATUS.preparing &&
+        uploadStatus !== UPLOADSTATUS.uploading &&
+        //  undefined,
+        //null,
+        //].includes(uploadStatus)
         onDelete && (
           <Clear
             className="dui-file-item-icon"

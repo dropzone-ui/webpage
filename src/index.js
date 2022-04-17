@@ -9,6 +9,7 @@ import Main from "./Router/MainRouter";
 import { DropzoneUI, Dropzone, FileItem } from "./dropzone-ui";
 import { FileItemObject } from "./dropzone-ui/utils/file-validation/validation.types";
 import FITester from "./FITester";
+import FITesterNeo from "./FITesterNeo";
 //const mode = 1;
 
 /* ReactDOM.render(
@@ -26,7 +27,8 @@ root.render(
   <React.StrictMode>
     {/*  <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter> */}
     {/*     <Main /> */}
-    <FITester />
+    {/* <FITester /> */}
+    <FITesterNeo />
   </React.StrictMode>
 );
 

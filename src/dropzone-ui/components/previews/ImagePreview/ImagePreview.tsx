@@ -1,11 +1,19 @@
 import * as React from "react";
 import { readAsDataURL } from "../../../utils/file-readers/readers";
-import { ImagePreviewProps } from "./ImagePreviewProps";
+import {
+  ImagePreviewDefaultProps,
+  ImagePreviewProps,
+} from "./ImagePreviewProps";
 import "./ImagePreview.scss";
+import { mergeProps } from "@dropzone-ui/core";
 const ImagePreview: React.FC<ImagePreviewProps> = (
   props: ImagePreviewProps
 ) => {
-  const { src, alt, className, style } = props;
+  const { src, alt, className, style, width, height } = mergeProps(
+    props,
+    ImagePreviewDefaultProps
+  );
+ // console.table({ src, alt, className, style, width, height });
   const [source, setSource] = React.useState<string | undefined>(undefined);
   const getSource = async (src: File): Promise<void> => {
     const newImageSrc = await readAsDataURL(src);
@@ -40,11 +48,11 @@ const ImagePreview: React.FC<ImagePreviewProps> = (
           onClick={(evt) => {
             evt.preventDefault();
           }}
-          width="100%"
-          height="100%"
+          width={width}
+          height={height}
           src={source}
-          alt={alt || "image-preview"}
-          className={className || "dui-image-preview"}
+          alt={alt}
+          className={className}
         />
       )}
     </React.Fragment>

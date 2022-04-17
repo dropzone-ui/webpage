@@ -14,7 +14,7 @@ export type MainLayerBodyNeoProps = {
    * by def. valid is false (if not present, is false too)
    */
   valid?: boolean | null;
-
+  hide?: boolean;
   uploadStatus?: UPLOADSTATUS;
 
   /**
@@ -41,7 +41,7 @@ const MainLayerBodyNeo: React.FC<MainLayerBodyNeoProps> = (
 ) => {
   const {
     uploadStatus,
-
+    hide,
     hovering,
     //uploadComplete,
     localization,
@@ -70,7 +70,7 @@ const MainLayerBodyNeo: React.FC<MainLayerBodyNeoProps> = (
   return (
     <div className="dui-file-item-main-layer-body">
       {/** Uploading or preparing stage? */}
-      {!uploadComplete && (
+      {!hide && !uploadComplete && (
         <React.Fragment>
           <FileItemLoader
             uploadStatus={uploadStatus}
@@ -87,8 +87,8 @@ const MainLayerBodyNeo: React.FC<MainLayerBodyNeoProps> = (
           />
         </React.Fragment>
       )}
-      <div className="dui-file-status-aboslute-container">
-        {hovering && (
+      <div className="dui-file-status-absolute-container">
+        {!hide && hovering && (
           <React.Fragment>
             {uploadComplete ? (
               <FileItemUploadStatus

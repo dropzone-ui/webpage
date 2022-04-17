@@ -1,5 +1,6 @@
 /**
- * Resize an image resolution given maxWidth and maxHeight, it will 
+ * Resize an image resolution given maxWidth and maxHeight
+ * 
  * Should be called with await
  * @param base64Str a string representation of an imae file
  * @param maxWidth the max width of he image
@@ -47,10 +48,8 @@ export default function resizeImage(
                     if (process.env.NODE_ENV === "development") {
                         console.error("An error ocurred when trying to make a thumnail");
                     }
-
                     reject(undefined);
                 }
-
             }
         } catch (error) {
             if (process.env.NODE_ENV === "development") {
@@ -58,6 +57,5 @@ export default function resizeImage(
             }
             reject(undefined);
         }
-
-    })
+    });
 }

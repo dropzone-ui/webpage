@@ -1,7 +1,7 @@
 import { mergeProps } from "@dropzone-ui/core";
 import * as React from "react";
-import { SkeletonDefaultProps, SkeletonProps } from "./SkeletonProps";
-import "./Skeleton.scss";
+import { DuiSkeletonDefaultProps, DuiSkeletonProps } from "./DuiSkeletonProps";
+import "./DuiSkeleton.scss";
 /**
  * Dui Skeleton component inspired on Mui Skeleton component
  *
@@ -13,10 +13,10 @@ import "./Skeleton.scss";
  *
  * - [Skeleton API](https://mui.com/api/skeleton/)
  */
-const Skeleton: React.FC<SkeletonProps> = (props: SkeletonProps) => {
+const DuiSkeleton: React.FC<DuiSkeletonProps> = (props: DuiSkeletonProps) => {
   const { className, animation, variant, width, height, style } = mergeProps(
     props,
-    SkeletonDefaultProps
+    DuiSkeletonDefaultProps
   );
   const [extendedClassName, setExtendedClassName] = React.useState<
     string | undefined
@@ -55,4 +55,4 @@ const Skeleton: React.FC<SkeletonProps> = (props: SkeletonProps) => {
     ></div>
   );
 };
-export default Skeleton;
+export default DuiSkeleton;

@@ -1,23 +1,21 @@
-import React, { FC, Fragment, useEffect, useRef, useState } from "react";
-
-import { FileItemProps, FileItemPropsDefault } from "./FileItemProps";
+import * as React from "react";
 import "./FileItemNeo.scss";
 import { mergeProps } from "@dropzone-ui/core";
-import {
-  fileSizeFormater,
-  getURLFileIco,
-  readAsDataURL as readImagePromise,
-  resizeImage,
-  shrinkWord,
-} from "../../../../utils";
+import { fileSizeFormater, shrinkWord } from "../../../../utils";
 
 import FileItemFullInfoLayer from "../FileItemFullInfoLayer/FileItemFullInfoLayer";
 import FileItemImage from "../FileItemImage/FileItemImage";
 import Tooltip from "../../../tooltip/components/Tooltip";
 import FileItemMainLayerNeo from "../FileItemMainLayer/MainLayer/FileItemMainLayerNeo";
 import useFileItemNeoClassName from "../../hooks/useFileItemNeoClassName";
+import { FileItemNeoProps, FileItemNeoPropsDefault } from "./FileItemPropsNeo";
+import useFileItemNeoInitializer from "./useFileItemNeoInitializer";
 
-const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
+import FileItemImageNeo from "../FileItemImage/FileItemImageNeo";
+import useFileItemProgress from "./useFileItemProgress";
+import DuiSkeleton from "../../../skeleton/DuiSkeleton";
+
+const FileItemNeo: React.FC<FileItemNeoProps> = (props: FileItemNeoProps) => {
   const {
     file,
     onDelete,
@@ -44,122 +42,63 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
     onAbort,
     xhr,
     onCancel,
-  } = mergeProps(props, FileItemPropsDefault);
+    showProgress,
+  } = mergeProps(props, FileItemNeoPropsDefault);
+  //ref for anchor element
+  const dui_anchor_ref = React.useRef<HTMLAnchorElement>(null);
+  //Initialize image properties for FileItem
+  const localProgress = useFileItemProgress(progress, showProgress, xhr);
 
-  const dui_anchor_ref = useRef<HTMLAnchorElement>(null);
-  //actionOnHover
-  const [hovering, setHOvering] = useState<boolean>(false);
-  const handleOnHoverEnter = () => {
+  const [isImage, isVideo, url, imageSource]: [
+    boolean,
+    boolean,
+    string,
+    string | undefined
+  ] = useFileItemNeoInitializer(file, valid, preview as boolean, imageUrl);
+  //console.table({isImage, isVideo, url, imageSource, localProgress} );
+  //className created
+  const classNameCreated = useFileItemNeoClassName(
+    resultOnTooltip as boolean,
+    elevation
+  );
+  //state for actionOnHover
+  const [hovering, setHOvering] = React.useState<boolean>(false);
+  const handleOnHoverEnter: React.MouseEventHandler<HTMLDivElement> = () => {
     setHOvering(true);
   };
-  const handleOnHoverLeave = () => {
+  const handleOnHoverLeave: React.MouseEventHandler<HTMLDivElement> = () => {
     setHOvering(false);
   };
 
   //size
   const sizeFormatted: string = file ? fileSizeFormater(file.size) : "0 KB";
-
-  const [isImage, setIsImage] = useState<boolean>(false);
-  const [isVideo, setIsVideo] = useState<boolean>(false);
-  const [url, setUrl] = useState<string>("");
-  const [imageSource, setImageSource] = useState<string | undefined>(undefined);
   //alwaysActive
-  const [showInfo, setShowInfo] = useState<boolean>(false);
-  //upload progress
-  const [localProgress, setLocalProgress] = useState<number | undefined>(1);
-  useEffect(() => {
-    //if (progress) {
-    setLocalProgress(!progress || progress === 0 ? 1 : progress);
-    //}
-  }, [progress]);
-
-  useEffect(() => {
-    init(file, valid, preview || false, imageUrl, xhr);
-
-    return () => {
-      setImageSource(undefined);
-      setIsImage(false);
-      setIsVideo(false);
-    };
-    // eslint-disable-next-line
-  }, [file, valid, preview, imageUrl, xhr, errors, localProgress]);
-
-  const init = async (
-    file: File | undefined,
-    valid: boolean | undefined | null,
-    preview: boolean,
-    imageUrl: string | undefined,
-    xhr?: XMLHttpRequest
-  ) => {
-    //////////////////////////////
-    if (!file) return;
-    const { url } = getURLFileIco(file as File);
-
-    setUrl(url);
-
-    if (imageUrl) {
-      setIsImage(true);
-      setImageSource(imageUrl);
-      return;
-    } else {
-      const headerMime = file.type ? file.type.split("/")[0] : "octet";
-      const tailMime = file.type ? file.type.split("/")[1] : "octet";
-      setIsImage(headerMime === "image");
-      setIsVideo(
-        headerMime === "video" && ["mp4", "ogg", "webm"].includes(tailMime)
-      );
-      if (
-        preview &&
-        (valid || typeof valid === "undefined" || valid === null) &&
-        headerMime === "image"
-      ) {
-        const response = await readImagePromise(file);
-        if (response) {
-          const cutt = await resizeImage(response);
-
-          setImageSource(cutt as string);
-        } else {
-          setImageSource(undefined);
-        }
-      }
-    }
-    /////////////// UPLOAD OBJECT ///////////////
-    if (xhr && xhr !== null) {
-      xhr.upload.onprogress = (event) => {
-        if (!progress) {
-          handleProgress((event.loaded / event.total) * 100);
-        }
-      };
-    }
-    //if (!localProgress) {
-    //handleProgress(1);
-    //}
-  };
-  const handleProgress = (currentProgress: number): void => {
-    setLocalProgress(currentProgress);
-  };
+  const [showInfo, setShowInfo] = React.useState<boolean>(false);
+  //delete file item
   const handleDelete = (): void => {
     onDelete?.(id);
   };
+  //open info layer
   const handleOpenInfo = () => {
     setShowInfo(true);
   };
+  //close info layer
   const handleCloseInfo = () => {
     setShowInfo(false);
   };
+  //handle watch video
   const handleOpenVideo = async () => {
-    if (file) {
-      onWatch?.(file);
-    }
+    if (file) onWatch?.(file);
   };
+  //open image
   const handleOpenImage = async () => {
     if (imageSource && file) {
-      if (hd) {
-        const response = await readImagePromise(file);
-        onSee?.(response || "");
-      } else {
-        onSee?.(imageSource);
-      }
+      //  if (hd) {
+      //    const response = await readImagePromise(file);
+      //    onSee?.(response || "");
+      //  } else {
+      onSee?.(imageSource);
+      //}
     }
   };
   function handleClick<T extends HTMLDivElement>(
@@ -168,110 +107,134 @@ const FileItemNeo: FC<FileItemProps> | undefined = (props: FileItemProps) => {
     //avoid children to trigger onClick ripple from parent
     e.stopPropagation();
   }
-  const innerDownload = (url: string | undefined) => {
+  /**
+   * onDownload, form 1
+   * Trigger dowload directly performing a click on anchor element
+   */
+  const innerDownload = () => {
     const anchorElement = dui_anchor_ref.current;
     if (anchorElement) {
       anchorElement.click();
     }
   };
+  /**
+   * onDownlad, form 2
+   * Handle the download triggering an outside event
+   */
   const handleDownload = () => {
     if (onDownload) {
       onDownload?.(id, downloadUrl);
     } else if (typeof downloadUrl == "string") {
-      innerDownload(downloadUrl);
+      innerDownload();
     }
   };
+  /**
+   * Perform abort event when xhr is given
+   */
   const handleAbort = (): void => {
     //trigger abort event
     xhr?.abort();
     // handle externally the abort event
     onAbort?.(id);
   };
+  /**
+   * Handle onCancel event
+   */
   const handleCancel = (): void => {
     // handle externally the cancel event
     onCancel?.(id);
   };
-  const classNameCreated = useFileItemNeoClassName(
-    resultOnTooltip as boolean,
-    elevation
-  );
-  if (classNameCreated && file && typeof file.name == "string") {
-    return (
-      <div
-        className={classNameCreated}
-        style={style}
-        onClick={handleClick}
-        onMouseEnter={handleOnHoverEnter}
-        onMouseLeave={handleOnHoverLeave}
-      >
-        <FileItemImage
-          imageSource={imageSource}
-          url={url}
-          fileName={file.name}
-        />
-
-        {!showInfo && (
-          <FileItemMainLayerNeo
-            fileName={file.name}
-            onDelete={onDelete ? handleDelete : undefined}
-            onOpenImage={onSee && preview ? handleOpenImage : undefined}
-            onOpenVideo={onWatch && preview ? handleOpenVideo : undefined}
-            onDownloadFile={
-              onDownload || downloadUrl ? handleDownload : undefined
-            }
-            isVideo={isVideo}
-            onOpenInfo={handleOpenInfo}
-            info={info || false}
-            valid={valid}
-            isImage={isImage}
-            sizeFormatted={sizeFormatted}
-            uploadStatus={uploadStatus}
-            localization={localization}
-            hovering={alwaysActive || hovering}
-            progress={localProgress}
-            onAbort={onAbort ? handleAbort : undefined}
-            onCancel={onCancel ? handleCancel : undefined}
-          />
-        )}
-        <FileItemFullInfoLayer
-          showInfo={showInfo}
-          errors={errors}
-          fileName={file.name}
-          fileSize={fileSizeFormater(file.size)}
-          fileType={file.type}
-          valid={valid}
-          onClose={handleCloseInfo}
-          uploadStatus={uploadStatus}
-          uploadMessage={uploadMessage}
-          localization={localization}
-          resultOnTooltip={resultOnTooltip}
-        />
-
-        {!onlyImage && (
-          <div className="file-item-name">{shrinkWord(file.name)}</div>
-        )}
-        {resultOnTooltip && (
-          <Tooltip
-            //open={resultOnTooltip && hovering}
-            open={true}
-            uploadStatus={uploadStatus}
-            valid={valid}
-            errors={errors}
-            uploadMessage={uploadMessage}
-          ></Tooltip>
-        )}
-        {downloadUrl && (
-          <a
-            ref={dui_anchor_ref}
-            href={downloadUrl}
-            download={file.name}
-            style={{ display: "none" }}
+  if (file && typeof file.name == "string") {
+    if (classNameCreated) {
+      return (
+        <div
+          className={classNameCreated}
+          style={style}
+          onClick={handleClick}
+          onMouseEnter={handleOnHoverEnter}
+          onMouseLeave={handleOnHoverLeave}
+        >
+          <div
+            className={`file-item-icon-container ${showInfo ? " hide" : ""}`}
           >
-            download_file
-          </a>
-        )}
-      </div>
-    );
-  } else return <Fragment></Fragment>;
+            <FileItemImageNeo
+              imageSource={imageSource}
+              url={url}
+              fileName={file.name}
+            />
+
+            <FileItemMainLayerNeo
+              showInfo={showInfo}
+              fileName={file.name}
+              onDelete={onDelete ? handleDelete : undefined}
+              onOpenImage={onSee && preview ? handleOpenImage : undefined}
+              onOpenVideo={onWatch && preview ? handleOpenVideo : undefined}
+              onDownloadFile={
+                onDownload || downloadUrl ? handleDownload : undefined
+              }
+              isVideo={isVideo}
+              onOpenInfo={handleOpenInfo}
+              info={info || false}
+              valid={valid}
+              isImage={isImage}
+              sizeFormatted={sizeFormatted}
+              uploadStatus={uploadStatus}
+              localization={localization}
+              hovering={alwaysActive || hovering}
+              progress={localProgress}
+              onAbort={onAbort ? handleAbort : undefined}
+              onCancel={onCancel ? handleCancel : undefined}
+            />
+
+            <FileItemFullInfoLayer
+              showInfo={showInfo}
+              errors={errors}
+              fileName={file.name}
+              fileSize={fileSizeFormater(file.size)}
+              fileType={file.type}
+              valid={valid}
+              onClose={handleCloseInfo}
+              uploadStatus={uploadStatus}
+              uploadMessage={uploadMessage}
+              localization={localization}
+              resultOnTooltip={resultOnTooltip}
+            />
+          </div>
+
+          {!onlyImage && (
+            <div className="file-item-name">{shrinkWord(file.name)}</div>
+          )}
+          {resultOnTooltip && (
+            <Tooltip
+              open={resultOnTooltip && hovering}
+              //open={true}
+              uploadStatus={uploadStatus}
+              valid={valid}
+              errors={errors}
+              uploadMessage={uploadMessage}
+            ></Tooltip>
+          )}
+          {downloadUrl && (
+            <a
+              ref={dui_anchor_ref}
+              href={downloadUrl}
+              download={file.name}
+              style={{ display: "none" }}
+            >
+              download_file
+            </a>
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <DuiSkeleton />
+        </React.Fragment>
+      );
+    }
+  } else {
+    return <React.Fragment></React.Fragment>;
+  }
 };
 export default FileItemNeo;

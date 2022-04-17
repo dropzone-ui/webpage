@@ -518,9 +518,9 @@ const Dropzone: React.FC<DropzoneProps> = (props: DropzoneProps) => {
           {children}
         </FileItemContainer>
       ) : (
-        <DropzoneLabel>
+        <Dropzone>
           {label || (DropzoneLocalizer.defaultLabel as string)}
-        </DropzoneLabel>
+        </Dropzone>
       )}
 
       {footer && (

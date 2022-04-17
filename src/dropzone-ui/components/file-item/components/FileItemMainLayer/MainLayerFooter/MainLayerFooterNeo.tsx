@@ -32,13 +32,14 @@ export type MainLayerFooterNeoProps = {
   onOpenImage?: Function | undefined;
   onOpenVideo?: Function | undefined;
   onDownloadFile?: Function | undefined;
+  hide: boolean;
 };
 const MainLayerFooterNeo: React.FC<MainLayerFooterNeoProps> = (
   props: MainLayerFooterNeoProps
 ) => {
   const {
     uploadStatus,
-    // uploadComplete,
+    hide,
     localization,
     sizeFormatted,
     valid,
@@ -84,7 +85,7 @@ const MainLayerFooterNeo: React.FC<MainLayerFooterNeoProps> = (
       <div className="dui-main-layer-footer-container">
         {/** Show only when footer is not visible */}
         <div className="dui-main-layer-footer-status">
-          {          uploadStatus &&
+          { !hide &&         uploadStatus &&
           uploadStatus !== UPLOADSTATUS.uploading &&
           uploadComplete ? (
             <React.Fragment>
@@ -108,7 +109,7 @@ const MainLayerFooterNeo: React.FC<MainLayerFooterNeoProps> = (
         </div>
         {/** Action buttons and file size */}
         <div className="dui-main-layer-footer">
-          {hovering && (
+          {!hide && hovering && (
             <React.Fragment>
               {<FileItemSize sizeFormatted={sizeFormatted} />}
 

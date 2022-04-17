@@ -3,8 +3,6 @@ import * as React from "react";
 //import FileItemStatus from "../FileItemStatus/FileItemStatus";
 
 import { Localization } from "../../../../../localization/localization";
-import MainLayerHeader from "../MainLayerHeader/MainLayerHeader";
-import MainLayerFooter from "../MainLayerFooter/MainLayerFooter";
 import "./FileItemMainLayer.scss";
 // import FileItemLoader from "../FileItemLoader/FileItemLoader";
 // import FileItemStatus from "../../FileItemStatus/FileItemStatus";
@@ -24,10 +22,10 @@ export interface FileItemMainLayerNeoProps {
   fileName: string;
   info: boolean;
   /**
-     * whether show a valid or rejected message
-     * by def. valid is false (if not present, is false too)
-     */
-   valid?: boolean | null;
+   * whether show a valid or rejected message
+   * by def. valid is false (if not present, is false too)
+   */
+  valid?: boolean | null;
   isImage: boolean;
   isVideo: boolean;
   uploadStatus?: UPLOADSTATUS;
@@ -49,19 +47,19 @@ export interface FileItemMainLayerNeoProps {
    */
   onAbort?: Function;
   onCancel?: Function;
+  showInfo: boolean;
 }
 
 const FileItemMainLayerNeo: React.FC<FileItemMainLayerNeoProps> = (
   props: FileItemMainLayerNeoProps
 ) => {
   const {
-  
     onDelete,
     info,
     valid,
     isImage,
     isVideo,
-   
+    showInfo,
     onOpenInfo,
     onOpenImage,
     onOpenVideo,
@@ -74,17 +72,19 @@ const FileItemMainLayerNeo: React.FC<FileItemMainLayerNeoProps> = (
     onAbort,
     onCancel,
   } = props;
-  
+
   return (
     <React.Fragment>
       <div className={"dui-main-layer-container"}>
         <MainLayerHeaderNeo
+          hide={showInfo}
           onDelete={onDelete}
           uploadStatus={uploadStatus}
           hovering={hovering}
         />
- 
-        <MainLayerBodyNeo 
+
+        <MainLayerBodyNeo
+          hide={showInfo}
           uploadStatus={uploadStatus}
           localization={localization}
           progress={progress}
@@ -94,8 +94,9 @@ const FileItemMainLayerNeo: React.FC<FileItemMainLayerNeoProps> = (
           onCancel={onCancel}
         />
         <MainLayerFooterNeo
+          hide={showInfo}
           uploadStatus={uploadStatus}
-         // uploadComplete={uploadComplete}
+          // uploadComplete={uploadComplete}
           localization={localization}
           sizeFormatted={sizeFormatted}
           valid={valid}

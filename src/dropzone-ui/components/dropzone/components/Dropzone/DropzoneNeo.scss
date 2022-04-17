@@ -15,6 +15,17 @@
   align-items: center;
   padding: 23px 0px;
   min-width: 150px;
+  /// label
+  text-rendering: optimizeLegibility;
+  font-size: 1.5em;
+  font-family: inherit;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.02857em;
+  @media (max-width: 600px) {
+    font-size: 1.3em;
+  }
+  word-break: normal;
   &.clickable {
     cursor: pointer;
   }

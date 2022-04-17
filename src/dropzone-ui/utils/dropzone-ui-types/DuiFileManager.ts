@@ -1,5 +1,5 @@
 import { UPLOADSTATUS } from "../file-validation/validation.types";
-import DuiFileInstance, { DuiFileType } from "./DuiFile";
+import DuiFileInstance, { DuiFile } from "./DuiFile";
 
 export declare type FileListMap = {
     [id: number]: DuiFileInstance[] | undefined;
@@ -89,7 +89,7 @@ export class DuiFileManager {
      */
     public static setFileListMapPreparing(
         duiFileId: number,
-        localFiles: DuiFileType[],
+        localFiles: DuiFile[],
         validateFiles: boolean,
         cleanOnUpload: boolean
     ): DuiFileInstance[] | undefined {
@@ -97,26 +97,34 @@ export class DuiFileManager {
         try {
             let resultDuiList: DuiFileInstance[] = [];
             //remove non valids if cleanOnUpload is true and validateFiles is also true
+            console.table(localFiles);
+            console.log(validateFiles ,cleanOnUpload);
             if (validateFiles && cleanOnUpload) {
                 for (let i = 0; i < localFiles.length; i++) {
-                    const duiFile: DuiFileType = localFiles[i];
+                    const duiFile: DuiFile = localFiles[i];
                     const { valid } = duiFile;
                     if (valid) {
                         resultDuiList.push(new DuiFileInstance(duiFile));
                     }
 
                 }
+            }else{
+                resultDuiList=[...localFiles.map((duiFile)=>new DuiFileInstance(duiFile))];
             }
+         
+            console.table(resultDuiList);
+
             //sets on preparing stage all files according to the following creiteria:
             // If theuploadStatus is diferent than "sucess" AND
             // If validateFiles is true and the file is true OR validateFiles is false
             // then update the files on preparing stage. Otherwise keep the duiFile props.
             for (let i = 0; i < resultDuiList.length; i++) {
-                const duiFile: DuiFileType = localFiles[i];
+                const duiFile: DuiFile = localFiles[i];
                 const { valid, uploadStatus } = duiFile;
                 if (uploadStatus !== UPLOADSTATUS.success && (validateFiles && valid || !validateFiles))
                     resultDuiList[i].uploadStatus = UPLOADSTATUS.preparing;
             }
+            console.table(resultDuiList);
             DuiFileManager.setFileList(duiFileId, resultDuiList);
             return DuiFileManager.fileLists[duiFileId];
         } catch (error) {

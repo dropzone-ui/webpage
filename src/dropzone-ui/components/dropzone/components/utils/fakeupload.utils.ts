@@ -1,7 +1,7 @@
-import { DropzoneLocalizer, DropzoneLocalizerSelector } from "../../../../localization";
-import { LocalLabels } from "../../../../localization/localization";
+import {  DropzoneLocalizerSelector } from "../../../../localization";
+
 import { FileValidated, UPLOADSTATUS } from "../../../../utils";
-import DuiFile, { DuiFileType } from "../../../../utils/dropzone-ui-types/DuiFile";
+import DuiFileInstance from "../../../../utils/dropzone-ui-types/DuiFile";
 import { DuiUploadResponse } from "./upload.utils";
 
 
@@ -55,7 +55,7 @@ export const sleepPreparing = (preparingTime?: number): Promise<Object> => {
  * @returns 
  */
 export const prepToUploadOne = (
-    fileValidated: DuiFile
+    fileValidated: DuiFileInstance
 ): Promise<Object> => {
     //console.log("prepToUpload One", fileValidated);
     return new Promise((resolve, reject) => {
@@ -69,7 +69,7 @@ export const prepToUploadOne = (
 
     });
 };
-export const uploadOneDuiFile = (fileValidated: DuiFile): Promise<Object> => {
+export const uploadOneDuiFile = (fileValidated: DuiFileInstance): Promise<Object> => {
     //console.log("upload One", fileValidated);
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -90,7 +90,7 @@ export const uploadOneDuiFile = (fileValidated: DuiFile): Promise<Object> => {
  * @returns a duiUploadResponse object that describes the result
  */
 export const fakeDuiUpload = (
-    duiFile: DuiFileType,
+    duiFile: DuiFileInstance,
     DropzoneLocalizer = DropzoneLocalizerSelector("EN-en")
 ): Promise<DuiUploadResponse> => {
     return new Promise((resolve, reject) => {

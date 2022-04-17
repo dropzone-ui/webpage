@@ -259,12 +259,12 @@ export const checkIsCode = (extension?: string): string => {
 
 /**
  * Looks for a suitable file icon
- * @param props mime and extension from file to search
+ * @param file mime and extension from file to search
  * @returns the result file ico, if not found, turns octet-stream url
  */
 export const getURLFileIco = (file: File | undefined): ResultFileIco => {
 
-    let result = "";
+    let result: string = "";
     //if not file, return octet
     if (!file) {
         result = DEF_GEN_MIME;
@@ -332,7 +332,6 @@ const mimeUrlList: MimeSelector = {
     json: json,
     jsonld: jsonld,
     midi: midi,
-    //  js: js,
     mp3: mp3,
     mp4: mp4,
     mpeg: mpeg,

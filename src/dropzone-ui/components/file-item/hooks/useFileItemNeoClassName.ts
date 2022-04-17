@@ -1,6 +1,12 @@
 import * as React from "react";
 import { FileItemProps } from "../components/FileItem/FileItemProps";
-
+/**
+ * Custom hook that generates the final className for main container
+ * on FleItem
+ * @param resultOnTooltip whether to show the result on tooltip or not
+ * @param elevation the shadow elevation
+ * @returns the fiaal classNmae
+ */
 const useFileItemNeoClassName = (resultOnTooltip: boolean, elevation:FileItemProps["elevation"]): string => {
     const [classNameCreated, setClassNameCreated] = React.useState<string>("");
 

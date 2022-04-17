@@ -1,10 +1,10 @@
 import { UPLOADSTATUS } from "../../../../utils";
 import { Method } from "../../../../utils/dropzone-ui-types";
-import DuiFileInstance, { DuiFileType } from "../../../../utils/dropzone-ui-types/DuiFile";
+import DuiFileInstance, { DuiFile } from "../../../../utils/dropzone-ui-types/DuiFile";
 
 export declare type DuiUploadResponse = {
     serverResponse: DuiFileResponse;
-    uploadedFile: DuiFileType;
+    uploadedFile: DuiFile;
 }
 export declare type DuiFileResponse = {
     id: number | string | undefined;
@@ -15,7 +15,7 @@ export declare type DuiServerResponse = {
     message: string;
     payload: any;
 }
-export const unexpectedErrorUploadResult = (duiFile: DuiFileType): DuiUploadResponse => {
+export const unexpectedErrorUploadResult = (duiFile: DuiFile): DuiUploadResponse => {
     return {
         uploadedFile:
         {
@@ -29,7 +29,7 @@ export const unexpectedErrorUploadResult = (duiFile: DuiFileType): DuiUploadResp
         }
     }
 }
-export const unableToUploadResult = (duiFile: DuiFileType): DuiUploadResponse => {
+export const unableToUploadResult = (duiFile: DuiFile): DuiUploadResponse => {
     return {
         uploadedFile: {
             ...duiFile,
@@ -42,7 +42,7 @@ export const unableToUploadResult = (duiFile: DuiFileType): DuiUploadResponse =>
         }
     }
 }
-export const completeUploadResult = (duiFile: DuiFileType, responseDui: DuiServerResponse, result: UPLOADSTATUS): DuiUploadResponse => {
+export const completeUploadResult = (duiFile: DuiFile, responseDui: DuiServerResponse, result: UPLOADSTATUS): DuiUploadResponse => {
     return {
         uploadedFile: {
             ...duiFile,
@@ -56,7 +56,7 @@ export const completeUploadResult = (duiFile: DuiFileType, responseDui: DuiServe
     }
 }
 export const uploadOnePromiseXHR = async (
-    duiFile: DuiFileType,
+    duiFile: DuiFile,
     url: string,
     method?: Method,
     headers?: Record<string, string>,
@@ -198,16 +198,30 @@ export const DuiUpload = (
  * @param duiFileList 
  * @returns the array of duiFiles with the xhr attribute initialized
  */
-export const toUploadableDuiFileList = (duiFileList: DuiFileType[]): DuiFileType[] => {
+export const toUploadableDuiFileList = (duiFileList: DuiFile[]): DuiFile[] => {
     if (!duiFileList) return [];
     return duiFileList.map(duiFile => {
         return { ...duiFile, xhr: new XMLHttpRequest() }
     });
 }
 
+export const instantPreparingToUploadOne = (
+    fileValidated: DuiFileInstance | DuiFile
+): DuiFileInstance | DuiFile => {
+    if (fileValidated.uploadStatus === UPLOADSTATUS.preparing) {
+        //for DuiFile instance
+        fileValidated.uploadStatus = UPLOADSTATUS.uploading;
+        //for DuiFile type
+        return {
+            ...fileValidated,
+            uploadStatus: UPLOADSTATUS.uploading,
+        };
+    }
+    return fileValidated;
+};
 export const preparingToUploadOne = (
-    fileValidated: DuiFileInstance | DuiFileType
-): Promise<DuiFileInstance | DuiFileType> => {
+    fileValidated: DuiFileInstance | DuiFile
+): Promise<DuiFileInstance | DuiFile> => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             if (fileValidated.uploadStatus === UPLOADSTATUS.preparing) {
