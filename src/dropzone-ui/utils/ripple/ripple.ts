@@ -103,10 +103,13 @@ export function createDuiRipple
   <T extends HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>
   (
     event: React.MouseEvent<T, MouseEvent>,
-    color: string
+    color?: string,
+    variant?: string
   ) {
   //const elementContainer = event.currentTarget;
-  const duiContainer: HTMLDivElement | HTMLButtonElement | HTMLAnchorElement = event.currentTarget;
+  const duiContainer:
+    HTMLDivElement | HTMLButtonElement | HTMLAnchorElement =
+    event.currentTarget;
   removeRippleIfExist(duiContainer, "dui-ripple");
 
   // creating the span circle ripple
@@ -123,15 +126,19 @@ export function createDuiRipple
   const rippleCircleRadius: number = diameter / 2;
   console.log("w,h", duiContainer.clientWidth, duiContainer.clientHeight);
   circle.style.width = circle.style.height = `${diameter}px`;
-  /*   circle.style.left = `${event.clientX - rippleCircleRadius
-      }px`;
-    circle.style.top = `${event.clientY - rippleCircleRadius}px`; */
-  /*   circle.style.left = `${0}px`;
-    circle.style.top = `${0}px`; */
-  circle.style.backgroundColor = hexColorToRGB(
-    asureColor(colourNameToHex(color)),
-    0.4
-  );
+  circle.style.left = `${event.clientX - duiContainer.offsetLeft - rippleCircleRadius
+    }px`;
+  circle.style.top = `${event.clientY - duiContainer.offsetTop - rippleCircleRadius
+    }px`;
+  if (variant !== "contained") {
+    circle.style.backgroundColor = hexColorToRGB(
+      asureColor(colourNameToHex(color)),
+      0.4
+    );
+  } else {
+    circle.style.backgroundColor = hexColorToRGB("#ffffff", 0.4);
+  }
+
   duiContainer.appendChild(circle);
   setTimeout(() => {
     //elementContainer.style.display = "none";

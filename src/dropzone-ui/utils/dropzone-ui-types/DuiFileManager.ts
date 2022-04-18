@@ -97,8 +97,8 @@ export class DuiFileManager {
         try {
             let resultDuiList: DuiFileInstance[] = [];
             //remove non valids if cleanOnUpload is true and validateFiles is also true
-            console.table(localFiles);
-            console.log(validateFiles ,cleanOnUpload);
+            //console.table(localFiles);
+            //console.log(validateFiles ,cleanOnUpload);
             if (validateFiles && cleanOnUpload) {
                 for (let i = 0; i < localFiles.length; i++) {
                     const duiFile: DuiFile = localFiles[i];
@@ -112,7 +112,7 @@ export class DuiFileManager {
                 resultDuiList=[...localFiles.map((duiFile)=>new DuiFileInstance(duiFile))];
             }
          
-            console.table(resultDuiList);
+            //console.table(resultDuiList);
 
             //sets on preparing stage all files according to the following creiteria:
             // If theuploadStatus is diferent than "sucess" AND
@@ -124,7 +124,7 @@ export class DuiFileManager {
                 if (uploadStatus !== UPLOADSTATUS.success && (validateFiles && valid || !validateFiles))
                     resultDuiList[i].uploadStatus = UPLOADSTATUS.preparing;
             }
-            console.table(resultDuiList);
+            //console.table(resultDuiList);
             DuiFileManager.setFileList(duiFileId, resultDuiList);
             return DuiFileManager.fileLists[duiFileId];
         } catch (error) {

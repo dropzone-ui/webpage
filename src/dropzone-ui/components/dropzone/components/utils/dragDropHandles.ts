@@ -24,7 +24,7 @@ export const handleDragUtil: React.DragEventHandler<HTMLDivElement> = (
  * @param evt click event handler object
  */
 export function
-  handleClickUtil<T extends HTMLDivElement>
+  handleClickUtil<T extends HTMLDivElement | HTMLButtonElement | HTMLAnchorElement>
   (
     evt: React.MouseEvent<T, MouseEvent>
   ) {

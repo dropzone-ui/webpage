@@ -23,7 +23,7 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
    * }
    *
    * This event is also triggered when upload starts and when upload 
-   * finishes for each file in order to update the props on very FileItem
+   * finishes for each file in order to update the props on each FileItem
    */
   onChange?: (files: DuiFile[]) => void;
   /**
@@ -93,18 +93,15 @@ export default interface DropzoneNeoProps extends OverridableComponentProps {
  * Label to place when no files selected
  */
   label?: string;
+  /**
+   * If `true`, the component is disabled.
+   * @default false
+   */
+  disabled?: boolean;
   ////////////        FILES MANAGEMENT         ///////////
 
-  /**
-   * If true, onDrop event will return the list of files, but also
-   * will upload the files if url was set, and also config
-   * By default is false
-   */
-  uploadOnDrop?: boolean;
-
-  preparingTime?: number;
   behaviour?: Behaviour;
-  disabled?: boolean;
+
   /**
    * custom validator
    * must be a function that recieves as first parameter a File Object
@@ -182,7 +179,6 @@ export const defaultDrozoneNeoProps: DropzoneNeoProps =
   clickable: true,
   minHeight: "100px",
   uploadConfig: { method: "POST", uploadLabel: "file" },
-  uploadOnDrop: false,
   //maxFileSize: 28000,
   //maxFiles: 10,
 

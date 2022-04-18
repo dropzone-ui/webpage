@@ -10,6 +10,7 @@ import { DropzoneUI, Dropzone, FileItem } from "./dropzone-ui";
 import { FileItemObject } from "./dropzone-ui/utils/file-validation/validation.types";
 import FITester from "./FITester";
 import FITesterNeo from "./FITesterNeo";
+import FITesterNeoInput from "./FITesterNeoInput";
 //const mode = 1;
 
 /* ReactDOM.render(
@@ -28,7 +29,8 @@ root.render(
     {/*  <BrowserRouter>{mode ? <MainPage /> : <App />}</BrowserRouter> */}
     {/*     <Main /> */}
     {/* <FITester /> */}
-    <FITesterNeo />
+    {/* <FITesterNeo /> */}
+    <FITesterNeoInput/>
   </React.StrictMode>
 );
 

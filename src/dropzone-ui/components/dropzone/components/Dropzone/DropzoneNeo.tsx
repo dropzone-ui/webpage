@@ -41,6 +41,7 @@ import { DropzoneLocalizerSelector } from "../../../../localization";
 import { DuiUploadConfig } from "../../../../utils/dropzone-ui-types/DuiUploadConfig";
 import { DuiFileManager } from "../../../../utils/dropzone-ui-types/DuiFileManager";
 import DropzoneLabelNeo from "../DropzoneLabel/DropzoneLabelNeo";
+import { cleanInput } from "../utils/input.utils";
 const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
   const {
     children,
@@ -105,7 +106,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
   const duiFileId: number = useDropzoneFileListID();
   //state for managing the number of valid files
 
-  //state for managin files
+  //state for managing files
   //const [files, setFiles] = React.useState<DuiFile[]>([]);
   const [localFiles, numberOfValidFiles, setLocalFiles] =
     useDropzoneFileListUpdater(
@@ -120,8 +121,21 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       validateFiles
     );
   /**
-   * Upload the list of files
-   */
+   * Uploads each file in the array of DuiFiles
+   * First, sets all the files in preparing status and awaits `preparingTime` miliseconds.
+   * If `preparingTime` is not given or its value is false or 0, there won´t be a preparing phase.
+   * Then onChange event will be called to update the files outside.
+   * If `onCancel` event ocurrs outside on any on the FileItems(e.g. by clicking the cancel button on `FileItem`), 
+   * the duiFileInstance will change its status from 'preparing' to undefined. If so,
+   * after the waiting time the value of status will be find as undefined and won´t perfom the upload.
+   * Then, for each file: sets the file in 'uploading' status.
+   * Then onChange event will be called to update the files outside.
+   * Then uploads the file with the `xhr` instance.
+   * After that, that file recieves the new uploadStatus that can be 'success', 'error' or 'aborted'
+   * and onChange event will be called to update the files outside.
+   * @param localFiles the list of duiFiles to upload
+   * @returns nothing
+   */  
   const uploadfiles = async (localFiles: DuiFile[]): Promise<void> => {
     // set flag to true
     // recieve on the new list
@@ -297,7 +311,7 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
 
   /**
    * Performs the action of recieving the files when user selects the files
-   * by clicking the Dropzone container
+   * by clicking the InputButton
    * @param evt event handler for getting files from input element target
    */
   const handleChangeInput: React.ChangeEventHandler<HTMLInputElement> = (
@@ -311,6 +325,9 @@ const DropzoneNeo: React.FC<DropzoneNeoProps> = (props: DropzoneNeoProps) => {
       duiFileListOutput = outerDuiValidation(duiFileListOutput);
     //init xhr on each dui file
     if (url) duiFileListOutput = toUploadableDuiFileList(duiFileListOutput);
+    
+    // Clean input element to trigger onChange event on input
+    cleanInput(inputRef.current);
 
     handleFilesChange(duiFileListOutput);
   };
