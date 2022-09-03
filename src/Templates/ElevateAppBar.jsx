@@ -63,7 +63,7 @@ export default function ElevateAppBar(props) {
                 window.location.replace("http://www.dropzone-ui.com");
               }}
             >
-              {"Dropzone-ui / react"}
+              {"Dropzone-ui / react  v.6.7.10"}
             </div>
           </Toolbar>
         </AppBar>

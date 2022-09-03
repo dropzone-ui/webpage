@@ -7,7 +7,7 @@
     "npm": "8.1.2"
   },
   "dependencies": {
-    "@dropzone-ui/react": "^6.5.3",
+    "@dropzone-ui/react": "^6.7.10",
     "@dynamicss/dynamicss": "^2.1.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
