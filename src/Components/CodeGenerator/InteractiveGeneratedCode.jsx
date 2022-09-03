@@ -299,7 +299,7 @@ const InteractiveGeneratedCode = (props) => {
       makeDisableScroll(disableScroll)+
       `
       >
-        {files.map((file) => (
+        {files.length>0 && files.map((file) => (
           <FileItem
             {...file}
             key={file.id}` +
@@ -315,9 +315,10 @@ const InteractiveGeneratedCode = (props) => {
       `
           />
         ))}` +
-      makeFullScreenOnseeComponent(onSee) +
+      //makeFullScreenOnseeComponent(onSee) +
       `
       </Dropzone>
+      ${makeFullScreenOnseeComponent(onSee)}
     );
   }
       `

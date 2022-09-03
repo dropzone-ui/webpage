@@ -216,7 +216,7 @@ const InteractiveCode = (props) => {
           uploadingMessage={uploadingMessage}
           disableScroll={disableScroll}
         >
-          {files.map((file) => (
+          {files.length>0 && files.map((file) => (
             <FileItem
               {...file}
               key={file.id}

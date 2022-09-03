@@ -1,4 +1,9 @@
-import {  Dropzone,  FileItem,  FullScreenPreview,  VideoPreview,} from "@dropzone-ui/react";
+import {
+  Dropzone,
+  FileItem,
+  FullScreenPreview,
+  VideoPreview,
+} from "@dropzone-ui/react";
 import React, { Fragment, useState } from "react";
 import Options from "../../../Components/OptionsRedirect/Options";
 /* import {
@@ -62,32 +67,33 @@ const RightPart = (props) => {
           fakeUploading
           disableScroll
         >
-          {files.map((file) => (
-            <FileItem
-              {...file}
-              key={file.id}
-              onWatch={handleWatch}
-              onDelete={onDelete}
-              onSee={handleSee}
-              resultOnTooltip
-              preview
-              info
-              hd
-            />
-          ))}
-          <FullScreenPreview
-            imgSource={imageSrc}
-            openImage={imageSrc}
-            onClose={(e) => handleSee(undefined)}
-          />
-          <VideoPreview
-            videoSrc={videoSrc}
-            openVideo={videoSrc}
-            onClose={(e) => handleWatch(undefined)}
-            controls
-            autoplay
-          />
-        </Dropzone>
+          {files.length > 0 &&
+            files.map((file) => (
+              <FileItem
+                {...file}
+                key={file.id}
+                onWatch={handleWatch}
+                onDelete={onDelete}
+                onSee={handleSee}
+                resultOnTooltip
+                preview
+                info
+                hd
+              />
+            ))}
+        </Dropzone>{" "}
+        <FullScreenPreview
+          imgSource={imageSrc}
+          openImage={imageSrc}
+          onClose={(e) => handleSee(undefined)}
+        />
+        <VideoPreview
+          videoSrc={videoSrc}
+          openVideo={videoSrc}
+          onClose={(e) => handleWatch(undefined)}
+          controls
+          autoplay
+        />
       </div>
       <br />
       <p>
@@ -99,12 +105,28 @@ const RightPart = (props) => {
       <ul>
         <li>{"✅ File validation: Validate files before uploading."}</li>
         <li>{"🎨 File Image previews: See a thumbnail preview"}</li>
-        <li>{"🖼️ Full screen image previews: Add more interacion with a full screen preview of images"}</li>
-        <li>{"🎥 Full screen video previews. Play the video before uploading."}</li>
-        <li>{"👀 status visualization: validation and upload status is shown on a Tooltip or on Info Layer"}</li>
-        <li>{"✈️ File upload: Upload valid files to a server using Axios lib."}</li>
+        <li>
+          {
+            "🖼️ Full screen image previews: Add more interacion with a full screen preview of images"
+          }
+        </li>
+        <li>
+          {"🎥 Full screen video previews. Play the video before uploading."}
+        </li>
+        <li>
+          {
+            "👀 status visualization: validation and upload status is shown on a Tooltip or on Info Layer"
+          }
+        </li>
+        <li>
+          {"✈️ File upload: Upload valid files to a server using Axios lib."}
+        </li>
         <li>{"🎭 Out of the box design and style."}</li>
-        <li>{"🍰 Easy to use. Probably, this is the killer feature you are looking for in a package."}</li>
+        <li>
+          {
+            "🍰 Easy to use. Probably, this is the killer feature you are looking for in a package."
+          }
+        </li>
       </ul>
       <Options />
     </Fragment>

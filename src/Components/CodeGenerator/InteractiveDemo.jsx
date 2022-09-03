@@ -33,23 +33,24 @@ const InteractiveDemo = (props) => {
         uploadOnDrop
         fakeUploading
       >
-        {files.map((file) => (
-          <FileItem
-            {...file}
-            key={file.id}
-            onDelete={onDelete}
-            onSee={handleSee}
-            preview
-            info
-            hd
-          />
-        ))}
-        <FullScreenPreview
-          imgSource={imageSrc}
-          openImage={imageSrc}
-          onClose={(e) => handleSee(undefined)}
-        />
-      </Dropzone>
+        {files.length > 0 &&
+          files.map((file) => (
+            <FileItem
+              {...file}
+              key={file.id}
+              onDelete={onDelete}
+              onSee={handleSee}
+              preview
+              info
+              hd
+            />
+          ))}
+      </Dropzone>{" "}
+      <FullScreenPreview
+        imgSource={imageSrc}
+        openImage={imageSrc}
+        onClose={(e) => handleSee(undefined)}
+      />
       <div className="dui-demo-container">
         <div className="dui-demo-paper"></div>
       </div>
