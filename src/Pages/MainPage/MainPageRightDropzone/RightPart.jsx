@@ -87,6 +87,7 @@ const RightPart = (props) => {
           openImage={imageSrc}
           onClose={(e) => handleSee(undefined)}
         />
+        
         <VideoPreview
           videoSrc={videoSrc}
           openVideo={videoSrc}
